@@ -3,6 +3,9 @@ package kaiserol.pieces;
 
 import kaiserol.chessboard.ChessBoard;
 import kaiserol.chessboard.Field;
+import kaiserol.chessboard.moves.Move;
+
+import java.util.List;
 
 public abstract class Piece {
 
@@ -44,6 +47,12 @@ public abstract class Piece {
 
     public void decreaseMoveCount() {
         moveCount--;
+    }
+
+    protected abstract List<Move> getAllMoves();
+
+    public List<Move> getValidMoves() {
+        return getAllMoves();
     }
 
     public abstract String getDisplayName();
