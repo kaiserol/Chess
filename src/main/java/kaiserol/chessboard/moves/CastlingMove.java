@@ -13,13 +13,13 @@ public final class CastlingMove extends Move {
     private final Field rookStart;
     private final Field rookTarget;
 
-    public CastlingMove(King king, Field kingStart, Field kingTarget, Rook rook, Field rookStart, Field rookTarget) {
+    public CastlingMove(King king, Field kingTarget, Rook rook, Field rookTarget) {
         this.king = king;
-        this.kingStart = kingStart;
+        this.kingStart = king.getField();
         this.kingTarget = kingTarget;
 
         this.rook = rook;
-        this.rookStart = rookStart;
+        this.rookStart = rook.getField();
         this.rookTarget = rookTarget;
     }
 
