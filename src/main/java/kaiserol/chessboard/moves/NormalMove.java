@@ -39,5 +39,8 @@ public final class NormalMove extends Move {
         // Moves the piece back
         start.put(movedPiece);
         movedPiece.setField(start);
+
+        // Decreases the moves
+        movedPiece.decreaseMoveCount();
     }
 }
