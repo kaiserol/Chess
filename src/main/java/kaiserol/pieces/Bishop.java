@@ -16,7 +16,7 @@ public final class Bishop extends Piece {
     }
 
     @Override
-    public String getIdentifier() {
-        return side.isWhite() ? "B" : "b";
+    public char getLetter() {
+        return side.isWhite() ? 'B' : 'b';
     }
 }

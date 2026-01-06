@@ -16,7 +16,7 @@ public final class Pawn extends Piece {
     }
 
     @Override
-    public String getIdentifier() {
-        return side.isWhite() ? "P" : "p";
+    public char getLetter() {
+        return side.isWhite() ? 'P' : 'p';
     }
 }

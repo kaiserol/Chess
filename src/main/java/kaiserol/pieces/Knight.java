@@ -16,7 +16,7 @@ public final class Knight extends Piece {
     }
 
     @Override
-    public String getIdentifier() {
-        return side.isWhite() ? "N" : "n";
+    public char getLetter() {
+        return side.isWhite() ? 'N' : 'n';
     }
 }

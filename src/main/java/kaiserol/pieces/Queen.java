@@ -15,7 +15,7 @@ public final class Queen extends Piece {
     }
 
     @Override
-    public String getIdentifier() {
-        return side.isWhite() ? "Q" : "q";
+    public char getLetter() {
+        return side.isWhite() ? 'Q' : 'q';
     }
 }

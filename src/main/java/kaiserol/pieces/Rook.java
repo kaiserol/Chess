@@ -15,7 +15,7 @@ public final class Rook extends kaiserol.pieces.Piece {
     }
 
     @Override
-    public String getIdentifier() {
-        return side.isWhite() ? "R" : "r";
+    public char getLetter() {
+        return side.isWhite() ? 'R' : 'r';
     }
 }

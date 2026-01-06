@@ -16,7 +16,7 @@ public final class King extends Piece {
     }
 
     @Override
-    public String getIdentifier() {
-        return side.isWhite() ? "K" : "k";
+    public char getLetter() {
+        return side.isWhite() ? 'K' : 'k';
     }
 }

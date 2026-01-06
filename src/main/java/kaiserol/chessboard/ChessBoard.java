@@ -47,7 +47,7 @@ public class ChessBoard {
             for (int x = 1; x <= 8; x++) {
                 Field field = getField(x, y);
                 if (field.isEmpty()) builder.append("|   ");
-                else builder.append("| %s ".formatted(field.get().getIdentifier()));
+                else builder.append("| %s ".formatted(field.get().getLetter()));
             }
             builder.append("|\n");
         }

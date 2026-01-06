@@ -48,7 +48,7 @@ public abstract class Piece {
 
     public abstract String getDisplayName();
 
-    public abstract String getIdentifier();
+    public abstract char getLetter();
 
     @Override
     public String toString() {
