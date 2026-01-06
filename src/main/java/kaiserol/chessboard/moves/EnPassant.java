@@ -3,7 +3,7 @@ package kaiserol.chessboard.moves;
 import kaiserol.chessboard.Field;
 import kaiserol.pieces.Pawn;
 
-public final class EnPassantMove extends Move {
+public final class EnPassant extends Move {
     private final Pawn pawn;
     private final Field pawnStart;
     private final Field pawnTarget;
@@ -11,7 +11,7 @@ public final class EnPassantMove extends Move {
     private final Pawn pawnToCapture;
     private final Field pawnToCaptureField;
 
-    public EnPassantMove(Pawn pawn, Field pawnTarget, Pawn pawnToCapture) {
+    public EnPassant(Pawn pawn, Field pawnTarget, Pawn pawnToCapture) {
         this.pawn = pawn;
         this.pawnStart = pawn.getField();
         this.pawnTarget = pawnTarget;

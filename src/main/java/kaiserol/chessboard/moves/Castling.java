@@ -4,7 +4,7 @@ import kaiserol.chessboard.Field;
 import kaiserol.pieces.King;
 import kaiserol.pieces.Rook;
 
-public final class CastlingMove extends Move {
+public final class Castling extends Move {
     private final King king;
     private final Field kingStart;
     private final Field kingTarget;
@@ -13,7 +13,7 @@ public final class CastlingMove extends Move {
     private final Field rookStart;
     private final Field rookTarget;
 
-    public CastlingMove(King king, Field kingTarget, Rook rook, Field rookTarget) {
+    public Castling(King king, Field kingTarget, Rook rook, Field rookTarget) {
         this.king = king;
         this.kingStart = king.getField();
         this.kingTarget = kingTarget;
