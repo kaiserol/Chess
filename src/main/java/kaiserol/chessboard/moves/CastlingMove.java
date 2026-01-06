@@ -1,13 +1,59 @@
 package kaiserol.chessboard.moves;
 
+import kaiserol.chessboard.Field;
+import kaiserol.pieces.King;
+import kaiserol.pieces.Rook;
+
 public final class CastlingMove extends Move {
+    private final King king;
+    private final Field kingStart;
+    private final Field kingTarget;
+
+    private final Rook rook;
+    private final Field rookStart;
+    private final Field rookTarget;
+
+    public CastlingMove(King king, Field kingStart, Field kingTarget, Rook rook, Field rookStart, Field rookTarget) {
+        this.king = king;
+        this.kingStart = kingStart;
+        this.kingTarget = kingTarget;
+
+        this.rook = rook;
+        this.rookStart = rookStart;
+        this.rookTarget = rookTarget;
+    }
+
     @Override
     public void execute() {
+        // Moves the king
+        kingStart.remove();
+        kingTarget.put(king);
+        king.setField(kingTarget);
 
+        // Moves the rook
+        rookStart.remove();
+        rookTarget.put(rook);
+        rook.setField(rookTarget);
+
+        // Increases the moves
+        king.increaseMoveCount();
+        rook.increaseMoveCount();
     }
 
     @Override
     public void undo() {
+        // Resets the king
+        rookTarget.remove();
+        kingStart.put(king);
+        king.setField(kingStart);
 
+        // Resets the rook
+        rookTarget.remove();
+        rookStart.put(rook);
+        king.setField(rookStart);
+
+        // Decreases the moves
+        king.decreaseMoveCount();
+        rook.decreaseMoveCount();
     }
 }
