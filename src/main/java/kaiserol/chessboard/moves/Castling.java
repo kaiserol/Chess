@@ -26,13 +26,13 @@ public final class Castling extends Move {
     @Override
     public void execute() {
         // Moves the king
-        kingStart.remove();
-        kingTarget.put(king);
+        kingStart.removePiece();
+        kingTarget.setPiece(king);
         king.setField(kingTarget);
 
         // Moves the rook
-        rookStart.remove();
-        rookTarget.put(rook);
+        rookStart.removePiece();
+        rookTarget.setPiece(rook);
         rook.setField(rookTarget);
 
         // Increases the moves
@@ -43,13 +43,13 @@ public final class Castling extends Move {
     @Override
     public void undo() {
         // Moves the king back
-        rookTarget.remove();
-        kingStart.put(king);
+        rookTarget.removePiece();
+        kingStart.setPiece(king);
         king.setField(kingStart);
 
         // Moves the rook back
-        rookTarget.remove();
-        rookStart.put(rook);
+        rookTarget.removePiece();
+        rookStart.setPiece(rook);
         king.setField(rookStart);
 
         // Decreases the moves

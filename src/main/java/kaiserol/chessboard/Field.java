@@ -20,22 +20,20 @@ public class Field {
         return y;
     }
 
-    public boolean isEmpty() {
-        return piece == null;
+    public boolean isOccupied() {
+        return piece != null;
     }
 
-    public Piece get() {
+    public Piece getPiece() {
         return piece;
     }
 
-    public Piece put(Piece piece) {
-        Piece oldPiece = this.piece;
+    public void setPiece(Piece piece) {
         this.piece = piece;
-        return oldPiece;
     }
 
-    public Piece remove() {
-        return put(null);
+    public void removePiece() {
+        this.piece = null;
     }
 
     @Override

@@ -23,12 +23,12 @@ public final class EnPassant extends Move {
     @Override
     public void execute() {
         // Moves the pawn
-        pawnStart.remove();
-        pawnTarget.put(pawn);
+        pawnStart.removePiece();
+        pawnTarget.setPiece(pawn);
         pawn.setField(pawnTarget);
 
         // Removes the pawn to capture
-        pawnToCaptureField.remove();
+        pawnToCaptureField.removePiece();
         pawnToCapture.setField(null);
 
         // Increases the moves
@@ -38,12 +38,12 @@ public final class EnPassant extends Move {
     @Override
     public void undo() {
         // Puts the pawn to capture back
-        pawnToCaptureField.put(pawnToCapture);
+        pawnToCaptureField.setPiece(pawnToCapture);
         pawnToCapture.setField(pawnToCaptureField);
 
         // Moves the pawn back
-        pawnTarget.remove();
-        pawnStart.put(pawn);
+        pawnTarget.removePiece();
+        pawnStart.setPiece(pawn);
         pawn.setField(pawnStart);
 
         // Decreases the moves

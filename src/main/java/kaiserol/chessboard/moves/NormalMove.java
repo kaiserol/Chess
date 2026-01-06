@@ -12,15 +12,15 @@ public final class NormalMove extends Move {
     public NormalMove(Field start, Field target) {
         this.start = start;
         this.target = target;
-        this.movedPiece = start.get();
-        this.capturedPiece = target.get();
+        this.movedPiece = start.getPiece();
+        this.capturedPiece = target.getPiece();
     }
 
     @Override
     public void execute() {
         // Moves the piece
-        start.remove();
-        target.put(movedPiece);
+        start.removePiece();
+        target.setPiece(movedPiece);
         movedPiece.setField(target);
 
         // Removes the piece to capture
@@ -33,11 +33,11 @@ public final class NormalMove extends Move {
     @Override
     public void undo() {
         // Puts the piece to capture back
-        target.put(capturedPiece);
+        target.setPiece(capturedPiece);
         capturedPiece.setField(target);
 
         // Moves the piece back
-        start.put(movedPiece);
+        start.setPiece(movedPiece);
         movedPiece.setField(start);
 
         // Decreases the moves

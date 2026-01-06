@@ -17,14 +17,14 @@ public final class PawnPromotion extends Move {
 
         this.pawn = pawn;
         this.promotedPiece = promotedPiece;
-        this.capturedPiece = target.get();
+        this.capturedPiece = target.getPiece();
     }
 
     @Override
     public void execute() {
         // Moves the pawn and promotes it
-        start.remove();
-        target.put(promotedPiece);
+        start.removePiece();
+        target.setPiece(promotedPiece);
 
         pawn.setField(null);
         promotedPiece.setField(target);
@@ -42,14 +42,14 @@ public final class PawnPromotion extends Move {
     public void undo() {
         // Puts the piece to capture back
         if (capturedPiece != null) {
-            target.put(capturedPiece);
+            target.setPiece(capturedPiece);
             capturedPiece.setField(target);
         } else {
-            target.remove();
+            target.removePiece();
         }
 
         // Moves the pawn back and removes the promoted piece
-        start.put(pawn);
+        start.setPiece(pawn);
         pawn.setField(start);
         promotedPiece.setField(null);
 
