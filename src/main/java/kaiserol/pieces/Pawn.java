@@ -17,6 +17,6 @@ public final class Pawn extends Piece {
 
     @Override
     public String getIdentifier() {
-        return this.color.isWhite() ? "P" : "p";
+        return color.isWhite() ? "P" : "p";
     }
 }

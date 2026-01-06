@@ -16,6 +16,6 @@ public final class Rook extends kaiserol.pieces.Piece {
 
     @Override
     public String getIdentifier() {
-        return this.color.isWhite() ? "R" : "r";
+        return color.isWhite() ? "R" : "r";
     }
 }

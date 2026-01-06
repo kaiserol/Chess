@@ -17,6 +17,6 @@ public final class King extends Piece {
 
     @Override
     public String getIdentifier() {
-        return this.color.isWhite() ? "K" : "k";
+        return color.isWhite() ? "K" : "k";
     }
 }

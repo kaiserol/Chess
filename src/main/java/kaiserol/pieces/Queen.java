@@ -16,6 +16,6 @@ public final class Queen extends Piece {
 
     @Override
     public String getIdentifier() {
-        return this.color.isWhite() ? "Q" : "q";
+        return color.isWhite() ? "Q" : "q";
     }
 }

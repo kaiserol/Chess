@@ -35,15 +35,15 @@ public abstract class Piece {
     }
 
     public int getMoveCount() {
-        return this.moveCount;
+        return moveCount;
     }
 
     public void increaseMoveCount() {
-        this.moveCount++;
+        moveCount++;
     }
 
     public void decreaseMoveCount() {
-        this.moveCount--;
+        moveCount--;
     }
 
     public abstract String getDisplayName();

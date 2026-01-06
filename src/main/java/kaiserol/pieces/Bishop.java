@@ -17,6 +17,6 @@ public final class Bishop extends Piece {
 
     @Override
     public String getIdentifier() {
-        return this.color.isWhite() ? "B" : "b";
+        return color.isWhite() ? "B" : "b";
     }
 }
