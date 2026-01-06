@@ -37,14 +37,14 @@ public final class EnPassantMove extends Move {
 
     @Override
     public void undo() {
+        // Puts the pawn to capture back
+        pawnToCaptureField.put(pawnToCapture);
+        pawnToCapture.setField(pawnToCaptureField);
+
         // Moves the pawn back
         pawnTarget.remove();
         pawnStart.put(pawn);
         pawn.setField(pawnStart);
-
-        // Puts the pawn to capture back
-        pawnToCaptureField.put(pawnToCapture);
-        pawnToCapture.setField(pawnToCaptureField);
 
         // Decreases the moves
         pawn.decreaseMoveCount();
