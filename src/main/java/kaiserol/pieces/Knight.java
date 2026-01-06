@@ -6,8 +6,8 @@ import kaiserol.chessboard.Field;
 
 public final class Knight extends Piece {
 
-    public Knight(PieceColor color, ChessBoard chessBoard, Field field) {
-        super(color, chessBoard, field);
+    public Knight(Side side, ChessBoard chessBoard, Field field) {
+        super(side, chessBoard, field);
     }
 
     @Override
@@ -17,6 +17,6 @@ public final class Knight extends Piece {
 
     @Override
     public String getIdentifier() {
-        return color.isWhite() ? "N" : "n";
+        return side.isWhite() ? "N" : "n";
     }
 }

@@ -21,17 +21,17 @@ public class ChessBoard {
                 setField(x, y, new Field(x, y));
                 Field field = getField(x, y);
 
-                PieceColor color = y <= 4 ? PieceColor.WHITE : PieceColor.BLACK;
+                Side side = y <= 4 ? Side.WHITE : Side.BLACK;
                 if (y == 1 || y == 8) {
                     switch (x) {
-                        case 1, 8 -> field.put(new Rook(color, this, field));
-                        case 2, 7 -> field.put(new Knight(color, this, field));
-                        case 3, 6 -> field.put(new Bishop(color, this, field));
-                        case 4 -> field.put(new Queen(color, this, field));
-                        case 5 -> field.put(new King(color, this, field));
+                        case 1, 8 -> field.put(new Rook(side, this, field));
+                        case 2, 7 -> field.put(new Knight(side, this, field));
+                        case 3, 6 -> field.put(new Bishop(side, this, field));
+                        case 4 -> field.put(new Queen(side, this, field));
+                        case 5 -> field.put(new King(side, this, field));
                     }
                 } else if (y == 2 || y == 7) {
-                    field.put(new Pawn(color, this, field));
+                    field.put(new Pawn(side, this, field));
                 }
             }
         }

@@ -5,8 +5,8 @@ import kaiserol.chessboard.Field;
 
 public final class Queen extends Piece {
 
-    public Queen(PieceColor color, ChessBoard chessBoard, Field field) {
-        super(color, chessBoard, field);
+    public Queen(Side side, ChessBoard chessBoard, Field field) {
+        super(side, chessBoard, field);
     }
 
     @Override
@@ -16,6 +16,6 @@ public final class Queen extends Piece {
 
     @Override
     public String getIdentifier() {
-        return color.isWhite() ? "Q" : "q";
+        return side.isWhite() ? "Q" : "q";
     }
 }

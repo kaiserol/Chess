@@ -6,20 +6,20 @@ import kaiserol.chessboard.Field;
 
 public abstract class Piece {
 
-    protected final PieceColor color;
+    protected final Side side;
     protected final ChessBoard chessBoard;
     protected Field field;
     protected int moveCount;
 
-    public Piece(PieceColor color, ChessBoard chessBoard, Field field) {
-        this.color = color;
+    public Piece(Side side, ChessBoard chessBoard, Field field) {
+        this.side = side;
         this.chessBoard = chessBoard;
         this.field = field;
         this.moveCount = 0;
     }
 
-    public PieceColor getColor() {
-        return color;
+    public Side getSide() {
+        return side;
     }
 
     public ChessBoard getChessBoard() {

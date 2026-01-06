@@ -5,8 +5,8 @@ import kaiserol.chessboard.Field;
 
 public final class Rook extends kaiserol.pieces.Piece {
 
-    public Rook(PieceColor color, ChessBoard chessBoard, Field field) {
-        super(color, chessBoard, field);
+    public Rook(Side side, ChessBoard chessBoard, Field field) {
+        super(side, chessBoard, field);
     }
 
     @Override
@@ -16,6 +16,6 @@ public final class Rook extends kaiserol.pieces.Piece {
 
     @Override
     public String getIdentifier() {
-        return color.isWhite() ? "R" : "r";
+        return side.isWhite() ? "R" : "r";
     }
 }

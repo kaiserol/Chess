@@ -6,8 +6,8 @@ import kaiserol.chessboard.Field;
 
 public final class Bishop extends Piece {
 
-    public Bishop(PieceColor color, ChessBoard chessBoard, Field field) {
-        super(color, chessBoard, field);
+    public Bishop(Side side, ChessBoard chessBoard, Field field) {
+        super(side, chessBoard, field);
     }
 
     @Override
@@ -17,6 +17,6 @@ public final class Bishop extends Piece {
 
     @Override
     public String getIdentifier() {
-        return color.isWhite() ? "B" : "b";
+        return side.isWhite() ? "B" : "b";
     }
 }

@@ -6,8 +6,8 @@ import kaiserol.chessboard.Field;
 
 public final class King extends Piece {
 
-    public King(PieceColor color, ChessBoard chessBoard, Field field) {
-        super(color, chessBoard, field);
+    public King(Side side, ChessBoard chessBoard, Field field) {
+        super(side, chessBoard, field);
     }
 
     @Override
@@ -17,6 +17,6 @@ public final class King extends Piece {
 
     @Override
     public String getIdentifier() {
-        return color.isWhite() ? "K" : "k";
+        return side.isWhite() ? "K" : "k";
     }
 }

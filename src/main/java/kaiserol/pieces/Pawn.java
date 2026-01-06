@@ -6,8 +6,8 @@ import kaiserol.chessboard.Field;
 
 public final class Pawn extends Piece {
 
-    public Pawn(PieceColor color, ChessBoard chessBoard, Field field) {
-        super(color, chessBoard, field);
+    public Pawn(Side side, ChessBoard chessBoard, Field field) {
+        super(side, chessBoard, field);
     }
 
     @Override
@@ -17,6 +17,6 @@ public final class Pawn extends Piece {
 
     @Override
     public String getIdentifier() {
-        return color.isWhite() ? "P" : "p";
+        return side.isWhite() ? "P" : "p";
     }
 }
