@@ -14,7 +14,7 @@ public final class Rook extends kaiserol.pieces.Piece {
 
     @Override
     protected List<Move> getAllMoves() {
-        return List.of();
+        return Move.getLinearMoves(this);
     }
 
     @Override

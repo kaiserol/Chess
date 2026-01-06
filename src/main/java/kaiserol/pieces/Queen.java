@@ -4,6 +4,7 @@ import kaiserol.chessboard.ChessBoard;
 import kaiserol.chessboard.Field;
 import kaiserol.chessboard.moves.Move;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public final class Queen extends Piece {
@@ -14,7 +15,10 @@ public final class Queen extends Piece {
 
     @Override
     protected List<Move> getAllMoves() {
-        return List.of();
+        List<Move> moves = new ArrayList<>();
+        moves.addAll(Move.getLinearMoves(this));
+        moves.addAll(Move.getDiagonalMoves(this));
+        return moves;
     }
 
     @Override

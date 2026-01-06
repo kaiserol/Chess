@@ -1,5 +1,6 @@
 package kaiserol.pieces;
 
+
 import kaiserol.chessboard.ChessBoard;
 import kaiserol.chessboard.Field;
 import kaiserol.chessboard.moves.Move;
@@ -14,7 +15,7 @@ public final class Bishop extends Piece {
 
     @Override
     protected List<Move> getAllMoves() {
-        return List.of();
+        return Move.getDiagonalMoves(this);
     }
 
     @Override
