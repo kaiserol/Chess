@@ -42,12 +42,12 @@ public final class CastlingMove extends Move {
 
     @Override
     public void undo() {
-        // Resets the king
+        // Moves the king back
         rookTarget.remove();
         kingStart.put(king);
         king.setField(kingStart);
 
-        // Resets the rook
+        // Moves the rook back
         rookTarget.remove();
         rookStart.put(rook);
         king.setField(rookStart);
