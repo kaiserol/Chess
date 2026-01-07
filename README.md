@@ -2,31 +2,6 @@
 
 Ein modernes Schach-Projekt in Java mit geplanter Multiplayer-Funktionalität.
 
-## 🧩 Installation & Ausführung
-
-1. **Repository klonen**
-    ```bash
-    git clone https://github.com/kaiserol/Chess.git
-    cd 4D_Viewer
-    ```
-
-2. **Abhängigkeiten installieren & Build erzeugen**
-    ```bash
-    mvn clean install && rm target/original-*.jar
-    ```
-
-3. **Anwendung starten**
-
-   _Option A – Über die erzeugte JAR-Datei_
-    ```bash
-    java -jar target/*.jar
-    ```
-
-   _Option B – Direkt über Maven_
-    ```bash
-    mvn exec:java
-    ```
-
 ## 🛠️ Entwicklung
 
 ### Technologie-Stack
@@ -36,6 +11,15 @@ Ein modernes Schach-Projekt in Java mit geplanter Multiplayer-Funktionalität.
 - **Build-Tool**: Maven
 - **Testen**: JUnit 5
 - **Architektur**: Objektorientiertes Design mit klarer Trennung von Spielelogik und Darstellung
+
+### Hinweise für IntelliJ IDEA
+
+1. Projekt öffnen → `Chess/`
+2. Project SDK auswählen: **JDK 24**
+3. IntelliJ erkennt automatisch das Maven-Projekt
+4. Zum Starten:
+    - Menü: *Run → Run 'Main'*
+    - oder eigene Run-Konfiguration mit Main-Class (z. B. `kaiserol.Main`)
 
 ### Wichtige Maven-Befehle
 
@@ -60,15 +44,6 @@ Ein modernes Schach-Projekt in Java mit geplanter Multiplayer-Funktionalität.
     ```
 
 Falls eine andere Version angezeigt wird, ggf. `JAVA_HOME` anpassen oder eine passende JDK-Version installieren.
-
-### Hinweise für IntelliJ IDEA
-
-1. Projekt öffnen → `4D_Viewer/`
-2. Project SDK auswählen: **JDK 24**
-3. IntelliJ erkennt automatisch das Maven-Projekt
-4. Zum Starten:
-    - Menü: *Run → Run 'Main'*
-    - oder eigene Run-Konfiguration mit Main-Class (z. B. `de.uzk.Main`)
 
 ## 📋 Projektbeschreibung
 
