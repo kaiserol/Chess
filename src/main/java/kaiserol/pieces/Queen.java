@@ -16,8 +16,8 @@ public final class Queen extends Piece {
     @Override
     protected List<Move> getAllMoves() {
         List<Move> moves = new ArrayList<>();
-        moves.addAll(Move.getLinearMoves(this));
-        moves.addAll(Move.getDiagonalMoves(this));
+        moves.addAll(getLinearMoves());
+        moves.addAll(getDiagonalMoves());
         return moves;
     }
 

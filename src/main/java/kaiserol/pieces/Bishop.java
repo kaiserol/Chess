@@ -15,7 +15,7 @@ public final class Bishop extends Piece {
 
     @Override
     protected List<Move> getAllMoves() {
-        return Move.getDiagonalMoves(this);
+        return getDiagonalMoves();
     }
 
     @Override
