@@ -4,8 +4,6 @@ Ein modernes Schach-Projekt in Java mit geplanter Multiplayer-Funktionalität.
 
 ## 🧩 Installation & Ausführung
 
----
-
 1. **Repository klonen**
     ```bash
     git clone https://github.com/kaiserol/Chess.git
@@ -31,8 +29,6 @@ Ein modernes Schach-Projekt in Java mit geplanter Multiplayer-Funktionalität.
 
 ## 🛠️ Entwicklung
 
----
-
 ### Technologie-Stack
 
 - **IDE:** IntelliJ IDEA (Community / Ultimate)
@@ -51,8 +47,6 @@ Ein modernes Schach-Projekt in Java mit geplanter Multiplayer-Funktionalität.
 | `mvn test`               | Tests ausführen                  |
 
 ## ⚙️ Troubleshooting
-
----
 
 ### Java-Version prüfen
 
@@ -77,8 +71,6 @@ Falls eine andere Version angezeigt wird, ggf. `JAVA_HOME` anpassen oder eine pa
     - oder eigene Run-Konfiguration mit Main-Class (z. B. `de.uzk.Main`)
 
 ## 📋 Projektbeschreibung
-
----
 
 **Chess** ist eine Schach-Implementierung in Java. Das Projekt
 befindet sich in aktiver Entwicklung und wird um neue Features erweitert.
