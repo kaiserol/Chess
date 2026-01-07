@@ -60,9 +60,8 @@ public class ChessBoard {
         return getField(cleanCoord.charAt(0) - 'a' + 1, cleanCoord.charAt(1) - '1' + 1);
     }
 
-    public boolean isOccupiedBySide(int x, int y, Side side) {
-        Field field = getField(x, y);
-        return field.isOccupied() && field.getPiece().getSide().equals(side);
+    public boolean isOccupiedBySide(Field target, Side side) {
+        return target.isOccupied() && target.getPiece().getSide().equals(side);
     }
 
     public void printBoard() {

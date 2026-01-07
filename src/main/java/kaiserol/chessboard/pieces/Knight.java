@@ -34,8 +34,8 @@ public final class Knight extends Piece {
             int targetY = startY + offset[1];
 
             if (targetX >= 1 && targetX <= 8 && targetY >= 1 && targetY <= 8) {
-                if (chessBoard.isOccupiedBySide(targetX, targetY, side)) continue;
                 Field target = chessBoard.getField(targetX, targetY);
+                if (chessBoard.isOccupiedBySide(target, side)) continue;
                 moves.add(new NormalMove(field, target));
             }
         }

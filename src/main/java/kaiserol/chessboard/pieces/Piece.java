@@ -52,6 +52,14 @@ public abstract class Piece {
         moveCount--;
     }
 
+    private boolean addMoveAndStop(int targetX, int targetY, List<Move> moves) {
+        Field target = chessBoard.getField(targetX, targetY);
+        if (chessBoard.isOccupiedBySide(target, side)) return true;
+
+        moves.add(new NormalMove(field, target));
+        return target.isOccupied();
+    }
+
     protected List<Move> getLinearMoves() {
         final List<Move> moves = new ArrayList<>();
         if (field == null) return moves;
@@ -59,37 +67,10 @@ public abstract class Piece {
         final int startX = field.getX();
         final int startY = field.getY();
 
-        // Moves towards the north
-        for (int y = startY + 1; y <= 8; y++) {
-            if (chessBoard.isOccupiedBySide(startX, y, side)) break;
-            Field target = chessBoard.getField(startX, y);
-            moves.add(new NormalMove(field, target));
-            if (target.isOccupied()) break;
-        }
-
-        // Moves towards the east
-        for (int x = startX + 1; x <= 8; x++) {
-            if (chessBoard.isOccupiedBySide(x, startY, side)) break;
-            Field target = chessBoard.getField(x, startY);
-            moves.add(new NormalMove(field, target));
-            if (target.isOccupied()) break;
-        }
-
-        // Moves towards the south
-        for (int y = startY - 1; y >= 1; y--) {
-            if (chessBoard.isOccupiedBySide(startX, y, side)) break;
-            Field target = chessBoard.getField(startX, y);
-            moves.add(new NormalMove(field, target));
-            if (target.isOccupied()) break;
-        }
-
-        // Moves towards the west
-        for (int x = startX - 1; x >= 1; x--) {
-            if (chessBoard.isOccupiedBySide(x, startY, side)) break;
-            Field target = chessBoard.getField(x, startY);
-            moves.add(new NormalMove(field, target));
-            if (target.isOccupied()) break;
-        }
+        for (int x = startX - 1; x >= 1; x--) if (addMoveAndStop(x, startY, moves)) break; // West
+        for (int x = startX + 1; x <= 8; x++) if (addMoveAndStop(x, startY, moves)) break; // East
+        for (int y = startY - 1; y >= 1; y--) if (addMoveAndStop(startX, y, moves)) break; // South
+        for (int y = startY + 1; y <= 8; y++) if (addMoveAndStop(startX, y, moves)) break; // North
 
         return moves;
     }
@@ -101,37 +82,14 @@ public abstract class Piece {
         final int startX = field.getX();
         final int startY = field.getY();
 
-        // Moves towards the north-east
-        for (int i = 1; startX + i <= 8 && startY + i <= 8; i++) {
-            if (chessBoard.isOccupiedBySide(startX + i, startY + i, side)) break;
-            Field target = chessBoard.getField(startX + i, startY + i);
-            moves.add(new NormalMove(field, target));
-            if (target.isOccupied()) break;
-        }
-
-        // Moves towards the south-east
-        for (int i = 1; startX + i <= 8 && startY - i >= 1; i++) {
-            if (chessBoard.isOccupiedBySide(startX + i, startY - i, side)) break;
-            Field target = chessBoard.getField(startX + i, startY - i);
-            moves.add(new NormalMove(field, target));
-            if (target.isOccupied()) break;
-        }
-
-        // Moves towards the south-west
-        for (int i = 1; startX - i >= 1 && startY - i >= 1; i++) {
-            if (chessBoard.isOccupiedBySide(startX - i, startY - i, side)) break;
-            Field target = chessBoard.getField(startX - i, startY - i);
-            moves.add(new NormalMove(field, target));
-            if (target.isOccupied()) break;
-        }
-
-        // Moves towards the north-west
-        for (int i = 1; startX - i >= 1 && startY + i <= 8; i++) {
-            if (chessBoard.isOccupiedBySide(startX - i, startY + i, side)) break;
-            Field target = chessBoard.getField(startX - i, startY + i);
-            moves.add(new NormalMove(field, target));
-            if (target.isOccupied()) break;
-        }
+        for (int i = 1; startX - i >= 1 && startY - i >= 1; i++)
+            if (addMoveAndStop(startX - i, startY - i, moves)) break; // South-West
+        for (int i = 1; startX + i <= 8 && startY + i <= 8; i++)
+            if (addMoveAndStop(startX + i, startY + i, moves)) break; // North-East
+        for (int i = 1; startX - i >= 1 && startY + i <= 8; i++)
+            if (addMoveAndStop(startX - i, startY + i, moves)) break; // North-West
+        for (int i = 1; startX + i <= 8 && startY - i >= 1; i++)
+            if (addMoveAndStop(startX + i, startY - i, moves)) break; // South-East
 
         return moves;
     }
