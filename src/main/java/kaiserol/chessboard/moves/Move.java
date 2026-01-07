@@ -17,6 +17,14 @@ public abstract sealed class Move permits NormalMove, Castling, EnPassant, PawnJ
         this.target = target;
     }
 
+    public Field getStart() {
+        return start;
+    }
+
+    public Field getTarget() {
+        return target;
+    }
+
     @Override
     public String toString() {
         return target.toString();

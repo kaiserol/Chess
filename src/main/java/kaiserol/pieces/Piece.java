@@ -5,6 +5,7 @@ import kaiserol.chessboard.ChessBoard;
 import kaiserol.chessboard.Field;
 import kaiserol.chessboard.moves.Move;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
@@ -53,8 +54,8 @@ public abstract class Piece {
     protected abstract List<Move> getAllMoves();
 
     public List<Move> getValidMoves() {
-        List<Move> validMoves = getAllMoves();
-        validMoves.sort(Comparator.comparing(Move::toString));
+        List<Move> validMoves = new ArrayList<>(getAllMoves());
+        validMoves.sort(Comparator.comparing(Move::getTarget));
         return validMoves;
     }
 
@@ -64,6 +65,6 @@ public abstract class Piece {
 
     @Override
     public String toString() {
-        return getDisplayName() + " (" + this.field + ")";
+        return getDisplayName();
     }
 }
