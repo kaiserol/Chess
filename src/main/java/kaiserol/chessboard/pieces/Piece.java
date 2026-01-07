@@ -1,10 +1,10 @@
-package kaiserol.pieces;
-
+package kaiserol.chessboard.pieces;
 
 import kaiserol.chessboard.ChessBoard;
 import kaiserol.chessboard.Field;
-import kaiserol.chessboard.moves.Move;
-import kaiserol.chessboard.moves.NormalMove;
+import kaiserol.chessboard.Side;
+import kaiserol.logic.moves.Move;
+import kaiserol.logic.moves.NormalMove;
 
 import java.util.ArrayList;
 import java.util.Comparator;

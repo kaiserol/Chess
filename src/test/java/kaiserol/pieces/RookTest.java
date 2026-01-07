@@ -2,7 +2,10 @@ package kaiserol.pieces;
 
 import kaiserol.chessboard.ChessBoard;
 import kaiserol.chessboard.Field;
-import kaiserol.chessboard.moves.Move;
+import kaiserol.chessboard.pieces.Pawn;
+import kaiserol.chessboard.pieces.Rook;
+import kaiserol.chessboard.Side;
+import kaiserol.logic.moves.Move;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

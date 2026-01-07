@@ -1,7 +1,7 @@
-package kaiserol.chessboard.moves;
+package kaiserol.logic.moves;
 
 import kaiserol.chessboard.Field;
-import kaiserol.pieces.Pawn;
+import kaiserol.chessboard.pieces.Pawn;
 
 public final class EnPassant extends Move {
     private final Field capturedPawnStart;

@@ -1,8 +1,8 @@
-package kaiserol.chessboard.moves;
+package kaiserol.logic.moves;
 
 import kaiserol.chessboard.Field;
-import kaiserol.pieces.Pawn;
-import kaiserol.pieces.Piece;
+import kaiserol.chessboard.pieces.Pawn;
+import kaiserol.chessboard.pieces.Piece;
 
 public final class PawnPromotion extends Move {
     private final Pawn pawn;

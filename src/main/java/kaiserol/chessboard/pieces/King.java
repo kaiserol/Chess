@@ -1,15 +1,15 @@
-package kaiserol.pieces;
-
+package kaiserol.chessboard.pieces;
 
 import kaiserol.chessboard.ChessBoard;
 import kaiserol.chessboard.Field;
-import kaiserol.chessboard.moves.Move;
+import kaiserol.chessboard.Side;
+import kaiserol.logic.moves.Move;
 
 import java.util.List;
 
-public final class Pawn extends Piece {
+public final class King extends Piece {
 
-    public Pawn(Side side, ChessBoard chessBoard, Field field) {
+    public King(Side side, ChessBoard chessBoard, Field field) {
         super(side, chessBoard, field);
     }
 
@@ -20,11 +20,11 @@ public final class Pawn extends Piece {
 
     @Override
     public String getDisplayName() {
-        return "Pawn";
+        return "King";
     }
 
     @Override
     public char getLetter() {
-        return side.isWhite() ? 'P' : 'p';
+        return side.isWhite() ? 'K' : 'k';
     }
 }

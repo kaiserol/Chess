@@ -1,4 +1,4 @@
-package kaiserol.chessboard.moves;
+package kaiserol.logic.moves;
 
 import kaiserol.chessboard.Field;
 

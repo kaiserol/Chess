@@ -1,8 +1,8 @@
 package kaiserol;
 
 import kaiserol.chessboard.ChessBoard;
-import kaiserol.chessboard.moves.Move;
-import kaiserol.pieces.Piece;
+import kaiserol.logic.moves.Move;
+import kaiserol.chessboard.pieces.Piece;
 
 import java.util.List;
 

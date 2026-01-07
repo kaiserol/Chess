@@ -1,6 +1,6 @@
 package kaiserol.chessboard;
 
-import kaiserol.pieces.*;
+import kaiserol.chessboard.pieces.*;
 
 public class ChessBoard {
     private final Field[][] fields;

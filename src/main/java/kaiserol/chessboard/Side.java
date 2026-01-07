@@ -1,4 +1,4 @@
-package kaiserol.pieces;
+package kaiserol.chessboard;
 
 public enum Side {
     WHITE, BLACK;

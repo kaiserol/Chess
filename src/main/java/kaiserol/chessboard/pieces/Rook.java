@@ -1,12 +1,13 @@
-package kaiserol.pieces;
+package kaiserol.chessboard.pieces;
 
 import kaiserol.chessboard.ChessBoard;
 import kaiserol.chessboard.Field;
-import kaiserol.chessboard.moves.Move;
+import kaiserol.chessboard.Side;
+import kaiserol.logic.moves.Move;
 
 import java.util.List;
 
-public final class Rook extends kaiserol.pieces.Piece {
+public final class Rook extends Piece {
 
     public Rook(Side side, ChessBoard chessBoard, Field field) {
         super(side, chessBoard, field);

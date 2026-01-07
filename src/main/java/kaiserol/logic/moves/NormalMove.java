@@ -1,7 +1,7 @@
-package kaiserol.chessboard.moves;
+package kaiserol.logic.moves;
 
 import kaiserol.chessboard.Field;
-import kaiserol.pieces.Piece;
+import kaiserol.chessboard.pieces.Piece;
 
 public final class NormalMove extends Move {
     private final Piece movedPiece;

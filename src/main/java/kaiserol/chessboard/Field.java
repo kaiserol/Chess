@@ -1,6 +1,6 @@
 package kaiserol.chessboard;
 
-import kaiserol.pieces.Piece;
+import kaiserol.chessboard.pieces.Piece;
 import org.jetbrains.annotations.NotNull;
 
 public class Field implements Comparable<Field>{
