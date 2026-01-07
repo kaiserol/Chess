@@ -2,10 +2,10 @@ package kaiserol.chessboard;
 
 import kaiserol.chessboard.pieces.*;
 
-public class ChessBoard {
+public class Board {
     private final Field[][] fields;
 
-    public ChessBoard() {
+    public Board() {
         this.fields = new Field[8][8];
         initFields();
     }

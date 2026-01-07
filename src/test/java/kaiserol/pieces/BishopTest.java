@@ -1,6 +1,6 @@
 package kaiserol.pieces;
 
-import kaiserol.chessboard.ChessBoard;
+import kaiserol.chessboard.Board;
 import kaiserol.chessboard.Field;
 import kaiserol.chessboard.pieces.Bishop;
 import kaiserol.chessboard.pieces.Pawn;
@@ -14,11 +14,11 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class BishopTest {
-    private ChessBoard board;
+    private Board board;
 
     @BeforeEach
     void setUp() {
-        board = new ChessBoard();
+        board = new Board();
     }
 
     @Test

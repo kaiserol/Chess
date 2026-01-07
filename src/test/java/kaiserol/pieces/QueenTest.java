@@ -1,6 +1,6 @@
 package kaiserol.pieces;
 
-import kaiserol.chessboard.ChessBoard;
+import kaiserol.chessboard.Board;
 import kaiserol.chessboard.Field;
 import kaiserol.chessboard.pieces.Queen;
 import kaiserol.chessboard.Side;
@@ -14,11 +14,11 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class QueenTest {
-    private ChessBoard board;
+    private Board board;
 
     @BeforeEach
     void setUp() {
-        board = new ChessBoard();
+        board = new Board();
     }
 
     @Test

@@ -1,6 +1,6 @@
 package kaiserol.chessboard.pieces;
 
-import kaiserol.chessboard.ChessBoard;
+import kaiserol.chessboard.Board;
 import kaiserol.chessboard.Field;
 import kaiserol.chessboard.Side;
 import kaiserol.logic.moves.Move;
@@ -13,13 +13,13 @@ import java.util.List;
 public abstract class Piece {
 
     protected final Side side;
-    protected final ChessBoard chessBoard;
+    protected final Board board;
     protected Field field;
     protected int moveCount;
 
-    public Piece(Side side, ChessBoard chessBoard, Field field) {
+    public Piece(Side side, Board board, Field field) {
         this.side = side;
-        this.chessBoard = chessBoard;
+        this.board = board;
         this.field = field;
         this.moveCount = 0;
     }
@@ -28,8 +28,8 @@ public abstract class Piece {
         return side;
     }
 
-    public ChessBoard getChessBoard() {
-        return chessBoard;
+    public Board getBoard() {
+        return board;
     }
 
     public Field getField() {
@@ -53,8 +53,8 @@ public abstract class Piece {
     }
 
     private boolean addMoveAndStop(int targetX, int targetY, List<Move> moves) {
-        Field target = chessBoard.getField(targetX, targetY);
-        if (chessBoard.isOccupiedBySide(target, side)) return true;
+        Field target = board.getField(targetX, targetY);
+        if (board.isOccupiedBySide(target, side)) return true;
 
         moves.add(new NormalMove(field, target));
         return target.isOccupied();
