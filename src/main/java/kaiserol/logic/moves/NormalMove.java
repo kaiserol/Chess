@@ -21,7 +21,9 @@ public final class NormalMove extends Move {
 
         // Updates the fields
         movedPiece.setField(target);
-        if (capturedPiece != null) capturedPiece.setField(null);
+        if (capturedPiece != null) {
+            capturedPiece.setField(null);
+        }
 
         // Increases the moves
         movedPiece.increaseMoveCount();
@@ -35,7 +37,9 @@ public final class NormalMove extends Move {
 
         // Updates the fields
         movedPiece.setField(start);
-        if (capturedPiece != null) capturedPiece.setField(target);
+        if (capturedPiece != null) {
+            capturedPiece.setField(target);
+        }
 
         // Decreases the moves
         movedPiece.decreaseMoveCount();

@@ -64,13 +64,13 @@ public abstract class Piece {
         final List<Move> moves = new ArrayList<>();
         if (field == null) return moves;
 
-        final int startX = field.getX();
-        final int startY = field.getY();
+        final int fieldX = field.getX();
+        final int fieldY = field.getY();
 
-        for (int x = startX - 1; x >= 1; x--) if (addMoveAndStop(x, startY, moves)) break; // West
-        for (int x = startX + 1; x <= 8; x++) if (addMoveAndStop(x, startY, moves)) break; // East
-        for (int y = startY - 1; y >= 1; y--) if (addMoveAndStop(startX, y, moves)) break; // South
-        for (int y = startY + 1; y <= 8; y++) if (addMoveAndStop(startX, y, moves)) break; // North
+        for (int x = fieldX - 1; x >= 1; x--) if (addMoveAndStop(x, fieldY, moves)) break; // West
+        for (int x = fieldX + 1; x <= 8; x++) if (addMoveAndStop(x, fieldY, moves)) break; // East
+        for (int y = fieldY - 1; y >= 1; y--) if (addMoveAndStop(fieldX, y, moves)) break; // South
+        for (int y = fieldY + 1; y <= 8; y++) if (addMoveAndStop(fieldX, y, moves)) break; // North
 
         return moves;
     }
@@ -79,17 +79,17 @@ public abstract class Piece {
         final List<Move> moves = new ArrayList<>();
         if (field == null) return moves;
 
-        final int startX = field.getX();
-        final int startY = field.getY();
+        final int fieldX = field.getX();
+        final int fieldY = field.getY();
 
-        for (int i = 1; startX - i >= 1 && startY - i >= 1; i++)
-            if (addMoveAndStop(startX - i, startY - i, moves)) break; // South-West
-        for (int i = 1; startX + i <= 8 && startY + i <= 8; i++)
-            if (addMoveAndStop(startX + i, startY + i, moves)) break; // North-East
-        for (int i = 1; startX - i >= 1 && startY + i <= 8; i++)
-            if (addMoveAndStop(startX - i, startY + i, moves)) break; // North-West
-        for (int i = 1; startX + i <= 8 && startY - i >= 1; i++)
-            if (addMoveAndStop(startX + i, startY - i, moves)) break; // South-East
+        for (int i = 1; fieldX - i >= 1 && fieldY - i >= 1; i++)
+            if (addMoveAndStop(fieldX - i, fieldY - i, moves)) break; // South-West
+        for (int i = 1; fieldX + i <= 8 && fieldY + i <= 8; i++)
+            if (addMoveAndStop(fieldX + i, fieldY + i, moves)) break; // North-East
+        for (int i = 1; fieldX - i >= 1 && fieldY + i <= 8; i++)
+            if (addMoveAndStop(fieldX - i, fieldY + i, moves)) break; // North-West
+        for (int i = 1; fieldX + i <= 8 && fieldY - i >= 1; i++)
+            if (addMoveAndStop(fieldX + i, fieldY - i, moves)) break; // South-East
 
         return moves;
     }

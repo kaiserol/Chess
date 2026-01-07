@@ -18,8 +18,10 @@ public final class Knight extends Piece {
     @Override
     protected List<Move> getAllMoves() {
         final List<Move> moves = new ArrayList<>();
-        final int startX = field.getX();
-        final int startY = field.getY();
+        if (field == null) return moves;
+
+        final int fieldX = field.getX();
+        final int fieldY = field.getY();
 
         // All possible knight move offsets
         final int[][] offsets = {
@@ -30,10 +32,10 @@ public final class Knight extends Piece {
         };
 
         for (int[] offset : offsets) {
-            int targetX = startX + offset[0];
-            int targetY = startY + offset[1];
+            int targetX = fieldX + offset[0];
+            int targetY = fieldY + offset[1];
 
-            if (targetX >= 1 && targetX <= 8 && targetY >= 1 && targetY <= 8) {
+            if (board.inside(targetX, targetY)) {
                 Field target = board.getField(targetX, targetY);
                 if (board.isOccupiedBySide(target, side)) continue;
                 moves.add(new NormalMove(field, target));

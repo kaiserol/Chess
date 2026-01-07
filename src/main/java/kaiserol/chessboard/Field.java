@@ -3,7 +3,7 @@ package kaiserol.chessboard;
 import kaiserol.chessboard.pieces.Piece;
 import org.jetbrains.annotations.NotNull;
 
-public class Field implements Comparable<Field>{
+public class Field implements Comparable<Field> {
     private final int x;
     private final int y;
     private Piece piece;

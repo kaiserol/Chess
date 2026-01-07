@@ -7,10 +7,6 @@ public enum Side {
         return this == WHITE;
     }
 
-    public boolean isBlack() {
-        return this == BLACK;
-    }
-
     public Side opposite() {
         return isWhite() ? BLACK : WHITE;
     }
