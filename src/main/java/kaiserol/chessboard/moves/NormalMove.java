@@ -4,14 +4,11 @@ import kaiserol.chessboard.Field;
 import kaiserol.pieces.Piece;
 
 public final class NormalMove extends Move {
-    private final Field start;
-    private final Field target;
     private final Piece movedPiece;
     private final Piece capturedPiece;
 
     public NormalMove(Field start, Field target) {
-        this.start = start;
-        this.target = target;
+        super(start, target);
         this.movedPiece = start.getPiece();
         this.capturedPiece = target.getPiece();
     }
@@ -21,10 +18,10 @@ public final class NormalMove extends Move {
         // Moves the piece
         start.removePiece();
         target.setPiece(movedPiece);
-        movedPiece.setField(target);
 
-        // Removes the piece to capture
-        capturedPiece.setField(null);
+        // Updates the fields
+        movedPiece.setField(target);
+        if (capturedPiece != null) capturedPiece.setField(null);
 
         // Increases the moves
         movedPiece.increaseMoveCount();
@@ -32,13 +29,13 @@ public final class NormalMove extends Move {
 
     @Override
     public void undo() {
-        // Puts the piece to capture back
-        target.setPiece(capturedPiece);
-        capturedPiece.setField(target);
-
         // Moves the piece back
+        target.setPiece(capturedPiece);
         start.setPiece(movedPiece);
+
+        // Updates the fields
         movedPiece.setField(start);
+        if (capturedPiece != null) capturedPiece.setField(target);
 
         // Decreases the moves
         movedPiece.decreaseMoveCount();

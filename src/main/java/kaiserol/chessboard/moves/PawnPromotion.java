@@ -5,17 +5,13 @@ import kaiserol.pieces.Pawn;
 import kaiserol.pieces.Piece;
 
 public final class PawnPromotion extends Move {
-    private final Field start;
-    private final Field target;
     private final Pawn pawn;
     private final Piece promotedPiece;
     private final Piece capturedPiece;
 
-    public PawnPromotion(Pawn pawn, Field target, Piece promotedPiece) {
-        this.start = pawn.getField();
-        this.target = target;
-
-        this.pawn = pawn;
+    public PawnPromotion(Field pawnStart, Field pawnTarget, Piece promotedPiece) {
+        super(pawnStart, pawnTarget);
+        this.pawn = (Pawn) pawnStart.getPiece();
         this.promotedPiece = promotedPiece;
         this.capturedPiece = target.getPiece();
     }
@@ -26,13 +22,10 @@ public final class PawnPromotion extends Move {
         start.removePiece();
         target.setPiece(promotedPiece);
 
+        // Updates the fields
         pawn.setField(null);
         promotedPiece.setField(target);
-
-        // Removes the piece to capture
-        if (capturedPiece != null) {
-            capturedPiece.setField(null);
-        }
+        if (capturedPiece != null) capturedPiece.setField(null);
 
         // Increases the moves
         pawn.increaseMoveCount();
@@ -40,18 +33,14 @@ public final class PawnPromotion extends Move {
 
     @Override
     public void undo() {
-        // Puts the piece to capture back
-        if (capturedPiece != null) {
-            target.setPiece(capturedPiece);
-            capturedPiece.setField(target);
-        } else {
-            target.removePiece();
-        }
-
         // Moves the pawn back and removes the promoted piece
+        target.setPiece(capturedPiece);
         start.setPiece(pawn);
+
+        // Updates the fields
         pawn.setField(start);
         promotedPiece.setField(null);
+        if (capturedPiece != null) capturedPiece.setField(target);
 
         // Decreases the moves
         pawn.decreaseMoveCount();

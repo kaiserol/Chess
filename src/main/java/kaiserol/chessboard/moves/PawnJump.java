@@ -5,21 +5,20 @@ import kaiserol.pieces.Pawn;
 
 public final class PawnJump extends Move {
     private final Pawn pawn;
-    private final Field pawnStart;
-    private final Field pawnTarget;
 
-    public PawnJump(Pawn pawn, Field pawnTarget) {
-        this.pawn = pawn;
-        this.pawnStart = pawn.getField();
-        this.pawnTarget = pawnTarget;
+    public PawnJump(Field pawnStart, Field pawnTarget) {
+        super(pawnStart, pawnTarget);
+        this.pawn = (Pawn) pawnStart.getPiece();
     }
 
     @Override
     public void execute() {
         // Moves the pawn two fields forward
-        pawnStart.removePiece();
-        pawnTarget.setPiece(pawn);
-        pawn.setField(pawnTarget);
+        start.removePiece();
+        target.setPiece(pawn);
+
+        // Updates the field
+        pawn.setField(target);
 
         // Increases the moves
         pawn.increaseMoveCount();
@@ -28,9 +27,11 @@ public final class PawnJump extends Move {
     @Override
     public void undo() {
         // Moves the pawn back
-        pawnTarget.removePiece();
-        pawnStart.setPiece(pawn);
-        pawn.setField(pawnStart);
+        target.removePiece();
+        start.setPiece(pawn);
+
+        // Updates the field
+        pawn.setField(start);
 
         // Decreases the moves
         pawn.decreaseMoveCount();

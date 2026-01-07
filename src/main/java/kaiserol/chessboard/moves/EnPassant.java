@@ -4,32 +4,29 @@ import kaiserol.chessboard.Field;
 import kaiserol.pieces.Pawn;
 
 public final class EnPassant extends Move {
+    private final Field capturedPawnStart;
+
     private final Pawn pawn;
-    private final Field pawnStart;
-    private final Field pawnTarget;
+    private final Pawn capturedPawn;
 
-    private final Pawn pawnToCapture;
-    private final Field pawnToCaptureField;
+    public EnPassant(Field pawnStart, Field pawnTarget, Field capturedPawnField) {
+        super(pawnStart, pawnTarget);
+        this.capturedPawnStart = capturedPawnField;
 
-    public EnPassant(Pawn pawn, Field pawnTarget, Pawn pawnToCapture) {
-        this.pawn = pawn;
-        this.pawnStart = pawn.getField();
-        this.pawnTarget = pawnTarget;
-
-        this.pawnToCapture = pawnToCapture;
-        this.pawnToCaptureField = pawnToCapture.getField();
+        this.pawn = (Pawn) pawnStart.getPiece();
+        this.capturedPawn = (Pawn) capturedPawnField.getPiece();
     }
 
     @Override
     public void execute() {
         // Moves the pawn
-        pawnStart.removePiece();
-        pawnTarget.setPiece(pawn);
-        pawn.setField(pawnTarget);
+        start.removePiece();
+        target.setPiece(pawn);
+        capturedPawnStart.removePiece();
 
-        // Removes the pawn to capture
-        pawnToCaptureField.removePiece();
-        pawnToCapture.setField(null);
+        // Updates the fields
+        pawn.setField(target);
+        capturedPawn.setField(null);
 
         // Increases the moves
         pawn.increaseMoveCount();
@@ -37,14 +34,14 @@ public final class EnPassant extends Move {
 
     @Override
     public void undo() {
-        // Puts the pawn to capture back
-        pawnToCaptureField.setPiece(pawnToCapture);
-        pawnToCapture.setField(pawnToCaptureField);
-
         // Moves the pawn back
-        pawnTarget.removePiece();
-        pawnStart.setPiece(pawn);
-        pawn.setField(pawnStart);
+        target.removePiece();
+        start.setPiece(pawn);
+        capturedPawnStart.setPiece(capturedPawn);
+
+        // Updates the fields
+        pawn.setField(start);
+        capturedPawn.setField(capturedPawnStart);
 
         // Decreases the moves
         pawn.decreaseMoveCount();

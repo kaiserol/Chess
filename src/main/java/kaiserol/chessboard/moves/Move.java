@@ -9,6 +9,27 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract sealed class Move permits NormalMove, Castling, EnPassant, PawnJump, PawnPromotion {
+    protected final Field start;
+    protected final Field target;
+
+    public Move(Field start, Field target) {
+        this.start = start;
+        this.target = target;
+    }
+
+    public Field getStart() {
+        return start;
+    }
+
+    public Field getTarget() {
+        return target;
+    }
+
+    @Override
+    public String toString() {
+        return getStart() + "->" + getTarget();
+    }
+
     public abstract void execute();
 
     public abstract void undo();
