@@ -5,23 +5,25 @@ import kaiserol.pieces.*;
 public class ChessBoard {
     private final Field[][] fields;
 
-    public static void main(String[] args) {
-        new ChessBoard();
-    }
-
     public ChessBoard() {
         this.fields = new Field[8][8];
-        initBoard();
-        printBoard();
+        initFields();
     }
 
-    private void initBoard() {
+    private void initFields() {
         for (int x = 1; x <= 8; x++) {
             for (int y = 1; y <= 8; y++) {
-                setField(x, y, new Field(x, y));
-                Field field = getField(x, y);
+                initField(x, y);
+            }
+        }
+    }
 
+    public void initPieces() {
+        for (int x = 1; x <= 8; x++) {
+            for (int y = 1; y <= 8; y++) {
+                Field field = getField(x, y);
                 Side side = y <= 4 ? Side.WHITE : Side.BLACK;
+
                 if (y == 1 || y == 8) {
                     switch (x) {
                         case 1, 8 -> field.setPiece(new Rook(side, this, field));
@@ -37,7 +39,24 @@ public class ChessBoard {
         }
     }
 
-    private void printBoard() {
+    private void initField(int x, int y) {
+        if (x < 1 || x > 8) throw new IllegalArgumentException("x must be between 1 and 8");
+        if (y < 1 || y > 8) throw new IllegalArgumentException("y must be between 1 and 8");
+        this.fields[x - 1][y - 1] = new Field(x, y);
+    }
+
+    public Field getField(int x, int y) {
+        if (x < 1 || x > 8) throw new IllegalArgumentException("x must be between 1 and 8");
+        if (y < 1 || y > 8) throw new IllegalArgumentException("y must be between 1 and 8");
+        return this.fields[x - 1][y - 1];
+    }
+
+    public boolean isOccupiedBySide(int x, int y, Side side) {
+        Field field = getField(x, y);
+        return field.isOccupied() && field.getPiece().getSide().equals(side);
+    }
+
+    public void printBoard() {
         StringBuilder builder = new StringBuilder();
         builder.append("  ").append("+---".repeat(8)).append("+\n");
 
@@ -54,25 +73,8 @@ public class ChessBoard {
 
         builder.append("  ").append("+---".repeat(8)).append("+\n  ");
         for (int x = 1; x <= 8; x++) builder.append("  %s ".formatted((char) ('a' + (x - 1))));
-        builder.append(" \n");
+        builder.append(" ");
 
         System.out.println(builder);
-    }
-
-    private void setField(int x, int y, Field field) {
-        if (x < 1 || x > 8) throw new IllegalArgumentException("x must be between 1 and 8");
-        if (y < 1 || y > 8) throw new IllegalArgumentException("y must be between 1 and 8");
-        this.fields[x - 1][y - 1] = field;
-    }
-
-    public Field getField(int x, int y) {
-        if (x < 1 || x > 8) throw new IllegalArgumentException("x must be between 1 and 8");
-        if (y < 1 || y > 8) throw new IllegalArgumentException("y must be between 1 and 8");
-        return this.fields[x - 1][y - 1];
-    }
-
-    public boolean isOccupiedBySide(int x, int y, Side side) {
-        Field field = getField(x, y);
-        return field.isOccupied() && field.getPiece().getSide().equals(side);
     }
 }
