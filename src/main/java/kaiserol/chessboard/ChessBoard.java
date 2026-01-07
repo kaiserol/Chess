@@ -51,6 +51,15 @@ public class ChessBoard {
         return this.fields[x - 1][y - 1];
     }
 
+    public Field getField(String coord) {
+        if (coord.length() != 2) throw new IllegalArgumentException("coord must be a 2-character string");
+        if (!Character.isLetter(coord.charAt(0))) throw new IllegalArgumentException("coord must start with a letter");
+        if (!Character.isDigit(coord.charAt(1))) throw new IllegalArgumentException("coord must end with a number");
+
+        String cleanCoord = coord.toLowerCase();
+        return getField(cleanCoord.charAt(0) - 'a' + 1, cleanCoord.charAt(1) - '1' + 1);
+    }
+
     public boolean isOccupiedBySide(int x, int y, Side side) {
         Field field = getField(x, y);
         return field.isOccupied() && field.getPiece().getSide().equals(side);
