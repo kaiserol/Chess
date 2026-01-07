@@ -6,14 +6,14 @@ import kaiserol.pieces.Piece;
 
 public final class PawnPromotion extends Move {
     private final Pawn pawn;
-    private final Piece promotedPiece;
     private final Piece capturedPiece;
+    private final Piece promotedPiece;
 
     public PawnPromotion(Field pawnStart, Field pawnTarget, Piece promotedPiece) {
         super(pawnStart, pawnTarget);
         this.pawn = (Pawn) pawnStart.getPiece();
+        this.capturedPiece = pawnTarget.getPiece();
         this.promotedPiece = promotedPiece;
-        this.capturedPiece = target.getPiece();
     }
 
     @Override
@@ -24,8 +24,8 @@ public final class PawnPromotion extends Move {
 
         // Updates the fields
         pawn.setField(null);
-        promotedPiece.setField(target);
         if (capturedPiece != null) capturedPiece.setField(null);
+        promotedPiece.setField(target);
 
         // Increases the moves
         pawn.increaseMoveCount();

@@ -7,10 +7,10 @@ public final class NormalMove extends Move {
     private final Piece movedPiece;
     private final Piece capturedPiece;
 
-    public NormalMove(Field start, Field target) {
-        super(start, target);
-        this.movedPiece = start.getPiece();
-        this.capturedPiece = target.getPiece();
+    public NormalMove(Field pieceStart, Field pieceTarget) {
+        super(pieceStart, pieceTarget);
+        this.movedPiece = pieceStart.getPiece();
+        this.capturedPiece = pieceTarget.getPiece();
     }
 
     @Override
