@@ -1,13 +1,22 @@
 package kaiserol.chessboard;
 
 import kaiserol.chessboard.pieces.*;
+import kaiserol.logic.Game;
 
 public class Board {
     private final Field[][] fields;
+    private final Game game;
 
-    public Board() {
+    public Board(boolean initPieces) {
         this.fields = new Field[8][8];
         initFields();
+        if (initPieces) initPieces();
+
+        this.game = new Game(this);
+    }
+
+    public Game getGame() {
+        return game;
     }
 
     private void initFields() {
@@ -18,7 +27,7 @@ public class Board {
         }
     }
 
-    public void initPieces() {
+    private void initPieces() {
         for (int x = 1; x <= 8; x++) {
             for (int y = 1; y <= 8; y++) {
                 Field field = getField(x, y);
