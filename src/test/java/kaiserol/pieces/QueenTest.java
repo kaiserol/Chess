@@ -30,9 +30,8 @@ public class QueenTest {
         List<Move> moves = queen.getValidMoves();
         List<String> targetFields = moves.stream().map(Move::toString).toList();
 
+        System.out.printf("%d Valid moves from %s (%s): %s%n", moves.size(), field, queen.getLetter(), moves);
         board.printBoard();
-        System.out.printf("Moves: %s%n", moves);
-        System.out.printf("Count: %d%n", moves.size());
 
         // Queen = Rook (14) + Bishop (13) = 27
         assertTrue(targetFields.contains("d1"));

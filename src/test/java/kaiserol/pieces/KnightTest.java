@@ -30,9 +30,8 @@ public class KnightTest {
         List<Move> moves = knight.getValidMoves();
         List<String> targetFields = moves.stream().map(Move::toString).toList();
 
+        System.out.printf("%d Valid moves from %s (%s): %s%n", moves.size(), field, knight.getLetter(), moves);
         board.printBoard();
-        System.out.printf("Moves: %s%n", moves);
-        System.out.printf("Count: %d%n", moves.size());
 
         // d4 -> c6, e6, f5, f3, e2, c2, b3, b5
         assertTrue(targetFields.contains("c6"));
@@ -55,9 +54,8 @@ public class KnightTest {
         List<Move> moves = knight.getValidMoves();
         List<String> targetFields = moves.stream().map(Move::toString).toList();
 
+        System.out.printf("%d Valid moves from %s (%s): %s%n", moves.size(), field, knight.getLetter(), moves);
         board.printBoard();
-        System.out.printf("Moves: %s%n", moves);
-        System.out.printf("Count: %d%n", moves.size());
 
         // a1 -> b3, c2
         assertTrue(targetFields.contains("b3"));
@@ -77,9 +75,8 @@ public class KnightTest {
         List<Move> moves = knight.getValidMoves();
         List<String> targetFields = moves.stream().map(Move::toString).toList();
 
+        System.out.printf("%d Valid moves from %s (%s): %s%n", moves.size(), field, knight.getLetter(), moves);
         board.printBoard();
-        System.out.printf("Moves: %s%n", moves);
-        System.out.printf("Count: %d%n", moves.size());
 
         assertFalse(targetFields.contains("c6"));
         assertEquals(7, moves.size());

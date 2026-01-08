@@ -2,9 +2,9 @@ package kaiserol.pieces;
 
 import kaiserol.chessboard.Board;
 import kaiserol.chessboard.Field;
+import kaiserol.chessboard.Side;
 import kaiserol.chessboard.pieces.Bishop;
 import kaiserol.chessboard.pieces.Pawn;
-import kaiserol.chessboard.Side;
 import kaiserol.logic.moves.Move;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -30,9 +30,8 @@ public class BishopTest {
         List<Move> moves = bishop.getValidMoves();
         List<String> targetFields = moves.stream().map(Move::toString).toList();
 
+        System.out.printf("%d Valid moves from %s (%s): %s%n", moves.size(), field, bishop.getLetter(), moves);
         board.printBoard();
-        System.out.printf("Moves: %s%n", moves);
-        System.out.printf("Count: %d%n", moves.size());
 
         // Diagonals from d4:
         // a1, b2, c3, e5, f6, g7, h8 (7 fields)
@@ -58,9 +57,8 @@ public class BishopTest {
         List<Move> moves = bishop.getValidMoves();
         List<String> targetFields = moves.stream().map(Move::toString).toList();
 
+        System.out.printf("%d Valid moves from %s (%s): %s%n", moves.size(), field, bishop.getLetter(), moves);
         board.printBoard();
-        System.out.printf("Moves: %s%n", moves);
-        System.out.printf("Count: %d%n", moves.size());
 
         // Should not contain e5, f6, g7, h8, ...
         assertFalse(targetFields.contains("a1"));
@@ -86,9 +84,8 @@ public class BishopTest {
         List<Move> moves = bishop.getValidMoves();
         List<String> targetFields = moves.stream().map(Move::toString).toList();
 
+        System.out.printf("%d Valid moves from %s (%s): %s%n", moves.size(), field, bishop.getLetter(), moves);
         board.printBoard();
-        System.out.printf("Moves: %s%n", moves);
-        System.out.printf("Count: %d%n", moves.size());
 
         // Should contain e5, but not f6, g7, h8, ...
         assertTrue(targetFields.contains("a1"));

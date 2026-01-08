@@ -30,9 +30,8 @@ public class RookTest {
         List<Move> moves = rook.getValidMoves();
         List<String> targetFields = moves.stream().map(Move::toString).toList();
 
+        System.out.printf("%d Valid moves from %s (%s): %s%n", moves.size(), field, rook.getLetter(), moves);
         board.printBoard();
-        System.out.printf("Moves: %s%n", moves);
-        System.out.printf("Count: %d%n", moves.size());
 
         // Rook from d4: d1-d3, d5-d8 (7) + a4-c4, e4-h4 (7) = 14
         assertTrue(targetFields.contains("d1"));
@@ -54,9 +53,8 @@ public class RookTest {
         List<Move> moves = rook.getValidMoves();
         List<String> targetFields = moves.stream().map(Move::toString).toList();
 
+        System.out.printf("%d Valid moves from %s (%s): %s%n", moves.size(), field, rook.getLetter(), moves);
         board.printBoard();
-        System.out.printf("Moves: %s%n", moves);
-        System.out.printf("Count: %d%n", moves.size());
 
         // d1-d3 (3), d5 (1), a4-c4 (3), e4-h4 (4) = 11
         // d6, d7, d8 are blocked
