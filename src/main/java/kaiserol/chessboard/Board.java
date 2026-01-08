@@ -82,6 +82,11 @@ public class Board {
     }
 
     public void printBoard() {
+        System.out.println(this);
+    }
+
+    @Override
+    public String toString() {
         StringBuilder builder = new StringBuilder();
         builder.append("  ").append("+---".repeat(8)).append("+\n");
 
@@ -100,6 +105,6 @@ public class Board {
         for (int x = 1; x <= 8; x++) builder.append("  %s ".formatted((char) ('a' + (x - 1))));
         builder.append(" ");
 
-        System.out.println(builder);
+        return builder.toString();
     }
 }
