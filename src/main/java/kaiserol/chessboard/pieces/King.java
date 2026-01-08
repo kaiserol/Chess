@@ -18,7 +18,7 @@ public final class King extends Piece {
     }
 
     @Override
-    protected List<Move> getMovesHelper() {
+    protected List<Move> getPseudoLegalMovesHelper() {
         List<Move> moves = new ArrayList<>();
         if (field == null) return moves;
 

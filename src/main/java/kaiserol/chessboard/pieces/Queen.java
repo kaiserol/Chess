@@ -14,7 +14,7 @@ public final class Queen extends Piece {
     }
 
     @Override
-    protected List<Move> getMovesHelper() {
+    protected List<Move> getPseudoLegalMovesHelper() {
         List<Move> moves = new ArrayList<>();
         moves.addAll(getLinearMoves());
         moves.addAll(getDiagonalMoves());

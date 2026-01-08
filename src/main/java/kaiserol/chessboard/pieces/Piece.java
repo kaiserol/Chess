@@ -96,16 +96,16 @@ public abstract class Piece {
         return moves;
     }
 
-    protected abstract List<Move> getMovesHelper();
+    protected abstract List<Move> getPseudoLegalMovesHelper();
 
-    public final List<Move> getMoves() {
-        List<Move> moves = new ArrayList<>(getMovesHelper());
+    public final List<Move> getPseudoLegalMoves() {
+        List<Move> moves = new ArrayList<>(getPseudoLegalMovesHelper());
         moves.sort(Comparator.comparing(Move::getTargetField));
         return moves;
     }
 
     public final List<Move> getLegalMoves() {
-        List<Move> pseudoLegalMoves = getMoves();
+        List<Move> pseudoLegalMoves = getPseudoLegalMoves();
         List<Move> legalMoves = new ArrayList<>();
 
         for (Move move : pseudoLegalMoves) {

@@ -27,7 +27,7 @@ public class PawnTest {
         Pawn whitePawn = new Pawn(board, Side.WHITE);
         board.link(whiteField, whitePawn);
 
-        List<Move> moves = whitePawn.getMoves();
+        List<Move> moves = whitePawn.getPseudoLegalMoves();
 
         System.out.printf("%d Pseudo moves from %s (%s): %s%n", moves.size(), whiteField, whitePawn, moves);
         board.printBoard();
@@ -43,7 +43,7 @@ public class PawnTest {
         Pawn blackPawn = new Pawn(board, Side.BLACK);
         board.link(blackField, blackPawn);
 
-        List<Move> moves = blackPawn.getMoves();
+        List<Move> moves = blackPawn.getPseudoLegalMoves();
 
         System.out.printf("%d Pseudo moves from %s (%s): %s%n", moves.size(), blackField, blackPawn, moves);
         board.printBoard();
@@ -67,7 +67,7 @@ public class PawnTest {
         Rook blackRook = new Rook(board, Side.BLACK);
         board.link(otherBlackField, blackRook);
 
-        List<Move> moves = whitePawn.getMoves();
+        List<Move> moves = whitePawn.getPseudoLegalMoves();
         System.out.printf("%d Pseudo moves from %s (%s): %s%n", moves.size(), whiteField, whitePawn, moves);
         board.printBoard();
 
@@ -88,7 +88,7 @@ public class PawnTest {
         Rook blockingPiece = new Rook(board, Side.BLACK);
         board.link(blockingField, blockingPiece);
 
-        List<Move> moves = whitePawn.getMoves();
+        List<Move> moves = whitePawn.getPseudoLegalMoves();
         System.out.printf("%d Pseudo moves from %s (%s): %s%n", moves.size(), whiteField, whitePawn, moves);
         board.printBoard();
 
@@ -101,7 +101,7 @@ public class PawnTest {
         Pawn whitePawn = new Pawn(board, Side.WHITE);
         board.link(whiteField, whitePawn);
 
-        List<Move> moves = whitePawn.getMoves();
+        List<Move> moves = whitePawn.getPseudoLegalMoves();
 
         System.out.printf("%d Pseudo moves from %s (%s): %s%n", moves.size(), whiteField, whitePawn, moves);
         board.printBoard();
@@ -130,7 +130,7 @@ public class PawnTest {
         PawnJump jump = new PawnJump(board, d7, d5);
         board.executeMove(jump);
 
-        List<Move> moves = whitePawn.getMoves();
+        List<Move> moves = whitePawn.getPseudoLegalMoves();
 
         System.out.printf("%d Pseudo moves from %s (%s): %s%n", moves.size(), e5, whitePawn, moves);
         board.printBoard();

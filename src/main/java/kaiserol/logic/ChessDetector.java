@@ -26,7 +26,7 @@ public class ChessDetector {
                     Piece piece = currentField.getPiece();
 
                     // Checks pseudolegal moves of the piece
-                    List<Move> pseudoLegalMoves = piece.getMoves();
+                    List<Move> pseudoLegalMoves = piece.getPseudoLegalMoves();
                     for (Move move : pseudoLegalMoves) {
                         if (move.getTargetField().equals(field)) {
                             return true;

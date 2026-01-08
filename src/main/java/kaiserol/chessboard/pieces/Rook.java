@@ -13,7 +13,7 @@ public final class Rook extends Piece {
     }
 
     @Override
-    protected List<Move> getMovesHelper() {
+    protected List<Move> getPseudoLegalMovesHelper() {
         return getLinearMoves();
     }
 

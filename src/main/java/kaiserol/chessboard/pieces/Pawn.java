@@ -15,7 +15,7 @@ public final class Pawn extends Piece {
     }
 
     @Override
-    protected List<Move> getMovesHelper() {
+    protected List<Move> getPseudoLegalMovesHelper() {
         final List<Move> moves = new ArrayList<>();
         if (field == null) return moves;
 
