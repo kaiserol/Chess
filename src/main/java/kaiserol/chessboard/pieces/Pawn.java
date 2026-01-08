@@ -9,9 +9,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public final class Pawn extends Piece {
+    private final int START_ROW;
+    private final int PROMOTION_ROW;
 
     public Pawn(ChessBoard board, Side side) {
         super(board, side);
+        this.START_ROW = side.isWhite() ? 2 : 7;
+        this.PROMOTION_ROW = side.isWhite() ? 8 : 1;
     }
 
     @Override
@@ -23,25 +27,17 @@ public final class Pawn extends Piece {
         final int fieldY = field.getY();
         final int direction = side.isWhite() ? 1 : -1;
 
-        final int startRow = side.isWhite() ? 2 : 7;
-        final int promotionRow = side.isWhite() ? 8 : 1;
-
         // Moves one field forward
         int targetY = fieldY + direction;
         if (targetY >= 1 && targetY <= 8) {
-
             ChessField targetField = board.getField(fieldX, targetY);
             if (!targetField.isOccupied()) {
-                if (targetY == promotionRow) {
-                    moves.add(new PawnPromotion(board, field, targetField));
-                } else {
-                    moves.add(new NormalMove(board, field, targetField));
-                }
+                addNormalMove(moves, targetField);
 
                 // Moves two fields forward
-                int twoTargetY = fieldY + 2 * direction;
-                if (fieldY == startRow && twoTargetY >= 1 && twoTargetY <= 8) {
-                    ChessField jumpField = board.getField(fieldX, twoTargetY);
+                int jumpFieldY = fieldY + 2 * direction;
+                if (fieldY == START_ROW) {
+                    ChessField jumpField = board.getField(fieldX, jumpFieldY);
 
                     if (!jumpField.isOccupied()) {
                         moves.add(new PawnJump(board, field, jumpField));
@@ -54,7 +50,7 @@ public final class Pawn extends Piece {
         if (board.inside(fieldX - 1, targetY)) {
             ChessField targetField = board.getField(fieldX - 1, targetY);
             if (board.isOccupiedBySide(targetField, side.opposite())) {
-                moves.add(new NormalMove(board, field, targetField));
+                addNormalMove(moves, targetField);
             }
         }
 
@@ -62,7 +58,7 @@ public final class Pawn extends Piece {
         if (board.inside(fieldX + 1, targetY)) {
             ChessField targetField = board.getField(fieldX + 1, targetY);
             if (board.isOccupiedBySide(targetField, side.opposite())) {
-                moves.add(new NormalMove(board, field, targetField));
+                addNormalMove(moves, targetField);
             }
         }
 
@@ -79,6 +75,14 @@ public final class Pawn extends Piece {
         }
 
         return moves;
+    }
+
+    private void addNormalMove(List<Move> moves, ChessField targetField ) {
+        if (targetField.getY() == PROMOTION_ROW) {
+            moves.add(new PawnPromotion(board, field, targetField));
+        } else {
+            moves.add(new NormalMove(board, field, targetField));
+        }
     }
 
     @Override
