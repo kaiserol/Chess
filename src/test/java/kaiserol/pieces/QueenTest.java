@@ -30,7 +30,7 @@ public class QueenTest {
         List<Move> moves = queen.getPseudoLegalMoves();
         List<String> targetFields = moves.stream().map(Move::toString).toList();
 
-        System.out.printf("%d Pseudo moves from %s (%s): %s%n", moves.size(), field, queen, moves);
+        System.out.printf("%d Pseudo legal moves from %s (%s): %s%n", moves.size(), field, queen, moves);
         board.printBoard();
 
         // Queen = Rook (14) + Bishop (13) = 27

@@ -29,7 +29,7 @@ public class PawnTest {
 
         List<Move> moves = whitePawn.getPseudoLegalMoves();
 
-        System.out.printf("%d Pseudo moves from %s (%s): %s%n", moves.size(), whiteField, whitePawn, moves);
+        System.out.printf("%d Pseudo legal moves from %s (%s): %s%n", moves.size(), whiteField, whitePawn, moves);
         board.printBoard();
 
         assertEquals(2, moves.size());
@@ -45,7 +45,7 @@ public class PawnTest {
 
         List<Move> moves = blackPawn.getPseudoLegalMoves();
 
-        System.out.printf("%d Pseudo moves from %s (%s): %s%n", moves.size(), blackField, blackPawn, moves);
+        System.out.printf("%d Pseudo legal moves from %s (%s): %s%n", moves.size(), blackField, blackPawn, moves);
         board.printBoard();
 
         assertEquals(2, moves.size());
@@ -68,7 +68,7 @@ public class PawnTest {
         board.link(otherBlackField, blackRook);
 
         List<Move> moves = whitePawn.getPseudoLegalMoves();
-        System.out.printf("%d Pseudo moves from %s (%s): %s%n", moves.size(), whiteField, whitePawn, moves);
+        System.out.printf("%d Pseudo legal moves from %s (%s): %s%n", moves.size(), whiteField, whitePawn, moves);
         board.printBoard();
 
         // Forward (e5), Capture Left (d5), Capture Right (f5)
@@ -89,7 +89,7 @@ public class PawnTest {
         board.link(blockingField, blockingPiece);
 
         List<Move> moves = whitePawn.getPseudoLegalMoves();
-        System.out.printf("%d Pseudo moves from %s (%s): %s%n", moves.size(), whiteField, whitePawn, moves);
+        System.out.printf("%d Pseudo legal moves from %s (%s): %s%n", moves.size(), whiteField, whitePawn, moves);
         board.printBoard();
 
         assertEquals(0, moves.size(), "Pawn should be blocked by piece in front");
@@ -103,7 +103,7 @@ public class PawnTest {
 
         List<Move> moves = whitePawn.getPseudoLegalMoves();
 
-        System.out.printf("%d Pseudo moves from %s (%s): %s%n", moves.size(), whiteField, whitePawn, moves);
+        System.out.printf("%d Pseudo legal moves from %s (%s): %s%n", moves.size(), whiteField, whitePawn, moves);
         board.printBoard();
 
         assertEquals(1, moves.size());
@@ -132,7 +132,7 @@ public class PawnTest {
 
         List<Move> moves = whitePawn.getPseudoLegalMoves();
 
-        System.out.printf("%d Pseudo moves from %s (%s): %s%n", moves.size(), e5, whitePawn, moves);
+        System.out.printf("%d Pseudo legal moves from %s (%s): %s%n", moves.size(), e5, whitePawn, moves);
         board.printBoard();
 
         assertTrue(moves.stream().anyMatch(m -> m instanceof EnPassant && m.getTargetField().toString().equals("d6")),

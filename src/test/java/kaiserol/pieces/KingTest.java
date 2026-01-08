@@ -29,11 +29,16 @@ public class KingTest {
         King king = new King(board, Side.WHITE);
         board.link(field, king);
 
-        List<Move> legalMoves = king.getLegalMoves();
-        System.out.printf("%d Legal moves from %s (%s): %s%n", legalMoves.size(), field, king, legalMoves);
+        // Black Rook attacking e5, f5, g5
+        ChessField rookField = board.getField("a5");
+        Rook rook = new Rook(board, Side.BLACK);
+        board.link(rookField, rook);
+
+        List<Move> moves = king.getPseudoLegalMoves();
+        System.out.printf("%d Pseudo legal moves from %s (%s): %s%n", moves.size(), field, king, moves);
         board.printBoard();
 
-        assertEquals(8, legalMoves.size());
+        assertEquals(8, moves.size());
     }
 
     @Test
@@ -67,11 +72,11 @@ public class KingTest {
         board.link(board.getField("e1"), king);
         board.link(board.getField("h1"), rook);
 
-        List<Move> legalMoves = king.getLegalMoves();
-        System.out.printf("%d Legal moves from %s (%s): %s%n", legalMoves.size(), king.getField(), king, legalMoves);
+        List<Move> moves = king.getPseudoLegalMoves();
+        System.out.printf("%d Pseudo legal moves from %s (%s): %s%n", moves.size(), king.getField(), king, moves);
         board.printBoard();
 
-        boolean hasCastling = legalMoves.stream().anyMatch(m -> m instanceof Castling && m.getTargetField().toString().equals("g1"));
+        boolean hasCastling = moves.stream().anyMatch(m -> m instanceof Castling && m.getTargetField().toString().equals("g1"));
         assertTrue(hasCastling, "Should have kingside castling to g1");
     }
 
@@ -83,11 +88,11 @@ public class KingTest {
         board.link(board.getField("e1"), king);
         board.link(board.getField("a1"), rook);
 
-        List<Move> legalMoves = king.getLegalMoves();
-        System.out.printf("%d Legal moves from %s (%s): %s%n", legalMoves.size(), king.getField(), king, legalMoves);
+        List<Move> moves = king.getPseudoLegalMoves();
+        System.out.printf("%d Pseudo legal moves from %s (%s): %s%n", moves.size(), king.getField(), king, moves);
         board.printBoard();
 
-        boolean hasCastling = legalMoves.stream().anyMatch(m -> m instanceof Castling && m.getTargetField().toString().equals("c1"));
+        boolean hasCastling = moves.stream().anyMatch(m -> m instanceof Castling && m.getTargetField().toString().equals("c1"));
         assertTrue(hasCastling, "Should have queenside castling to c1");
     }
 
@@ -101,11 +106,11 @@ public class KingTest {
         // Block with Bishop
         board.link(board.getField("f1"), new Queen(board, Side.WHITE));
 
-        List<Move> legalMoves = king.getLegalMoves();
-        System.out.printf("%d Legal moves from %s (%s): %s%n", legalMoves.size(), king.getField(), king, legalMoves);
+        List<Move> moves = king.getPseudoLegalMoves();
+        System.out.printf("%d Pseudo legal moves from %s (%s): %s%n", moves.size(), king.getField(), king, moves);
         board.printBoard();
 
-        boolean hasCastling = legalMoves.stream().anyMatch(m -> m instanceof Castling);
+        boolean hasCastling = moves.stream().anyMatch(m -> m instanceof Castling);
         assertFalse(hasCastling, "Should not have castling when path is blocked");
     }
 
@@ -120,11 +125,11 @@ public class KingTest {
         Rook enemyRook = new Rook(board, Side.BLACK);
         board.link(board.getField("f8"), enemyRook);
 
-        List<Move> legalMoves = king.getLegalMoves();
-        System.out.printf("%d Legal moves from %s (%s): %s%n", legalMoves.size(), king.getField(), king, legalMoves);
+        List<Move> moves = king.getPseudoLegalMoves();
+        System.out.printf("%d Pseudo legal moves from %s (%s): %s%n", moves.size(), king.getField(), king, moves);
         board.printBoard();
 
-        boolean hasCastling = legalMoves.stream().anyMatch(m -> m instanceof Castling);
+        boolean hasCastling = moves.stream().anyMatch(m -> m instanceof Castling);
         assertFalse(hasCastling, "Should not have castling when moving through check");
     }
 }
