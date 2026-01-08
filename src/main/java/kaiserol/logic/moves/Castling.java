@@ -22,7 +22,7 @@ public final class Castling extends Move {
 
     @Override
     public void execute() {
-        // Moves the king and the rook
+        // Castles the king and the rook
         start.removePiece();
         target.setPiece(king);
         rookStart.removePiece();
@@ -39,7 +39,7 @@ public final class Castling extends Move {
 
     @Override
     public void undo() {
-        // Moves the king and the rook back
+        // Castles the king and the rook back
         target.removePiece();
         start.setPiece(king);
         rookTarget.removePiece();

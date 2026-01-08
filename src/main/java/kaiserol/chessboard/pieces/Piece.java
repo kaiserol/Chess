@@ -108,6 +108,6 @@ public abstract class Piece {
 
     @Override
     public String toString() {
-        return getDisplayName();
+        return String.valueOf(getLetter());
     }
 }

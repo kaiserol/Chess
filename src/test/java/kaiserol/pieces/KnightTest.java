@@ -30,7 +30,7 @@ public class KnightTest {
         List<Move> moves = knight.getValidMoves();
         List<String> targetFields = moves.stream().map(Move::toString).toList();
 
-        System.out.printf("%d Valid moves from %s (%s): %s%n", moves.size(), field, knight.getLetter(), moves);
+        System.out.printf("%d Valid moves from %s (%s): %s%n", moves.size(), field, knight, moves);
         board.printBoard();
 
         // d4 -> c6, e6, f5, f3, e2, c2, b3, b5
@@ -54,7 +54,7 @@ public class KnightTest {
         List<Move> moves = knight.getValidMoves();
         List<String> targetFields = moves.stream().map(Move::toString).toList();
 
-        System.out.printf("%d Valid moves from %s (%s): %s%n", moves.size(), field, knight.getLetter(), moves);
+        System.out.printf("%d Valid moves from %s (%s): %s%n", moves.size(), field, knight, moves);
         board.printBoard();
 
         // a1 -> b3, c2
@@ -75,7 +75,7 @@ public class KnightTest {
         List<Move> moves = knight.getValidMoves();
         List<String> targetFields = moves.stream().map(Move::toString).toList();
 
-        System.out.printf("%d Valid moves from %s (%s): %s%n", moves.size(), field, knight.getLetter(), moves);
+        System.out.printf("%d Valid moves from %s (%s): %s%n", moves.size(), field, knight, moves);
         board.printBoard();
 
         assertFalse(targetFields.contains("c6"));

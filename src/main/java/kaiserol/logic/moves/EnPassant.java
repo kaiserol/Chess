@@ -19,7 +19,7 @@ public final class EnPassant extends Move {
 
     @Override
     public void execute() {
-        // Moves the pawn
+        // Moves the pawn diagonally
         start.removePiece();
         target.setPiece(pawn);
         capturedPawnStart.removePiece();
@@ -34,7 +34,7 @@ public final class EnPassant extends Move {
 
     @Override
     public void undo() {
-        // Moves the pawn back
+        // Moves the pawn back diagonally
         target.removePiece();
         start.setPiece(pawn);
         capturedPawnStart.setPiece(capturedPawn);

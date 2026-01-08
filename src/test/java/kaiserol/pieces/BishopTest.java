@@ -30,7 +30,7 @@ public class BishopTest {
         List<Move> moves = bishop.getValidMoves();
         List<String> targetFields = moves.stream().map(Move::toString).toList();
 
-        System.out.printf("%d Valid moves from %s (%s): %s%n", moves.size(), field, bishop.getLetter(), moves);
+        System.out.printf("%d Valid moves from %s (%s): %s%n", moves.size(), field, bishop, moves);
         board.printBoard();
 
         // Diagonals from d4:
@@ -57,7 +57,7 @@ public class BishopTest {
         List<Move> moves = bishop.getValidMoves();
         List<String> targetFields = moves.stream().map(Move::toString).toList();
 
-        System.out.printf("%d Valid moves from %s (%s): %s%n", moves.size(), field, bishop.getLetter(), moves);
+        System.out.printf("%d Valid moves from %s (%s): %s%n", moves.size(), field, bishop, moves);
         board.printBoard();
 
         // Should not contain e5, f6, g7, h8, ...
@@ -84,7 +84,7 @@ public class BishopTest {
         List<Move> moves = bishop.getValidMoves();
         List<String> targetFields = moves.stream().map(Move::toString).toList();
 
-        System.out.printf("%d Valid moves from %s (%s): %s%n", moves.size(), field, bishop.getLetter(), moves);
+        System.out.printf("%d Valid moves from %s (%s): %s%n", moves.size(), field, bishop, moves);
         board.printBoard();
 
         // Should contain e5, but not f6, g7, h8, ...

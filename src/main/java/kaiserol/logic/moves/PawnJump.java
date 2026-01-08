@@ -26,7 +26,7 @@ public final class PawnJump extends Move {
 
     @Override
     public void undo() {
-        // Moves the pawn back
+        // Moves the pawn two fields back
         target.removePiece();
         start.setPiece(pawn);
 
