@@ -67,7 +67,7 @@ public final class Pawn extends Piece {
         }
 
         // En Passant
-        Move lastMove = board.getGame().getLastMove();
+        Move lastMove = board.getLastMove();
         if (lastMove instanceof PawnJump pawnJump) {
             int lastPawnX = pawnJump.getTargetField().getX();
             int lastPawnY = pawnJump.getTargetField().getY();

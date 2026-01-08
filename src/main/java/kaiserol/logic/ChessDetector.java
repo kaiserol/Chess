@@ -19,8 +19,8 @@ public class ChessDetector {
     }
 
     public static boolean isFieldAttacked(ChessBoard board, ChessField field, Side side) {
-        for (int x = 1; x <= 8; x++) {
-            for (int y = 1; y <= 8; y++) {
+        for (int y = 1; y <= 8; y++) {
+            for (int x = 1; x <= 8; x++) {
                 ChessField currentField = board.getField(x, y);
                 if (board.isOccupiedBySide(currentField, side)) {
                     Piece piece = currentField.getPiece();
@@ -39,8 +39,8 @@ public class ChessDetector {
     }
 
     private static ChessField findKingField(ChessBoard board, Side side) {
-        for (int x = 1; x <= 8; x++) {
-            for (int y = 1; y <= 8; y++) {
+        for (int y = 1; y <= 8; y++) {
+            for (int x = 1; x <= 8; x++) {
                 ChessField field = board.getField(x, y);
                 if (board.isOccupiedBySide(field, side)) {
                     Piece piece = field.getPiece();

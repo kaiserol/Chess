@@ -1,39 +1,54 @@
 package kaiserol.chessboard;
 
 import kaiserol.chessboard.pieces.*;
-import kaiserol.handler.Game;
+import kaiserol.logic.moves.Move;
+
+import java.util.Stack;
 
 public class ChessBoard {
     private final ChessField[][] fields;
-    private final Game game;
+    private final Stack<Move> moveHistory;
 
     public ChessBoard(boolean initPieces) {
         this.fields = new ChessField[8][8];
         initFields();
-        if (initPieces) initPieces();
 
-        this.game = new Game(this);
+        if (initPieces) {
+            initPieces();
+        }
+
+        this.moveHistory = new Stack<>();
     }
 
     public ChessBoard() {
         this(false);
     }
 
-    public Game getGame() {
-        return game;
+    public void executeMove(Move move) {
+        moveHistory.push(move);
+        move.execute();
+    }
+
+    public void undoMove() {
+        Move move = moveHistory.pop();
+        move.undo();
+    }
+
+    public Move getLastMove() {
+        return moveHistory.empty() ? null : moveHistory.peek();
     }
 
     private void initFields() {
-        for (int x = 1; x <= 8; x++) {
-            for (int y = 1; y <= 8; y++) {
+        for (int y = 1; y <= 8; y++) {
+            for (int x = 1; x <= 8; x++) {
                 initField(x, y);
             }
         }
     }
 
     private void initPieces() {
-        for (int x = 1; x <= 8; x++) {
-            for (int y = 1; y <= 8; y++) {
+        for (int y = 1; y <= 8; y++) {
+            for (int x = 1; x <= 8; x++) {
                 ChessField field = getField(x, y);
                 Side side = y <= 4 ? Side.WHITE : Side.BLACK;
 

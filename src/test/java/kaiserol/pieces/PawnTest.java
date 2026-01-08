@@ -128,7 +128,7 @@ public class PawnTest {
 
         ChessField d5 = board.getField("d5");
         PawnJump jump = new PawnJump(board, d7, d5);
-        board.getGame().executeMove(jump);
+        board.executeMove(jump);
 
         List<Move> moves = whitePawn.getMoves();
 
