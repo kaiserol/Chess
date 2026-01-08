@@ -3,6 +3,7 @@ package kaiserol.chessboard.pieces;
 import kaiserol.chessboard.ChessBoard;
 import kaiserol.chessboard.ChessField;
 import kaiserol.chessboard.Side;
+import kaiserol.logic.ChessDetector;
 import kaiserol.logic.moves.Move;
 import kaiserol.logic.moves.NormalMove;
 
@@ -11,7 +12,6 @@ import java.util.Comparator;
 import java.util.List;
 
 public abstract class Piece {
-
     protected final ChessBoard board;
     protected final Side side;
     protected ChessField field;
@@ -54,7 +54,7 @@ public abstract class Piece {
         moveCount--;
     }
 
-    private boolean addMoveAndStop(int targetX, int targetY, List<Move> moves) {
+    private boolean breakWhileAddingMove(int targetX, int targetY, List<Move> moves) {
         ChessField targetField = board.getField(targetX, targetY);
         if (board.isOccupiedBySide(targetField, side)) return true;
 
@@ -69,10 +69,10 @@ public abstract class Piece {
         final int fieldX = field.getX();
         final int fieldY = field.getY();
 
-        for (int x = fieldX - 1; x >= 1; x--) if (addMoveAndStop(x, fieldY, moves)) break; // West
-        for (int x = fieldX + 1; x <= 8; x++) if (addMoveAndStop(x, fieldY, moves)) break; // East
-        for (int y = fieldY - 1; y >= 1; y--) if (addMoveAndStop(fieldX, y, moves)) break; // South
-        for (int y = fieldY + 1; y <= 8; y++) if (addMoveAndStop(fieldX, y, moves)) break; // North
+        for (int x = fieldX - 1; x >= 1; x--) if (breakWhileAddingMove(x, fieldY, moves)) break; // West
+        for (int x = fieldX + 1; x <= 8; x++) if (breakWhileAddingMove(x, fieldY, moves)) break; // East
+        for (int y = fieldY - 1; y >= 1; y--) if (breakWhileAddingMove(fieldX, y, moves)) break; // South
+        for (int y = fieldY + 1; y <= 8; y++) if (breakWhileAddingMove(fieldX, y, moves)) break; // North
 
         return moves;
     }
@@ -85,13 +85,13 @@ public abstract class Piece {
         final int fieldY = field.getY();
 
         for (int i = 1; fieldX - i >= 1 && fieldY - i >= 1; i++)
-            if (addMoveAndStop(fieldX - i, fieldY - i, moves)) break; // South-West
+            if (breakWhileAddingMove(fieldX - i, fieldY - i, moves)) break; // South-West
         for (int i = 1; fieldX + i <= 8 && fieldY + i <= 8; i++)
-            if (addMoveAndStop(fieldX + i, fieldY + i, moves)) break; // North-East
+            if (breakWhileAddingMove(fieldX + i, fieldY + i, moves)) break; // North-East
         for (int i = 1; fieldX - i >= 1 && fieldY + i <= 8; i++)
-            if (addMoveAndStop(fieldX - i, fieldY + i, moves)) break; // North-West
+            if (breakWhileAddingMove(fieldX - i, fieldY + i, moves)) break; // North-West
         for (int i = 1; fieldX + i <= 8 && fieldY - i >= 1; i++)
-            if (addMoveAndStop(fieldX + i, fieldY - i, moves)) break; // South-East
+            if (breakWhileAddingMove(fieldX + i, fieldY - i, moves)) break; // South-East
 
         return moves;
     }
@@ -111,8 +111,8 @@ public abstract class Piece {
         for (Move move : pseudoLegalMoves) {
             move.execute();
 
-//            boolean isInCheck = ChessDetector.isInCheck(board, side);
-//            if (!isInCheck) legalMoves.add(move);
+            boolean isInCheck = ChessDetector.isInCheck(board, side);
+            if (!isInCheck) legalMoves.add(move);
 
             move.undo();
         }

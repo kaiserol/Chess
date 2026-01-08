@@ -74,7 +74,7 @@ public class ChessBoard {
     }
 
     public boolean isOccupiedBySide(ChessField field, Side side) {
-        return field.isOccupied() && field.getPiece().getSide().equals(side);
+        return field.isOccupied() && field.getPiece().getSide() == side;
     }
 
     public boolean inside(int x, int y) {
