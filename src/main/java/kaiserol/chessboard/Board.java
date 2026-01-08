@@ -15,6 +15,10 @@ public class Board {
         this.game = new Game(this);
     }
 
+    public Board() {
+        this(false);
+    }
+
     public Game getGame() {
         return game;
     }
