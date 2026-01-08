@@ -18,7 +18,7 @@ public class PawnTest {
 
     @BeforeEach
     void setUp() {
-        board = new ChessBoard(false);
+        board = new ChessBoard();
     }
 
     @Test

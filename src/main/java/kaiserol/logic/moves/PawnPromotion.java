@@ -51,6 +51,7 @@ public final class PawnPromotion extends Move {
     }
 
     private Piece waitForPromotionChoice() {
+        // TODO: Implement method
         throw new UnsupportedOperationException("Promotion choice not yet implemented");
     }
 

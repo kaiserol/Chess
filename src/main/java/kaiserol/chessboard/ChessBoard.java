@@ -1,7 +1,7 @@
 package kaiserol.chessboard;
 
 import kaiserol.chessboard.pieces.*;
-import kaiserol.logic.Game;
+import kaiserol.handler.Game;
 
 public class ChessBoard {
     private final ChessField[][] fields;
