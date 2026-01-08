@@ -31,7 +31,9 @@ public class PawnPromotionTest {
         PawnPromotion promotion = new PawnPromotion(startField, targetField);
         Queen promotedQueen = (Queen) promotion.setPromotedPiece(PawnPromotion.Choice.QUEEN);
 
+        board.printBoard();
         promotion.execute();
+        board.printBoard();
 
         assertNull(startField.getPiece());
         assertNull(pawn.getField());
@@ -50,8 +52,11 @@ public class PawnPromotionTest {
         PawnPromotion promotion = new PawnPromotion(startField, targetField);
         Queen promotedQueen = (Queen) promotion.setPromotedPiece(PawnPromotion.Choice.QUEEN);
 
+        board.printBoard();
         promotion.execute();
+        board.printBoard();
         promotion.undo();
+        board.printBoard();
 
         assertNull(targetField.getPiece());
         assertNull(promotedQueen.getField());
@@ -73,7 +78,9 @@ public class PawnPromotionTest {
         PawnPromotion promotion = new PawnPromotion(startField, targetField);
         Queen promotedQueen = (Queen) promotion.setPromotedPiece(PawnPromotion.Choice.QUEEN);
 
+        board.printBoard();
         promotion.execute();
+        board.printBoard();
 
         assertNull(startField.getPiece());
         assertNull(blackRook.getField());
@@ -96,8 +103,11 @@ public class PawnPromotionTest {
         PawnPromotion promotion = new PawnPromotion(startField, targetField);
         Queen promotedQueen = (Queen) promotion.setPromotedPiece(PawnPromotion.Choice.QUEEN);
 
+        board.printBoard();
         promotion.execute();
+        board.printBoard();
         promotion.undo();
+        board.printBoard();
 
         assertNull(promotedQueen.getField());
         assertEquals(pawn, startField.getPiece());

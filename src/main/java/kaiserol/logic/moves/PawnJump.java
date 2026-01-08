@@ -14,11 +14,8 @@ public final class PawnJump extends Move {
     @Override
     public void execute() {
         // Moves the pawn two fields forward
-        start.removePiece();
-        target.setPiece(pawn);
-
-        // Updates the field
-        pawn.setField(target);
+        unlink(start, pawn);
+        link(target, pawn);
 
         // Increases the moves
         pawn.increaseMoveCount();
@@ -27,11 +24,8 @@ public final class PawnJump extends Move {
     @Override
     public void undo() {
         // Moves the pawn two fields back
-        target.removePiece();
-        start.setPiece(pawn);
-
-        // Updates the field
-        pawn.setField(start);
+        unlink(target, pawn);
+        link(start, pawn);
 
         // Decreases the moves
         pawn.decreaseMoveCount();

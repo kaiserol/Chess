@@ -40,6 +40,10 @@ public abstract class Piece {
         this.field = field;
     }
 
+    public void removeField() {
+        this.field = null;
+    }
+
     public int getMoveCount() {
         return moveCount;
     }

@@ -7,15 +7,52 @@ import kaiserol.chessboard.pieces.*;
 
 public final class PawnPromotion extends Move {
 
-    private final Pawn pawn;
+    private final Pawn attackingPawn;
     private final Piece capturedPiece;
     private Piece promotedPiece;
 
     public PawnPromotion(Field pawnStart, Field pawnTarget) {
         super(pawnStart, pawnTarget);
-        this.pawn = (Pawn) pawnStart.getPiece();
+        this.attackingPawn = (Pawn) pawnStart.getPiece();
         this.capturedPiece = pawnTarget.getPiece();
         this.promotedPiece = null;
+    }
+
+    @Override
+    public void execute() {
+        // Removes the captured pawn and moves the attacking pawn one field forward
+        unlink(target, capturedPiece);
+        unlink(start, attackingPawn);
+        link(target, attackingPawn);
+
+        // Query the promotion piece, if not already set
+        if (promotedPiece == null) {
+            promotedPiece = waitForPromotionChoice();
+        }
+
+        // Removes the attacking pawn and promotes the pawn
+        unlink(target, attackingPawn);
+        link(target, promotedPiece);
+
+        // Increases the moves
+        attackingPawn.increaseMoveCount();
+    }
+
+    @Override
+    public void undo() {
+        // Removes the promoted piece
+        unlink(target, promotedPiece);
+
+        // Puts the attacking pawn and captured piece back
+        link(start, attackingPawn);
+        link(target, capturedPiece);
+
+        // Decreases the moves
+        attackingPawn.decreaseMoveCount();
+    }
+
+    private Piece waitForPromotionChoice() {
+        throw new UnsupportedOperationException("Promotion choice not yet implemented");
     }
 
     public Piece setPromotedPiece(Choice promotionChoice) {
@@ -23,8 +60,8 @@ public final class PawnPromotion extends Move {
     }
 
     public Piece createPromotedPiece(Choice promotionChoice) {
-        final Side side = pawn.getSide();
-        final Board board = pawn.getBoard();
+        final Side side = attackingPawn.getSide();
+        final Board board = attackingPawn.getBoard();
 
         return switch (promotionChoice) {
             case QUEEN -> new Queen(side, board, null);
@@ -32,53 +69,6 @@ public final class PawnPromotion extends Move {
             case BISHOP -> new Bishop(side, board, null);
             case KNIGHT -> new Knight(side, board, null);
         };
-    }
-
-    private Piece waitForPromotionChoice() {
-        throw new UnsupportedOperationException("Promotion choice not yet implemented");
-    }
-
-    @Override
-    public void execute() {
-        // Moves the pawn one field forward
-        start.removePiece();
-        target.setPiece(pawn);
-
-        // Updates the fields
-        pawn.setField(target);
-        if (capturedPiece != null) {
-            capturedPiece.setField(null);
-        }
-
-        // Query the promotion piece, if not already set
-        if (promotedPiece == null) {
-            promotedPiece = waitForPromotionChoice();
-        }
-
-        // Promotes the pawn
-        target.setPiece(promotedPiece);
-
-        // Updates the target field
-        pawn.setField(null);
-        promotedPiece.setField(target);
-
-        // Increases the moves
-        pawn.increaseMoveCount();
-    }
-
-    @Override
-    public void undo() {
-        // Moves the pawn back and removes the promoted piece
-        target.setPiece(capturedPiece);
-        start.setPiece(pawn);
-
-        // Updates the fields
-        pawn.setField(start);
-        if (promotedPiece != null) promotedPiece.setField(null);
-        if (capturedPiece != null) capturedPiece.setField(target);
-
-        // Decreases the moves
-        pawn.decreaseMoveCount();
     }
 
     public enum Choice {
