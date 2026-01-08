@@ -29,12 +29,12 @@ public class PawnTest {
 
         List<Move> moves = whitePawn.getMoves();
 
-        System.out.printf("%d Possible moves from %s (%s): %s%n", moves.size(), whiteField, whitePawn, moves);
+        System.out.printf("%d Pseudo moves from %s (%s): %s%n", moves.size(), whiteField, whitePawn, moves);
         board.printBoard();
 
         assertEquals(2, moves.size());
-        assertTrue(moves.stream().anyMatch(m -> m instanceof NormalMove && m.getTarget().toString().equals("e3")));
-        assertTrue(moves.stream().anyMatch(m -> m instanceof PawnJump && m.getTarget().toString().equals("e4")));
+        assertTrue(moves.stream().anyMatch(m -> m instanceof NormalMove && m.getTargetField().toString().equals("e3")));
+        assertTrue(moves.stream().anyMatch(m -> m instanceof PawnJump && m.getTargetField().toString().equals("e4")));
     }
 
     @Test
@@ -45,12 +45,12 @@ public class PawnTest {
 
         List<Move> moves = blackPawn.getMoves();
 
-        System.out.printf("%d Possible moves from %s (%s): %s%n", moves.size(), blackField, blackPawn, moves);
+        System.out.printf("%d Pseudo moves from %s (%s): %s%n", moves.size(), blackField, blackPawn, moves);
         board.printBoard();
 
         assertEquals(2, moves.size());
-        assertTrue(moves.stream().anyMatch(m -> m instanceof NormalMove && m.getTarget().toString().equals("e6")));
-        assertTrue(moves.stream().anyMatch(m -> m instanceof PawnJump && m.getTarget().toString().equals("e5")));
+        assertTrue(moves.stream().anyMatch(m -> m instanceof NormalMove && m.getTargetField().toString().equals("e6")));
+        assertTrue(moves.stream().anyMatch(m -> m instanceof PawnJump && m.getTargetField().toString().equals("e5")));
     }
 
     @Test
@@ -68,14 +68,14 @@ public class PawnTest {
         board.link(otherBlackField, blackRook);
 
         List<Move> moves = whitePawn.getMoves();
-        System.out.printf("%d Possible moves from %s (%s): %s%n", moves.size(), whiteField, whitePawn, moves);
+        System.out.printf("%d Pseudo moves from %s (%s): %s%n", moves.size(), whiteField, whitePawn, moves);
         board.printBoard();
 
         // Forward (e5), Capture Left (d5), Capture Right (f5)
         assertEquals(3, moves.size());
-        assertTrue(moves.stream().anyMatch(m -> m.getTarget().toString().equals("e5")));
-        assertTrue(moves.stream().anyMatch(m -> m.getTarget().toString().equals("d5")));
-        assertTrue(moves.stream().anyMatch(m -> m.getTarget().toString().equals("f5")));
+        assertTrue(moves.stream().anyMatch(m -> m.getTargetField().toString().equals("e5")));
+        assertTrue(moves.stream().anyMatch(m -> m.getTargetField().toString().equals("d5")));
+        assertTrue(moves.stream().anyMatch(m -> m.getTargetField().toString().equals("f5")));
     }
 
     @Test
@@ -89,7 +89,7 @@ public class PawnTest {
         board.link(blockingField, blockingPiece);
 
         List<Move> moves = whitePawn.getMoves();
-        System.out.printf("%d Possible moves from %s (%s): %s%n", moves.size(), whiteField, whitePawn, moves);
+        System.out.printf("%d Pseudo moves from %s (%s): %s%n", moves.size(), whiteField, whitePawn, moves);
         board.printBoard();
 
         assertEquals(0, moves.size(), "Pawn should be blocked by piece in front");
@@ -103,12 +103,12 @@ public class PawnTest {
 
         List<Move> moves = whitePawn.getMoves();
 
-        System.out.printf("%d Possible moves from %s (%s): %s%n", moves.size(), whiteField, whitePawn, moves);
+        System.out.printf("%d Pseudo moves from %s (%s): %s%n", moves.size(), whiteField, whitePawn, moves);
         board.printBoard();
 
         assertEquals(1, moves.size());
         assertInstanceOf(PawnPromotion.class, moves.getFirst());
-        assertEquals("e8", moves.getFirst().getTarget().toString());
+        assertEquals("e8", moves.getFirst().getTargetField().toString());
     }
 
     @Test
@@ -132,10 +132,10 @@ public class PawnTest {
 
         List<Move> moves = whitePawn.getMoves();
 
-        System.out.printf("%d Possible moves from %s (%s): %s%n", moves.size(), e5, whitePawn, moves);
+        System.out.printf("%d Pseudo moves from %s (%s): %s%n", moves.size(), e5, whitePawn, moves);
         board.printBoard();
 
-        assertTrue(moves.stream().anyMatch(m -> m instanceof EnPassant && m.getTarget().toString().equals("d6")),
+        assertTrue(moves.stream().anyMatch(m -> m instanceof EnPassant && m.getTargetField().toString().equals("d6")),
                 "En Passant move to d6 should be available");
     }
 }

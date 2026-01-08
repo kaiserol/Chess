@@ -30,21 +30,21 @@ public final class Pawn extends Piece {
         int targetY = fieldY + direction;
         if (targetY >= 1 && targetY <= 8) {
 
-            ChessField target = board.getField(fieldX, targetY);
-            if (!target.isOccupied()) {
+            ChessField targetField = board.getField(fieldX, targetY);
+            if (!targetField.isOccupied()) {
                 if (targetY == promotionRow) {
-                    moves.add(new PawnPromotion(board, field, target));
+                    moves.add(new PawnPromotion(board, field, targetField));
                 } else {
-                    moves.add(new NormalMove(board, field, target));
+                    moves.add(new NormalMove(board, field, targetField));
                 }
 
                 // Moves two fields forward
                 int twoTargetY = fieldY + 2 * direction;
                 if (fieldY == startRow && twoTargetY >= 1 && twoTargetY <= 8) {
-                    ChessField target2 = board.getField(fieldX, twoTargetY);
+                    ChessField jumpField = board.getField(fieldX, twoTargetY);
 
-                    if (!target2.isOccupied()) {
-                        moves.add(new PawnJump(board, field, target2));
+                    if (!jumpField.isOccupied()) {
+                        moves.add(new PawnJump(board, field, jumpField));
                     }
                 }
             }
@@ -52,29 +52,29 @@ public final class Pawn extends Piece {
 
         // Hits diagonally to the left
         if (board.inside(fieldX - 1, targetY)) {
-            ChessField target = board.getField(fieldX - 1, targetY);
-            if (board.isOccupiedBySide(target, side.opposite())) {
-                moves.add(new NormalMove(board, field, target));
+            ChessField targetField = board.getField(fieldX - 1, targetY);
+            if (board.isOccupiedBySide(targetField, side.opposite())) {
+                moves.add(new NormalMove(board, field, targetField));
             }
         }
 
         // Hits diagonally to the right
         if (board.inside(fieldX + 1, targetY)) {
-            ChessField target = board.getField(fieldX + 1, targetY);
-            if (board.isOccupiedBySide(target, side.opposite())) {
-                moves.add(new NormalMove(board, field, target));
+            ChessField targetField = board.getField(fieldX + 1, targetY);
+            if (board.isOccupiedBySide(targetField, side.opposite())) {
+                moves.add(new NormalMove(board, field, targetField));
             }
         }
 
         // En Passant
         Move lastMove = board.getGame().getLastMove();
         if (lastMove instanceof PawnJump pawnJump) {
-            int enPassantX = pawnJump.getTarget().getX();
-            int enPassantY = pawnJump.getTarget().getY();
+            int lastPawnX = pawnJump.getTargetField().getX();
+            int lastPawnY = pawnJump.getTargetField().getY();
 
-            if (fieldY == enPassantY && Math.abs(enPassantX - fieldX) == 1) {
-                ChessField target = board.getField(enPassantX, targetY);
-                moves.add(new EnPassant(board, field, target, pawnJump.getTarget()));
+            if (fieldY == lastPawnY && Math.abs(lastPawnX - fieldX) == 1) {
+                ChessField targetField = board.getField(lastPawnX, targetY);
+                moves.add(new EnPassant(board, field, targetField, pawnJump.getTargetField()));
             }
         }
 

@@ -10,19 +10,19 @@ public final class PawnPromotion extends Move {
     private final Piece capturedPiece;
     private Piece promotedPiece;
 
-    public PawnPromotion(ChessBoard board, ChessField pawnStart, ChessField pawnTarget) {
-        super(board, pawnStart, pawnTarget);
-        this.attackingPawn = (Pawn) pawnStart.getPiece();
-        this.capturedPiece = pawnTarget.getPiece();
+    public PawnPromotion(ChessBoard board, ChessField startField, ChessField targetField) {
+        super(board, startField, targetField);
+        this.attackingPawn = (Pawn) startField.getPiece();
+        this.capturedPiece = targetField.getPiece();
         this.promotedPiece = null;
     }
 
     @Override
     public void execute() {
         // Removes the captured pawn and moves the attacking pawn one field forward
-        board.unlink(target, capturedPiece);
-        board.unlink(start, attackingPawn);
-        board.link(target, attackingPawn);
+        board.unlink(targetField, capturedPiece);
+        board.unlink(startField, attackingPawn);
+        board.link(targetField, attackingPawn);
 
         // Query the promotion piece, if not already set
         if (promotedPiece == null) {
@@ -30,8 +30,8 @@ public final class PawnPromotion extends Move {
         }
 
         // Removes the attacking pawn and promotes the pawn
-        board.unlink(target, attackingPawn);
-        board.link(target, promotedPiece);
+        board.unlink(targetField, attackingPawn);
+        board.link(targetField, promotedPiece);
 
         // Increases the moves
         attackingPawn.increaseMoveCount();
@@ -40,11 +40,11 @@ public final class PawnPromotion extends Move {
     @Override
     public void undo() {
         // Removes the promoted piece
-        board.unlink(target, promotedPiece);
+        board.unlink(targetField, promotedPiece);
 
         // Puts the attacking pawn and captured piece back
-        board.link(start, attackingPawn);
-        board.link(target, capturedPiece);
+        board.link(startField, attackingPawn);
+        board.link(targetField, capturedPiece);
 
         // Decreases the moves
         attackingPawn.decreaseMoveCount();

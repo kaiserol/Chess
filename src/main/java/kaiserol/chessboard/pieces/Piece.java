@@ -55,11 +55,11 @@ public abstract class Piece {
     }
 
     private boolean addMoveAndStop(int targetX, int targetY, List<Move> moves) {
-        ChessField target = board.getField(targetX, targetY);
-        if (board.isOccupiedBySide(target, side)) return true;
+        ChessField targetField = board.getField(targetX, targetY);
+        if (board.isOccupiedBySide(targetField, side)) return true;
 
-        moves.add(new NormalMove(board, field, target));
-        return target.isOccupied();
+        moves.add(new NormalMove(board, field, targetField));
+        return targetField.isOccupied();
     }
 
     protected final List<Move> getLinearMoves() {
@@ -100,14 +100,25 @@ public abstract class Piece {
 
     public final List<Move> getMoves() {
         List<Move> moves = new ArrayList<>(getMovesHelper());
-        moves.sort(Comparator.comparing(Move::getTarget));
+        moves.sort(Comparator.comparing(Move::getTargetField));
         return moves;
     }
 
-    public final List<Move> getValidMoves() {
-        List<Move> validMoves = new ArrayList<>(getMoves());
-        validMoves.sort(Comparator.comparing(Move::getTarget));
-        return validMoves;
+    public final List<Move> getLegalMoves() {
+        List<Move> pseudoLegalMoves = getMoves();
+        List<Move> legalMoves = new ArrayList<>();
+
+        for (Move move : pseudoLegalMoves) {
+            move.execute();
+
+//            boolean isInCheck = ChessDetector.isInCheck(board, side);
+//            if (!isInCheck) legalMoves.add(move);
+
+            move.undo();
+        }
+
+        legalMoves.sort(Comparator.comparing(Move::getTargetField));
+        return legalMoves;
     }
 
     public abstract char getDisplayName();

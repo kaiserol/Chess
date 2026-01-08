@@ -5,22 +5,22 @@ import kaiserol.chessboard.ChessField;
 
 public abstract sealed class Move permits NormalMove, Castling, EnPassant, PawnJump, PawnPromotion {
     protected final ChessBoard board;
-    protected final ChessField start;
-    protected final ChessField target;
+    protected final ChessField startField;
+    protected final ChessField targetField;
 
-    public Move(ChessBoard board, ChessField start, ChessField target) {
+    public Move(ChessBoard board, ChessField startField, ChessField targetField) {
         this.board = board;
-        this.start = start;
-        this.target = target;
+        this.startField = startField;
+        this.targetField = targetField;
     }
 
-    public ChessField getTarget() {
-        return target;
+    public ChessField getTargetField() {
+        return targetField;
     }
 
     @Override
     public String toString() {
-        return target.toString();
+        return targetField.toString();
     }
 
     public abstract void execute();
