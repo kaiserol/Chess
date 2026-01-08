@@ -1,7 +1,7 @@
 package kaiserol.chessboard.pieces;
 
-import kaiserol.chessboard.Board;
-import kaiserol.chessboard.Field;
+import kaiserol.chessboard.ChessBoard;
+import kaiserol.chessboard.ChessField;
 import kaiserol.chessboard.Side;
 import kaiserol.logic.moves.*;
 
@@ -10,7 +10,7 @@ import java.util.List;
 
 public final class Pawn extends Piece {
 
-    public Pawn(Board board, Side side) {
+    public Pawn(ChessBoard board, Side side) {
         super(board, side);
     }
 
@@ -30,7 +30,7 @@ public final class Pawn extends Piece {
         int targetY = fieldY + direction;
         if (targetY >= 1 && targetY <= 8) {
 
-            Field target = board.getField(fieldX, targetY);
+            ChessField target = board.getField(fieldX, targetY);
             if (!target.isOccupied()) {
                 if (targetY == promotionRow) {
                     moves.add(new PawnPromotion(board, field, target));
@@ -41,7 +41,7 @@ public final class Pawn extends Piece {
                 // Moves two fields forward
                 int twoTargetY = fieldY + 2 * direction;
                 if (fieldY == startRow && twoTargetY >= 1 && twoTargetY <= 8) {
-                    Field target2 = board.getField(fieldX, twoTargetY);
+                    ChessField target2 = board.getField(fieldX, twoTargetY);
 
                     if (!target2.isOccupied()) {
                         moves.add(new PawnJump(board, field, target2));
@@ -52,7 +52,7 @@ public final class Pawn extends Piece {
 
         // Hits diagonally to the left
         if (board.inside(fieldX - 1, targetY)) {
-            Field target = board.getField(fieldX - 1, targetY);
+            ChessField target = board.getField(fieldX - 1, targetY);
             if (board.isOccupiedBySide(target, side.opposite())) {
                 moves.add(new NormalMove(board, field, target));
             }
@@ -60,7 +60,7 @@ public final class Pawn extends Piece {
 
         // Hits diagonally to the right
         if (board.inside(fieldX + 1, targetY)) {
-            Field target = board.getField(fieldX + 1, targetY);
+            ChessField target = board.getField(fieldX + 1, targetY);
             if (board.isOccupiedBySide(target, side.opposite())) {
                 moves.add(new NormalMove(board, field, target));
             }
@@ -73,7 +73,7 @@ public final class Pawn extends Piece {
             int enPassantY = pawnJump.getTarget().getY();
 
             if (fieldY == enPassantY && Math.abs(enPassantX - fieldX) == 1) {
-                Field target = board.getField(enPassantX, targetY);
+                ChessField target = board.getField(enPassantX, targetY);
                 moves.add(new EnPassant(board, field, target, pawnJump.getTarget()));
             }
         }

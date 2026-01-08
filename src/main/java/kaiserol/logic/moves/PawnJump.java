@@ -1,13 +1,13 @@
 package kaiserol.logic.moves;
 
-import kaiserol.chessboard.Board;
-import kaiserol.chessboard.Field;
+import kaiserol.chessboard.ChessBoard;
+import kaiserol.chessboard.ChessField;
 import kaiserol.chessboard.pieces.Pawn;
 
 public final class PawnJump extends Move {
     private final Pawn pawn;
 
-    public PawnJump(Board board, Field pawnStart, Field pawnTarget) {
+    public PawnJump(ChessBoard board, ChessField pawnStart, ChessField pawnTarget) {
         super(board, pawnStart, pawnTarget);
         this.pawn = (Pawn) pawnStart.getPiece();
     }

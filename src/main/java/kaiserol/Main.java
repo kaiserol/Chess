@@ -1,7 +1,7 @@
 package kaiserol;
 
-import kaiserol.chessboard.Board;
-import kaiserol.chessboard.Field;
+import kaiserol.chessboard.ChessBoard;
+import kaiserol.chessboard.ChessField;
 import kaiserol.chessboard.pieces.Piece;
 import kaiserol.logic.moves.Move;
 import kaiserol.logic.moves.PawnJump;
@@ -10,9 +10,9 @@ import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
-        Board board = new Board(true);
+        ChessBoard board = new ChessBoard(true);
 
-        Field field = board.getField("a2");
+        ChessField field = board.getField("a2");
         Piece piece = field.getPiece();
         List<Move> moves = piece.getMoves();
 

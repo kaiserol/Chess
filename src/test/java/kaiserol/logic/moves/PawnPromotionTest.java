@@ -1,7 +1,7 @@
 package kaiserol.logic.moves;
 
-import kaiserol.chessboard.Board;
-import kaiserol.chessboard.Field;
+import kaiserol.chessboard.ChessBoard;
+import kaiserol.chessboard.ChessField;
 import kaiserol.chessboard.Side;
 import kaiserol.chessboard.pieces.Pawn;
 import kaiserol.chessboard.pieces.Piece;
@@ -14,17 +14,17 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
 public class PawnPromotionTest {
-    private Board board;
+    private ChessBoard board;
 
     @BeforeEach
     void setUp() {
-        board = new Board();
+        board = new ChessBoard();
     }
 
     @Test
     void testPawnPromotionExecute() {
-        Field startField = board.getField("a7");
-        Field targetField = board.getField("a8");
+        ChessField startField = board.getField("a7");
+        ChessField targetField = board.getField("a8");
 
         Pawn pawn = new Pawn(board, Side.WHITE);
         board.link(startField, pawn);
@@ -45,8 +45,8 @@ public class PawnPromotionTest {
 
     @Test
     void testPawnPromotionUndo() {
-        Field startField = board.getField("a7");
-        Field targetField = board.getField("a8");
+        ChessField startField = board.getField("a7");
+        ChessField targetField = board.getField("a8");
 
         Pawn pawn = new Pawn(board, Side.WHITE);
         board.link(startField, pawn);
@@ -69,8 +69,8 @@ public class PawnPromotionTest {
 
     @Test
     void testPawnPromotionWithCaptureExecute() {
-        Field startField = board.getField("a7");
-        Field targetField = board.getField("b8");
+        ChessField startField = board.getField("a7");
+        ChessField targetField = board.getField("b8");
 
         Pawn pawn = new Pawn(board, Side.WHITE);
         board.link(startField, pawn);
@@ -95,8 +95,8 @@ public class PawnPromotionTest {
 
     @Test
     void testPawnPromotionWithCaptureUndo() {
-        Field startField = board.getField("a7");
-        Field targetField = board.getField("b8");
+        ChessField startField = board.getField("a7");
+        ChessField targetField = board.getField("b8");
 
         Pawn pawn = new Pawn(board, Side.WHITE);
         board.link(startField, pawn);

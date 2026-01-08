@@ -1,15 +1,15 @@
 package kaiserol.logic.moves;
 
-import kaiserol.chessboard.Board;
-import kaiserol.chessboard.Field;
+import kaiserol.chessboard.ChessBoard;
+import kaiserol.chessboard.ChessField;
 import kaiserol.chessboard.pieces.Pawn;
 
 public final class EnPassant extends Move {
-    private final Field capturedPawnStart;
+    private final ChessField capturedPawnStart;
     private final Pawn attackingPawn;
     private final Pawn capturedPawn;
 
-    public EnPassant(Board board, Field pawnStart, Field pawnTarget, Field capturedPawnField) {
+    public EnPassant(ChessBoard board, ChessField pawnStart, ChessField pawnTarget, ChessField capturedPawnField) {
         super(board, pawnStart, pawnTarget);
         this.capturedPawnStart = capturedPawnField;
         this.attackingPawn = (Pawn) pawnStart.getPiece();

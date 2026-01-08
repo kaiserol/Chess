@@ -1,20 +1,20 @@
 package kaiserol.logic.moves;
 
-import kaiserol.chessboard.Board;
-import kaiserol.chessboard.Field;
+import kaiserol.chessboard.ChessBoard;
+import kaiserol.chessboard.ChessField;
 
 public abstract sealed class Move permits NormalMove, Castling, EnPassant, PawnJump, PawnPromotion {
-    protected final Board board;
-    protected final Field start;
-    protected final Field target;
+    protected final ChessBoard board;
+    protected final ChessField start;
+    protected final ChessField target;
 
-    public Move(Board board, Field start, Field target) {
+    public Move(ChessBoard board, ChessField start, ChessField target) {
         this.board = board;
         this.start = start;
         this.target = target;
     }
 
-    public Field getTarget() {
+    public ChessField getTarget() {
         return target;
     }
 

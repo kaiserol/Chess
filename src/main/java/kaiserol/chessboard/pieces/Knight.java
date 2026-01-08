@@ -1,7 +1,7 @@
 package kaiserol.chessboard.pieces;
 
-import kaiserol.chessboard.Board;
-import kaiserol.chessboard.Field;
+import kaiserol.chessboard.ChessBoard;
+import kaiserol.chessboard.ChessField;
 import kaiserol.chessboard.Side;
 import kaiserol.logic.moves.Move;
 import kaiserol.logic.moves.NormalMove;
@@ -11,7 +11,7 @@ import java.util.List;
 
 public final class Knight extends Piece {
 
-    public Knight(Board board, Side side) {
+    public Knight(ChessBoard board, Side side) {
         super(board, side);
     }
 
@@ -36,7 +36,7 @@ public final class Knight extends Piece {
             int targetY = fieldY + offset[1];
 
             if (board.inside(targetX, targetY)) {
-                Field target = board.getField(targetX, targetY);
+                ChessField target = board.getField(targetX, targetY);
                 if (board.isOccupiedBySide(target, side)) continue;
                 moves.add(new NormalMove(board, field, target));
             }

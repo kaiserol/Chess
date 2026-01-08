@@ -1,14 +1,14 @@
 package kaiserol.logic.moves;
 
-import kaiserol.chessboard.Board;
-import kaiserol.chessboard.Field;
+import kaiserol.chessboard.ChessBoard;
+import kaiserol.chessboard.ChessField;
 import kaiserol.chessboard.pieces.Piece;
 
 public final class NormalMove extends Move {
     private final Piece attackingPiece;
     private final Piece capturedPiece;
 
-    public NormalMove(Board board, Field pieceStart, Field pieceTarget) {
+    public NormalMove(ChessBoard board, ChessField pieceStart, ChessField pieceTarget) {
         super(board, pieceStart, pieceTarget);
         this.attackingPiece = pieceStart.getPiece();
         this.capturedPiece = pieceTarget.getPiece();

@@ -1,7 +1,7 @@
 package kaiserol.logic.moves;
 
-import kaiserol.chessboard.Board;
-import kaiserol.chessboard.Field;
+import kaiserol.chessboard.ChessBoard;
+import kaiserol.chessboard.ChessField;
 import kaiserol.chessboard.Side;
 import kaiserol.chessboard.pieces.*;
 
@@ -10,7 +10,7 @@ public final class PawnPromotion extends Move {
     private final Piece capturedPiece;
     private Piece promotedPiece;
 
-    public PawnPromotion(Board board, Field pawnStart, Field pawnTarget) {
+    public PawnPromotion(ChessBoard board, ChessField pawnStart, ChessField pawnTarget) {
         super(board, pawnStart, pawnTarget);
         this.attackingPawn = (Pawn) pawnStart.getPiece();
         this.capturedPiece = pawnTarget.getPiece();
@@ -60,7 +60,7 @@ public final class PawnPromotion extends Move {
 
     public Piece createPromotedPiece(Choice promotionChoice) {
         final Side side = attackingPawn.getSide();
-        final Board board = attackingPawn.getBoard();
+        final ChessBoard board = attackingPawn.getBoard();
 
         return switch (promotionChoice) {
             case QUEEN -> new Queen(board, side);

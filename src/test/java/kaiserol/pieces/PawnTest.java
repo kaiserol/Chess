@@ -1,7 +1,7 @@
 package kaiserol.pieces;
 
-import kaiserol.chessboard.Board;
-import kaiserol.chessboard.Field;
+import kaiserol.chessboard.ChessBoard;
+import kaiserol.chessboard.ChessField;
 import kaiserol.chessboard.Side;
 import kaiserol.chessboard.pieces.Pawn;
 import kaiserol.chessboard.pieces.Rook;
@@ -14,16 +14,16 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class PawnTest {
-    private Board board;
+    private ChessBoard board;
 
     @BeforeEach
     void setUp() {
-        board = new Board(false);
+        board = new ChessBoard(false);
     }
 
     @Test
     void testWhitePawnMovesFromStart() {
-        Field whiteField = board.getField("e2");
+        ChessField whiteField = board.getField("e2");
         Pawn whitePawn = new Pawn(board, Side.WHITE);
         board.link(whiteField, whitePawn);
 
@@ -39,7 +39,7 @@ public class PawnTest {
 
     @Test
     void testBlackPawnMovesFromStart() {
-        Field blackField = board.getField("e7");
+        ChessField blackField = board.getField("e7");
         Pawn blackPawn = new Pawn(board, Side.BLACK);
         board.link(blackField, blackPawn);
 
@@ -55,15 +55,15 @@ public class PawnTest {
 
     @Test
     void testPawnCapture() {
-        Field whiteField = board.getField("e4");
+        ChessField whiteField = board.getField("e4");
         Pawn whitePawn = new Pawn(board, Side.WHITE);
         board.link(whiteField, whitePawn);
 
-        Field blackField = board.getField("d5");
+        ChessField blackField = board.getField("d5");
         Pawn blackPawn = new Pawn(board, Side.BLACK);
         board.link(blackField, blackPawn);
 
-        Field otherBlackField = board.getField("f5");
+        ChessField otherBlackField = board.getField("f5");
         Rook blackRook = new Rook(board, Side.BLACK);
         board.link(otherBlackField, blackRook);
 
@@ -80,11 +80,11 @@ public class PawnTest {
 
     @Test
     void testPawnBlocked() {
-        Field whiteField = board.getField("e4");
+        ChessField whiteField = board.getField("e4");
         Pawn whitePawn = new Pawn(board, Side.WHITE);
         board.link(whiteField, whitePawn);
 
-        Field blockingField = board.getField("e5");
+        ChessField blockingField = board.getField("e5");
         Rook blockingPiece = new Rook(board, Side.BLACK);
         board.link(blockingField, blockingPiece);
 
@@ -97,7 +97,7 @@ public class PawnTest {
 
     @Test
     void testPawnPromotionMove() {
-        Field whiteField = board.getField("e7");
+        ChessField whiteField = board.getField("e7");
         Pawn whitePawn = new Pawn(board, Side.WHITE);
         board.link(whiteField, whitePawn);
 
@@ -118,15 +118,15 @@ public class PawnTest {
         // 2. Black pawn jumps from d7 to d5
         // 3. White pawn can capture d5 by moving to d6
 
-        Field e5 = board.getField("e5");
+        ChessField e5 = board.getField("e5");
         Pawn whitePawn = new Pawn(board, Side.WHITE);
         board.link(e5, whitePawn);
 
-        Field d7 = board.getField("d7");
+        ChessField d7 = board.getField("d7");
         Pawn blackPawn = new Pawn(board, Side.BLACK);
         board.link(d7, blackPawn);
 
-        Field d5 = board.getField("d5");
+        ChessField d5 = board.getField("d5");
         PawnJump jump = new PawnJump(board, d7, d5);
         board.getGame().executeMove(jump);
 

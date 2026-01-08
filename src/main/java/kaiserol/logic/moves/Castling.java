@@ -1,17 +1,17 @@
 package kaiserol.logic.moves;
 
-import kaiserol.chessboard.Board;
-import kaiserol.chessboard.Field;
+import kaiserol.chessboard.ChessBoard;
+import kaiserol.chessboard.ChessField;
 import kaiserol.chessboard.pieces.King;
 import kaiserol.chessboard.pieces.Rook;
 
 public final class Castling extends Move {
-    private final Field rookStart;
-    private final Field rookTarget;
+    private final ChessField rookStart;
+    private final ChessField rookTarget;
     private final King king;
     private final Rook rook;
 
-    public Castling(Board board, Field kingStart, Field kingTarget, Field rookStart, Field rookTarget) {
+    public Castling(ChessBoard board, ChessField kingStart, ChessField kingTarget, ChessField rookStart, ChessField rookTarget) {
         super(board, kingStart, kingTarget);
         this.rookStart = rookStart;
         this.rookTarget = rookTarget;

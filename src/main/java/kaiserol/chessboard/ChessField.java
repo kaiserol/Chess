@@ -3,12 +3,12 @@ package kaiserol.chessboard;
 import kaiserol.chessboard.pieces.Piece;
 import org.jetbrains.annotations.NotNull;
 
-public class Field implements Comparable<Field> {
+public class ChessField implements Comparable<ChessField> {
     private final int x;
     private final int y;
     private Piece piece;
 
-    public Field(int x, int y) {
+    public ChessField(int x, int y) {
         this.x = x;
         this.y = y;
     }
@@ -45,7 +45,7 @@ public class Field implements Comparable<Field> {
     }
 
     @Override
-    public int compareTo(@NotNull Field o) {
+    public int compareTo(@NotNull ChessField o) {
         int xComparison = Integer.compare(x, o.x);
         if (xComparison != 0) return xComparison;
         return Integer.compare(y, o.y);

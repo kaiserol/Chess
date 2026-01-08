@@ -1,6 +1,6 @@
 package kaiserol.chessboard.pieces;
 
-import kaiserol.chessboard.Board;
+import kaiserol.chessboard.ChessBoard;
 import kaiserol.chessboard.Side;
 import kaiserol.logic.moves.Move;
 
@@ -8,7 +8,7 @@ import java.util.List;
 
 public final class Bishop extends Piece {
 
-    public Bishop(Board board, Side side) {
+    public Bishop(ChessBoard board, Side side) {
         super(board, side);
     }
 

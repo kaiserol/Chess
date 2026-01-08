@@ -3,19 +3,19 @@ package kaiserol.chessboard;
 import kaiserol.chessboard.pieces.*;
 import kaiserol.logic.Game;
 
-public class Board {
-    private final Field[][] fields;
+public class ChessBoard {
+    private final ChessField[][] fields;
     private final Game game;
 
-    public Board(boolean initPieces) {
-        this.fields = new Field[8][8];
+    public ChessBoard(boolean initPieces) {
+        this.fields = new ChessField[8][8];
         initFields();
         if (initPieces) initPieces();
 
         this.game = new Game(this);
     }
 
-    public Board() {
+    public ChessBoard() {
         this(false);
     }
 
@@ -34,7 +34,7 @@ public class Board {
     private void initPieces() {
         for (int x = 1; x <= 8; x++) {
             for (int y = 1; y <= 8; y++) {
-                Field field = getField(x, y);
+                ChessField field = getField(x, y);
                 Side side = y <= 4 ? Side.WHITE : Side.BLACK;
 
                 if (y == 1 || y == 8) {
@@ -55,16 +55,16 @@ public class Board {
     private void initField(int x, int y) {
         if (x < 1 || x > 8) throw new IllegalArgumentException("x must be between 1 and 8");
         if (y < 1 || y > 8) throw new IllegalArgumentException("y must be between 1 and 8");
-        this.fields[x - 1][y - 1] = new Field(x, y);
+        this.fields[x - 1][y - 1] = new ChessField(x, y);
     }
 
-    public Field getField(int x, int y) {
+    public ChessField getField(int x, int y) {
         if (x < 1 || x > 8) throw new IllegalArgumentException("x must be between 1 and 8");
         if (y < 1 || y > 8) throw new IllegalArgumentException("y must be between 1 and 8");
         return this.fields[x - 1][y - 1];
     }
 
-    public Field getField(String coord) {
+    public ChessField getField(String coord) {
         if (coord.length() != 2) throw new IllegalArgumentException("coord must be a 2-character string");
         if (!Character.isLetter(coord.charAt(0))) throw new IllegalArgumentException("coord must start with a letter");
         if (!Character.isDigit(coord.charAt(1))) throw new IllegalArgumentException("coord must end with a number");
@@ -73,7 +73,7 @@ public class Board {
         return getField(cleanCoord.charAt(0) - 'a' + 1, cleanCoord.charAt(1) - '1' + 1);
     }
 
-    public boolean isOccupiedBySide(Field target, Side side) {
+    public boolean isOccupiedBySide(ChessField target, Side side) {
         return target.isOccupied() && target.getPiece().getSide().equals(side);
     }
 
@@ -85,12 +85,12 @@ public class Board {
         System.out.println(this);
     }
 
-    public void link(Field field, Piece piece) {
+    public void link(ChessField field, Piece piece) {
         if (field != null) field.setPiece(piece);
         if (piece != null) piece.setField(field);
     }
 
-    public void unlink(Field field, Piece piece) {
+    public void unlink(ChessField field, Piece piece) {
         if (field != null) field.removePiece();
         if (piece != null) piece.removeField();
     }
@@ -104,7 +104,7 @@ public class Board {
             builder.append(y).append(" ");
 
             for (int x = 1; x <= 8; x++) {
-                Field field = getField(x, y);
+                ChessField field = getField(x, y);
                 if (!field.isOccupied()) builder.append("|   ");
                 else builder.append("| %s ".formatted(field.getPiece()));
             }

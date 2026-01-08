@@ -1,17 +1,17 @@
 package kaiserol.logic;
 
-import kaiserol.chessboard.Board;
+import kaiserol.chessboard.ChessBoard;
 import kaiserol.chessboard.Side;
 import kaiserol.logic.moves.Move;
 
 import java.util.Stack;
 
 public class Game {
-    private final Board board;
+    private final ChessBoard board;
     private final Stack<Move> moves;
     private Side currentSide;
 
-    public Game(Board board) {
+    public Game(ChessBoard board) {
         this.board = board;
         this.moves = new Stack<>();
         this.currentSide = Side.WHITE;

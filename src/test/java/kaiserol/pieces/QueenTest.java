@@ -1,7 +1,7 @@
 package kaiserol.pieces;
 
-import kaiserol.chessboard.Board;
-import kaiserol.chessboard.Field;
+import kaiserol.chessboard.ChessBoard;
+import kaiserol.chessboard.ChessField;
 import kaiserol.chessboard.pieces.Queen;
 import kaiserol.chessboard.Side;
 import kaiserol.logic.moves.Move;
@@ -14,16 +14,16 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class QueenTest {
-    private Board board;
+    private ChessBoard board;
 
     @BeforeEach
     void setUp() {
-        board = new Board();
+        board = new ChessBoard();
     }
 
     @Test
     void testQueenMovesCenter() {
-        Field field = board.getField("d4");
+        ChessField field = board.getField("d4");
         Queen queen = new Queen(board, Side.WHITE);
         board.link(field, queen);
 

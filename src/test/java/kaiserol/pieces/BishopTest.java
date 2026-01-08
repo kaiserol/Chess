@@ -1,7 +1,7 @@
 package kaiserol.pieces;
 
-import kaiserol.chessboard.Board;
-import kaiserol.chessboard.Field;
+import kaiserol.chessboard.ChessBoard;
+import kaiserol.chessboard.ChessField;
 import kaiserol.chessboard.Side;
 import kaiserol.chessboard.pieces.Bishop;
 import kaiserol.chessboard.pieces.Pawn;
@@ -14,16 +14,16 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class BishopTest {
-    private Board board;
+    private ChessBoard board;
 
     @BeforeEach
     void setUp() {
-        board = new Board();
+        board = new ChessBoard();
     }
 
     @Test
     void testBishopMovesOnEmptyBoard() {
-        Field field = board.getField("d4");
+        ChessField field = board.getField("d4");
         Bishop bishop = new Bishop(board, Side.WHITE);
         board.link(field, bishop);
 
@@ -45,7 +45,7 @@ public class BishopTest {
 
     @Test
     void testBishopMovesBlocked() {
-        Field field = board.getField("d4");
+        ChessField field = board.getField("d4");
         Bishop bishop = new Bishop(board, Side.WHITE);
         board.link(field, bishop);
 
@@ -72,7 +72,7 @@ public class BishopTest {
 
     @Test
     void testBishopMovesCapturingEnemies() {
-        Field field = board.getField("d4");
+        ChessField field = board.getField("d4");
         Bishop bishop = new Bishop(board, Side.WHITE);
         board.link(field, bishop);
 

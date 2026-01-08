@@ -1,6 +1,6 @@
 package kaiserol.chessboard.pieces;
 
-import kaiserol.chessboard.Board;
+import kaiserol.chessboard.ChessBoard;
 import kaiserol.chessboard.Side;
 import kaiserol.logic.moves.Move;
 
@@ -9,7 +9,7 @@ import java.util.List;
 
 public final class Queen extends Piece {
 
-    public Queen(Board board, Side side) {
+    public Queen(ChessBoard board, Side side) {
         super(board, side);
     }
 
