@@ -6,6 +6,8 @@ import kaiserol.chessboard.Side;
 import kaiserol.chessboard.pieces.Piece;
 import kaiserol.logic.moves.Move;
 
+import java.util.Scanner;
+
 public class Game {
     private final ChessBoard board;
     private Side currentSide;
@@ -34,6 +36,7 @@ public class Game {
                 for (Move move : piece.getLegalMoves()) {
                     if (move.getTargetField().equals(targetField)) {
                         board.executeMove(move);
+                        System.out.println(move.getClass().getSimpleName() + " executed\n");
                         this.currentSide = currentSide.opposite();
                         return;
                     }
@@ -53,5 +56,21 @@ public class Game {
     }
 
     public void startGameLoop() {
+        try (Scanner scanner = new Scanner(System.in)) {
+            while (true) {
+                System.out.printf("Enter move (%s's turn): ", currentSide.isWhite() ? "White" : "Black");
+                String input = scanner.nextLine();
+                if (input.equalsIgnoreCase("exit")) break;
+
+                try {
+                    executeMove(input);
+                    System.out.println();
+                    printBoard();
+                } catch (IllegalArgumentException e) {
+                    System.out.println(e.getMessage());
+                }
+            }
+        } catch (Exception ignore) {
+        }
     }
 }
