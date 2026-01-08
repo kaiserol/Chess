@@ -14,9 +14,9 @@ public class Main {
 
         Field field = board.getField("a2");
         Piece piece = field.getPiece();
-        List<Move> moves = piece.getValidMoves();
+        List<Move> moves = piece.getMoves();
 
-        System.out.printf("%d Valid moves from %s (%s): %s%n", moves.size(), field, piece, moves);
+        System.out.printf("%d Possible moves from %s (%s): %s%n", moves.size(), field, piece, moves);
         board.printBoard();
 
         board.getGame().executeMove(new PawnJump(board.getField("a2"), board.getField("a4")));

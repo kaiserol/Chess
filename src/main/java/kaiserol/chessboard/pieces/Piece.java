@@ -60,7 +60,7 @@ public abstract class Piece {
         return target.isOccupied();
     }
 
-    protected List<Move> getLinearMoves() {
+    protected final List<Move> getLinearMoves() {
         final List<Move> moves = new ArrayList<>();
         if (field == null) return moves;
 
@@ -75,7 +75,7 @@ public abstract class Piece {
         return moves;
     }
 
-    protected List<Move> getDiagonalMoves() {
+    protected final List<Move> getDiagonalMoves() {
         final List<Move> moves = new ArrayList<>();
         if (field == null) return moves;
 
@@ -94,10 +94,16 @@ public abstract class Piece {
         return moves;
     }
 
-    protected abstract List<Move> getAllMoves();
+    protected abstract List<Move> getMovesHelper();
 
-    public List<Move> getValidMoves() {
-        List<Move> validMoves = new ArrayList<>(getAllMoves());
+    public final List<Move> getMoves() {
+        List<Move> moves = new ArrayList<>(getMovesHelper());
+        moves.sort(Comparator.comparing(Move::getTarget));
+        return moves;
+    }
+
+    public final List<Move> getValidMoves() {
+        List<Move> validMoves = new ArrayList<>(getMoves());
         validMoves.sort(Comparator.comparing(Move::getTarget));
         return validMoves;
     }

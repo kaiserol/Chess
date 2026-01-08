@@ -27,9 +27,9 @@ public class PawnTest {
         Pawn whitePawn = new Pawn(Side.WHITE, board, whiteField);
         whiteField.setPiece(whitePawn);
 
-        List<Move> moves = whitePawn.getValidMoves();
+        List<Move> moves = whitePawn.getMoves();
 
-        System.out.printf("%d Valid moves from %s (%s): %s%n", moves.size(), whiteField, whitePawn, moves);
+        System.out.printf("%d Possible moves from %s (%s): %s%n", moves.size(), whiteField, whitePawn, moves);
         board.printBoard();
 
         assertEquals(2, moves.size());
@@ -43,9 +43,9 @@ public class PawnTest {
         Pawn blackPawn = new Pawn(Side.BLACK, board, blackField);
         blackField.setPiece(blackPawn);
 
-        List<Move> moves = blackPawn.getValidMoves();
+        List<Move> moves = blackPawn.getMoves();
 
-        System.out.printf("%d Valid moves from %s (%s): %s%n", moves.size(), blackField, blackPawn, moves);
+        System.out.printf("%d Possible moves from %s (%s): %s%n", moves.size(), blackField, blackPawn, moves);
         board.printBoard();
 
         assertEquals(2, moves.size());
@@ -67,8 +67,8 @@ public class PawnTest {
         Rook blackRook = new Rook(Side.BLACK, board, otherBlackField);
         otherBlackField.setPiece(blackRook);
 
-        List<Move> moves = whitePawn.getValidMoves();
-        System.out.printf("%d Valid moves from %s (%s): %s%n", moves.size(), whiteField, whitePawn, moves);
+        List<Move> moves = whitePawn.getMoves();
+        System.out.printf("%d Possible moves from %s (%s): %s%n", moves.size(), whiteField, whitePawn, moves);
         board.printBoard();
 
         // Forward (e5), Capture Left (d5), Capture Right (f5)
@@ -88,8 +88,8 @@ public class PawnTest {
         Rook blockingPiece = new Rook(Side.BLACK, board, blockingField);
         blockingField.setPiece(blockingPiece);
 
-        List<Move> moves = whitePawn.getValidMoves();
-        System.out.printf("%d Valid moves from %s (%s): %s%n", moves.size(), whiteField, whitePawn, moves);
+        List<Move> moves = whitePawn.getMoves();
+        System.out.printf("%d Possible moves from %s (%s): %s%n", moves.size(), whiteField, whitePawn, moves);
         board.printBoard();
 
         assertEquals(0, moves.size(), "Pawn should be blocked by piece in front");
@@ -101,9 +101,9 @@ public class PawnTest {
         Pawn whitePawn = new Pawn(Side.WHITE, board, whiteField);
         whiteField.setPiece(whitePawn);
 
-        List<Move> moves = whitePawn.getValidMoves();
+        List<Move> moves = whitePawn.getMoves();
 
-        System.out.printf("%d Valid moves from %s (%s): %s%n", moves.size(), whiteField, whitePawn, moves);
+        System.out.printf("%d Possible moves from %s (%s): %s%n", moves.size(), whiteField, whitePawn, moves);
         board.printBoard();
 
         assertEquals(1, moves.size());
@@ -130,9 +130,9 @@ public class PawnTest {
         PawnJump jump = new PawnJump(d7, d5);
         board.getGame().executeMove(jump);
 
-        List<Move> moves = whitePawn.getValidMoves();
+        List<Move> moves = whitePawn.getMoves();
 
-        System.out.printf("%d Valid moves from %s (%s): %s%n", moves.size(), e5, whitePawn, moves);
+        System.out.printf("%d Possible moves from %s (%s): %s%n", moves.size(), e5, whitePawn, moves);
         board.printBoard();
 
         assertTrue(moves.stream().anyMatch(m -> m instanceof EnPassant && m.getTarget().toString().equals("d6")),

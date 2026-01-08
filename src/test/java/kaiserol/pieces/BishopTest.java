@@ -27,10 +27,10 @@ public class BishopTest {
         Bishop bishop = new Bishop(Side.WHITE, board, field);
         field.setPiece(bishop);
 
-        List<Move> moves = bishop.getValidMoves();
+        List<Move> moves = bishop.getMoves();
         List<String> targetFields = moves.stream().map(Move::toString).toList();
 
-        System.out.printf("%d Valid moves from %s (%s): %s%n", moves.size(), field, bishop, moves);
+        System.out.printf("%d Possible moves from %s (%s): %s%n", moves.size(), field, bishop, moves);
         board.printBoard();
 
         // Diagonals from d4:
@@ -54,10 +54,10 @@ public class BishopTest {
         board.getField("b6").setPiece(new Pawn(Side.WHITE, board, board.getField("b6")));
         board.getField("e5").setPiece(new Pawn(Side.WHITE, board, board.getField("e5")));
 
-        List<Move> moves = bishop.getValidMoves();
+        List<Move> moves = bishop.getMoves();
         List<String> targetFields = moves.stream().map(Move::toString).toList();
 
-        System.out.printf("%d Valid moves from %s (%s): %s%n", moves.size(), field, bishop, moves);
+        System.out.printf("%d Possible moves from %s (%s): %s%n", moves.size(), field, bishop, moves);
         board.printBoard();
 
         // Should not contain e5, f6, g7, h8, ...
@@ -81,10 +81,10 @@ public class BishopTest {
         board.getField("b6").setPiece(new Pawn(Side.BLACK, board, board.getField("b6")));
         board.getField("e5").setPiece(new Pawn(Side.BLACK, board, board.getField("e5")));
 
-        List<Move> moves = bishop.getValidMoves();
+        List<Move> moves = bishop.getMoves();
         List<String> targetFields = moves.stream().map(Move::toString).toList();
 
-        System.out.printf("%d Valid moves from %s (%s): %s%n", moves.size(), field, bishop, moves);
+        System.out.printf("%d Possible moves from %s (%s): %s%n", moves.size(), field, bishop, moves);
         board.printBoard();
 
         // Should contain e5, but not f6, g7, h8, ...

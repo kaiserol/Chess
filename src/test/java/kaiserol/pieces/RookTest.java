@@ -27,10 +27,10 @@ public class RookTest {
         Rook rook = new Rook(Side.WHITE, board, field);
         field.setPiece(rook);
 
-        List<Move> moves = rook.getValidMoves();
+        List<Move> moves = rook.getMoves();
         List<String> targetFields = moves.stream().map(Move::toString).toList();
 
-        System.out.printf("%d Valid moves from %s (%s): %s%n", moves.size(), field, rook, moves);
+        System.out.printf("%d Possible moves from %s (%s): %s%n", moves.size(), field, rook, moves);
         board.printBoard();
 
         // Rook from d4: d1-d3, d5-d8 (7) + a4-c4, e4-h4 (7) = 14
@@ -50,10 +50,10 @@ public class RookTest {
         // Block d6
         board.getField("d6").setPiece(new Pawn(Side.WHITE, board, board.getField("d6")));
 
-        List<Move> moves = rook.getValidMoves();
+        List<Move> moves = rook.getMoves();
         List<String> targetFields = moves.stream().map(Move::toString).toList();
 
-        System.out.printf("%d Valid moves from %s (%s): %s%n", moves.size(), field, rook, moves);
+        System.out.printf("%d Possible moves from %s (%s): %s%n", moves.size(), field, rook, moves);
         board.printBoard();
 
         // d1-d3 (3), d5 (1), a4-c4 (3), e4-h4 (4) = 11

@@ -27,10 +27,10 @@ public class KnightTest {
         Knight knight = new Knight(Side.WHITE, board, field);
         field.setPiece(knight);
 
-        List<Move> moves = knight.getValidMoves();
+        List<Move> moves = knight.getMoves();
         List<String> targetFields = moves.stream().map(Move::toString).toList();
 
-        System.out.printf("%d Valid moves from %s (%s): %s%n", moves.size(), field, knight, moves);
+        System.out.printf("%d Possible moves from %s (%s): %s%n", moves.size(), field, knight, moves);
         board.printBoard();
 
         // d4 -> c6, e6, f5, f3, e2, c2, b3, b5
@@ -51,10 +51,10 @@ public class KnightTest {
         Knight knight = new Knight(Side.WHITE, board, field);
         field.setPiece(knight);
 
-        List<Move> moves = knight.getValidMoves();
+        List<Move> moves = knight.getMoves();
         List<String> targetFields = moves.stream().map(Move::toString).toList();
 
-        System.out.printf("%d Valid moves from %s (%s): %s%n", moves.size(), field, knight, moves);
+        System.out.printf("%d Possible moves from %s (%s): %s%n", moves.size(), field, knight, moves);
         board.printBoard();
 
         // a1 -> b3, c2
@@ -72,10 +72,10 @@ public class KnightTest {
         // Block c6
         board.getField("c6").setPiece(new Pawn(Side.WHITE, board, board.getField("c6")));
 
-        List<Move> moves = knight.getValidMoves();
+        List<Move> moves = knight.getMoves();
         List<String> targetFields = moves.stream().map(Move::toString).toList();
 
-        System.out.printf("%d Valid moves from %s (%s): %s%n", moves.size(), field, knight, moves);
+        System.out.printf("%d Possible moves from %s (%s): %s%n", moves.size(), field, knight, moves);
         board.printBoard();
 
         assertFalse(targetFields.contains("c6"));

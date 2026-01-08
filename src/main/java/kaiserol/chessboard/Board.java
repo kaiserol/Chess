@@ -96,7 +96,7 @@ public class Board {
             for (int x = 1; x <= 8; x++) {
                 Field field = getField(x, y);
                 if (!field.isOccupied()) builder.append("|   ");
-                else builder.append("| %s ".formatted(field.getPiece().getLetter()));
+                else builder.append("| %s ".formatted(field));
             }
             builder.append("|\n");
         }

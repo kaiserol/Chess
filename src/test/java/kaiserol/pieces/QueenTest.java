@@ -27,10 +27,10 @@ public class QueenTest {
         Queen queen = new Queen(Side.WHITE, board, field);
         field.setPiece(queen);
 
-        List<Move> moves = queen.getValidMoves();
+        List<Move> moves = queen.getMoves();
         List<String> targetFields = moves.stream().map(Move::toString).toList();
 
-        System.out.printf("%d Valid moves from %s (%s): %s%n", moves.size(), field, queen, moves);
+        System.out.printf("%d Possible moves from %s (%s): %s%n", moves.size(), field, queen, moves);
         board.printBoard();
 
         // Queen = Rook (14) + Bishop (13) = 27
