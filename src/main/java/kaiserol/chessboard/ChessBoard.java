@@ -121,7 +121,7 @@ public class ChessBoard {
             for (int x = 1; x <= 8; x++) {
                 ChessField field = getField(x, y);
                 if (!field.isOccupied()) builder.append("|   ");
-                else builder.append("| %s ".formatted(field.getPiece()));
+                else builder.append("| %s ".formatted(field.getPiece().getSymbol()));
             }
             builder.append("|\n");
         }

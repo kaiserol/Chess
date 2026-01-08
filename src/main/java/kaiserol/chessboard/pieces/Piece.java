@@ -121,6 +121,8 @@ public abstract class Piece {
         return legalMoves;
     }
 
+    public abstract char getSymbol();
+
     public abstract char getDisplayName();
 
     @Override

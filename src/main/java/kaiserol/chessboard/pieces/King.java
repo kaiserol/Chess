@@ -83,6 +83,11 @@ public final class King extends Piece {
     }
 
     @Override
+    public char getSymbol() {
+        return !side.isWhite() ? '♔' : '♚';
+    }
+
+    @Override
     public char getDisplayName() {
         return side.isWhite() ? 'K' : 'k';
     }

@@ -18,6 +18,11 @@ public final class Rook extends Piece {
     }
 
     @Override
+    public char getSymbol() {
+        return !side.isWhite() ? '♖' : '♜';
+    }
+
+    @Override
     public char getDisplayName() {
         return side.isWhite() ? 'R' : 'r';
     }
