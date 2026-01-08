@@ -58,7 +58,7 @@ public final class King extends Piece {
         ChessField rookStartField = board.getField(rookX, fieldY);
 
         if (board.isOccupiedBySide(rookStartField, side) && rookStartField.getPiece() instanceof Rook rook) {
-            if (rook.getMoveCount() == 0) return;
+            if (rook.getMoveCount() != 0) return;
 
             // Check whether the fields between the king and the rook are empty
             int startX = Math.min(field.getX(), rookX) + 1;
