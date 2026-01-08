@@ -39,14 +39,14 @@ public class Board {
 
                 if (y == 1 || y == 8) {
                     switch (x) {
-                        case 1, 8 -> field.setPiece(new Rook(side, this, field));
-                        case 2, 7 -> field.setPiece(new Knight(side, this, field));
-                        case 3, 6 -> field.setPiece(new Bishop(side, this, field));
-                        case 4 -> field.setPiece(new Queen(side, this, field));
-                        case 5 -> field.setPiece(new King(side, this, field));
+                        case 1, 8 -> link(field, new Rook(this, side));
+                        case 2, 7 -> link(field, new Knight(this, side));
+                        case 3, 6 -> link(field, new Bishop(this, side));
+                        case 4 -> link(field, new Queen(this, side));
+                        case 5 -> link(field, new King(this, side));
                     }
                 } else if (y == 2 || y == 7) {
-                    field.setPiece(new Pawn(side, this, field));
+                    link(field, new Pawn(this, side));
                 }
             }
         }
@@ -83,6 +83,16 @@ public class Board {
 
     public void printBoard() {
         System.out.println(this);
+    }
+
+    public void link(Field field, Piece piece) {
+        if (field != null) field.setPiece(piece);
+        if (piece != null) piece.setField(field);
+    }
+
+    public void unlink(Field field, Piece piece) {
+        if (field != null) field.removePiece();
+        if (piece != null) piece.removeField();
     }
 
     @Override

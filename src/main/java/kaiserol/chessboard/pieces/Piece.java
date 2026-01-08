@@ -12,16 +12,14 @@ import java.util.List;
 
 public abstract class Piece {
 
-    protected final Side side;
     protected final Board board;
+    protected final Side side;
     protected Field field;
     protected int moveCount;
 
-    public Piece(Side side, Board board, Field field) {
-        this.side = side;
+    public Piece(Board board, Side side) {
         this.board = board;
-        this.field = field;
-        this.moveCount = 0;
+        this.side = side;
     }
 
     public Side getSide() {
@@ -60,7 +58,7 @@ public abstract class Piece {
         Field target = board.getField(targetX, targetY);
         if (board.isOccupiedBySide(target, side)) return true;
 
-        moves.add(new NormalMove(field, target));
+        moves.add(new NormalMove(board, field, target));
         return target.isOccupied();
     }
 
@@ -112,12 +110,10 @@ public abstract class Piece {
         return validMoves;
     }
 
-    public abstract String getDisplayName();
-
-    public abstract char getLetter();
+    public abstract char getDisplayName();
 
     @Override
     public String toString() {
-        return String.valueOf(getLetter());
+        return String.valueOf(getDisplayName());
     }
 }

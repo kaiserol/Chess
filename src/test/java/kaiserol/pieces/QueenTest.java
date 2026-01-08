@@ -24,8 +24,8 @@ public class QueenTest {
     @Test
     void testQueenMovesCenter() {
         Field field = board.getField("d4");
-        Queen queen = new Queen(Side.WHITE, board, field);
-        field.setPiece(queen);
+        Queen queen = new Queen(board, Side.WHITE);
+        board.link(field, queen);
 
         List<Move> moves = queen.getMoves();
         List<String> targetFields = moves.stream().map(Move::toString).toList();

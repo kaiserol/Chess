@@ -19,7 +19,7 @@ public class Main {
         System.out.printf("%d Possible moves from %s (%s): %s%n", moves.size(), field, piece, moves);
         board.printBoard();
 
-        board.getGame().executeMove(new PawnJump(board.getField("a2"), board.getField("a4")));
+        board.getGame().executeMove(new PawnJump(board, board.getField("a2"), board.getField("a4")));
 
         System.out.println("\nAfter first move:");
         board.printBoard();

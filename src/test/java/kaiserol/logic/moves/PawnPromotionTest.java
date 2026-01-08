@@ -25,32 +25,34 @@ public class PawnPromotionTest {
     void testPawnPromotionExecute() {
         Field startField = board.getField("a7");
         Field targetField = board.getField("a8");
-        Pawn pawn = new Pawn(Side.WHITE, board, startField);
-        startField.setPiece(pawn);
 
-        PawnPromotion promotion = new PawnPromotion(startField, targetField);
-        Queen promotedQueen = (Queen) promotion.setPromotedPiece(PawnPromotion.Choice.QUEEN);
+        Pawn pawn = new Pawn(board, Side.WHITE);
+        board.link(startField, pawn);
+
+        PawnPromotion promotion = new PawnPromotion(board, startField, targetField);
+        Queen promotedQueen = (Queen) promotion.choosePromotedPiece(PawnPromotion.Choice.QUEEN);
 
         board.printBoard();
         promotion.execute();
         board.printBoard();
 
+        assertEquals(1, pawn.getMoveCount());
         assertNull(startField.getPiece());
         assertNull(pawn.getField());
         assertEquals(promotedQueen, targetField.getPiece());
         assertEquals(targetField, promotedQueen.getField());
-        assertEquals(1, pawn.getMoveCount());
     }
 
     @Test
     void testPawnPromotionUndo() {
         Field startField = board.getField("a7");
         Field targetField = board.getField("a8");
-        Pawn pawn = new Pawn(Side.WHITE, board, startField);
-        startField.setPiece(pawn);
 
-        PawnPromotion promotion = new PawnPromotion(startField, targetField);
-        Queen promotedQueen = (Queen) promotion.setPromotedPiece(PawnPromotion.Choice.QUEEN);
+        Pawn pawn = new Pawn(board, Side.WHITE);
+        board.link(startField, pawn);
+
+        PawnPromotion promotion = new PawnPromotion(board, startField, targetField);
+        Queen promotedQueen = (Queen) promotion.choosePromotedPiece(PawnPromotion.Choice.QUEEN);
 
         board.printBoard();
         promotion.execute();
@@ -58,50 +60,52 @@ public class PawnPromotionTest {
         promotion.undo();
         board.printBoard();
 
+        assertEquals(0, pawn.getMoveCount());
         assertNull(targetField.getPiece());
         assertNull(promotedQueen.getField());
         assertEquals(pawn, startField.getPiece());
         assertEquals(startField, pawn.getField());
-        assertEquals(0, pawn.getMoveCount());
     }
 
     @Test
     void testPawnPromotionWithCaptureExecute() {
         Field startField = board.getField("a7");
         Field targetField = board.getField("b8");
-        Pawn pawn = new Pawn(Side.WHITE, board, startField);
-        startField.setPiece(pawn);
 
-        Piece blackRook = new Rook(Side.BLACK, board, targetField);
-        targetField.setPiece(blackRook);
+        Pawn pawn = new Pawn(board, Side.WHITE);
+        board.link(startField, pawn);
 
-        PawnPromotion promotion = new PawnPromotion(startField, targetField);
-        Queen promotedQueen = (Queen) promotion.setPromotedPiece(PawnPromotion.Choice.QUEEN);
+        Piece blackRook = new Rook(board, Side.BLACK);
+        board.link(targetField, blackRook);
+
+        PawnPromotion promotion = new PawnPromotion(board, startField, targetField);
+        Queen promotedQueen = (Queen) promotion.choosePromotedPiece(PawnPromotion.Choice.QUEEN);
 
         board.printBoard();
         promotion.execute();
         board.printBoard();
 
+        assertEquals(1, pawn.getMoveCount());
         assertNull(startField.getPiece());
         assertNull(blackRook.getField());
         assertNull(pawn.getField());
         assertEquals(promotedQueen, targetField.getPiece());
         assertEquals(targetField, promotedQueen.getField());
-        assertEquals(1, pawn.getMoveCount());
     }
 
     @Test
     void testPawnPromotionWithCaptureUndo() {
         Field startField = board.getField("a7");
         Field targetField = board.getField("b8");
-        Pawn pawn = new Pawn(Side.WHITE, board, startField);
-        startField.setPiece(pawn);
 
-        Piece blackRook = new Rook(Side.BLACK, board, targetField);
-        targetField.setPiece(blackRook);
+        Pawn pawn = new Pawn(board, Side.WHITE);
+        board.link(startField, pawn);
 
-        PawnPromotion promotion = new PawnPromotion(startField, targetField);
-        Queen promotedQueen = (Queen) promotion.setPromotedPiece(PawnPromotion.Choice.QUEEN);
+        Piece blackRook = new Rook(board, Side.BLACK);
+        board.link(targetField, blackRook);
+
+        PawnPromotion promotion = new PawnPromotion(board, startField, targetField);
+        Queen promotedQueen = (Queen) promotion.choosePromotedPiece(PawnPromotion.Choice.QUEEN);
 
         board.printBoard();
         promotion.execute();
@@ -109,11 +113,11 @@ public class PawnPromotionTest {
         promotion.undo();
         board.printBoard();
 
+        assertEquals(0, pawn.getMoveCount());
         assertNull(promotedQueen.getField());
         assertEquals(pawn, startField.getPiece());
         assertEquals(startField, pawn.getField());
         assertEquals(blackRook, targetField.getPiece());
         assertEquals(targetField, blackRook.getField());
-        assertEquals(0, pawn.getMoveCount());
     }
 }

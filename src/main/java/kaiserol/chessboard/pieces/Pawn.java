@@ -10,8 +10,8 @@ import java.util.List;
 
 public final class Pawn extends Piece {
 
-    public Pawn(Side side, Board board, Field field) {
-        super(side, board, field);
+    public Pawn(Board board, Side side) {
+        super(board, side);
     }
 
     @Override
@@ -33,9 +33,9 @@ public final class Pawn extends Piece {
             Field target = board.getField(fieldX, targetY);
             if (!target.isOccupied()) {
                 if (targetY == promotionRow) {
-                    moves.add(new PawnPromotion(field, target));
+                    moves.add(new PawnPromotion(board, field, target));
                 } else {
-                    moves.add(new NormalMove(field, target));
+                    moves.add(new NormalMove(board, field, target));
                 }
 
                 // Moves two fields forward
@@ -44,7 +44,7 @@ public final class Pawn extends Piece {
                     Field target2 = board.getField(fieldX, twoTargetY);
 
                     if (!target2.isOccupied()) {
-                        moves.add(new PawnJump(field, target2));
+                        moves.add(new PawnJump(board, field, target2));
                     }
                 }
             }
@@ -54,7 +54,7 @@ public final class Pawn extends Piece {
         if (board.inside(fieldX - 1, targetY)) {
             Field target = board.getField(fieldX - 1, targetY);
             if (board.isOccupiedBySide(target, side.opposite())) {
-                moves.add(new NormalMove(field, target));
+                moves.add(new NormalMove(board, field, target));
             }
         }
 
@@ -62,7 +62,7 @@ public final class Pawn extends Piece {
         if (board.inside(fieldX + 1, targetY)) {
             Field target = board.getField(fieldX + 1, targetY);
             if (board.isOccupiedBySide(target, side.opposite())) {
-                moves.add(new NormalMove(field, target));
+                moves.add(new NormalMove(board, field, target));
             }
         }
 
@@ -74,7 +74,7 @@ public final class Pawn extends Piece {
 
             if (fieldY == enPassantY && Math.abs(enPassantX - fieldX) == 1) {
                 Field target = board.getField(enPassantX, targetY);
-                moves.add(new EnPassant(field, target, pawnJump.getTarget()));
+                moves.add(new EnPassant(board, field, target, pawnJump.getTarget()));
             }
         }
 
@@ -82,12 +82,7 @@ public final class Pawn extends Piece {
     }
 
     @Override
-    public String getDisplayName() {
-        return "Pawn";
-    }
-
-    @Override
-    public char getLetter() {
+    public char getDisplayName() {
         return side.isWhite() ? 'P' : 'p';
     }
 }

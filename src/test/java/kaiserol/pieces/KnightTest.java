@@ -24,8 +24,8 @@ public class KnightTest {
     @Test
     void testKnightMovesCenter() {
         Field field = board.getField("d4");
-        Knight knight = new Knight(Side.WHITE, board, field);
-        field.setPiece(knight);
+        Knight knight = new Knight(board, Side.WHITE);
+        board.link(field, knight);
 
         List<Move> moves = knight.getMoves();
         List<String> targetFields = moves.stream().map(Move::toString).toList();
@@ -34,6 +34,7 @@ public class KnightTest {
         board.printBoard();
 
         // d4 -> c6, e6, f5, f3, e2, c2, b3, b5
+        assertEquals(8, moves.size());
         assertTrue(targetFields.contains("c6"));
         assertTrue(targetFields.contains("e6"));
         assertTrue(targetFields.contains("f5"));
@@ -42,14 +43,13 @@ public class KnightTest {
         assertTrue(targetFields.contains("c2"));
         assertTrue(targetFields.contains("b3"));
         assertTrue(targetFields.contains("b5"));
-        assertEquals(8, moves.size());
     }
 
     @Test
     void testKnightMovesCorner() {
         Field field = board.getField("a1");
-        Knight knight = new Knight(Side.WHITE, board, field);
-        field.setPiece(knight);
+        Knight knight = new Knight(board, Side.WHITE);
+        board.link(field, knight);
 
         List<Move> moves = knight.getMoves();
         List<String> targetFields = moves.stream().map(Move::toString).toList();
@@ -58,19 +58,19 @@ public class KnightTest {
         board.printBoard();
 
         // a1 -> b3, c2
+        assertEquals(2, moves.size());
         assertTrue(targetFields.contains("b3"));
         assertTrue(targetFields.contains("c2"));
-        assertEquals(2, moves.size());
     }
 
     @Test
     void testKnightMovesBlocked() {
         Field field = board.getField("d4");
-        Knight knight = new Knight(Side.WHITE, board, field);
-        field.setPiece(knight);
+        Knight knight = new Knight(board, Side.WHITE);
+        board.link(field, knight);
 
         // Block c6
-        board.getField("c6").setPiece(new Pawn(Side.WHITE, board, board.getField("c6")));
+        board.link(board.getField("c6"), new Pawn(board, Side.WHITE));
 
         List<Move> moves = knight.getMoves();
         List<String> targetFields = moves.stream().map(Move::toString).toList();
@@ -78,7 +78,7 @@ public class KnightTest {
         System.out.printf("%d Possible moves from %s (%s): %s%n", moves.size(), field, knight, moves);
         board.printBoard();
 
-        assertFalse(targetFields.contains("c6"));
         assertEquals(7, moves.size());
+        assertFalse(targetFields.contains("c6"));
     }
 }

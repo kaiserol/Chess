@@ -11,8 +11,8 @@ import java.util.List;
 
 public final class Knight extends Piece {
 
-    public Knight(Side side, Board board, Field field) {
-        super(side, board, field);
+    public Knight(Board board, Side side) {
+        super(board, side);
     }
 
     @Override
@@ -38,7 +38,7 @@ public final class Knight extends Piece {
             if (board.inside(targetX, targetY)) {
                 Field target = board.getField(targetX, targetY);
                 if (board.isOccupiedBySide(target, side)) continue;
-                moves.add(new NormalMove(field, target));
+                moves.add(new NormalMove(board, field, target));
             }
         }
 
@@ -46,12 +46,7 @@ public final class Knight extends Piece {
     }
 
     @Override
-    public String getDisplayName() {
-        return "Knight";
-    }
-
-    @Override
-    public char getLetter() {
+    public char getDisplayName() {
         return side.isWhite() ? 'N' : 'n';
     }
 }

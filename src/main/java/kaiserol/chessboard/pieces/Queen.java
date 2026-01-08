@@ -1,7 +1,6 @@
 package kaiserol.chessboard.pieces;
 
 import kaiserol.chessboard.Board;
-import kaiserol.chessboard.Field;
 import kaiserol.chessboard.Side;
 import kaiserol.logic.moves.Move;
 
@@ -10,8 +9,8 @@ import java.util.List;
 
 public final class Queen extends Piece {
 
-    public Queen(Side side, Board board, Field field) {
-        super(side, board, field);
+    public Queen(Board board, Side side) {
+        super(board, side);
     }
 
     @Override
@@ -23,12 +22,7 @@ public final class Queen extends Piece {
     }
 
     @Override
-    public String getDisplayName() {
-        return "Queen";
-    }
-
-    @Override
-    public char getLetter() {
+    public char getDisplayName() {
         return side.isWhite() ? 'Q' : 'q';
     }
 }

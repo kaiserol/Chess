@@ -24,8 +24,8 @@ public class PawnTest {
     @Test
     void testWhitePawnMovesFromStart() {
         Field whiteField = board.getField("e2");
-        Pawn whitePawn = new Pawn(Side.WHITE, board, whiteField);
-        whiteField.setPiece(whitePawn);
+        Pawn whitePawn = new Pawn(board, Side.WHITE);
+        board.link(whiteField, whitePawn);
 
         List<Move> moves = whitePawn.getMoves();
 
@@ -40,8 +40,8 @@ public class PawnTest {
     @Test
     void testBlackPawnMovesFromStart() {
         Field blackField = board.getField("e7");
-        Pawn blackPawn = new Pawn(Side.BLACK, board, blackField);
-        blackField.setPiece(blackPawn);
+        Pawn blackPawn = new Pawn(board, Side.BLACK);
+        board.link(blackField, blackPawn);
 
         List<Move> moves = blackPawn.getMoves();
 
@@ -56,16 +56,16 @@ public class PawnTest {
     @Test
     void testPawnCapture() {
         Field whiteField = board.getField("e4");
-        Pawn whitePawn = new Pawn(Side.WHITE, board, whiteField);
-        whiteField.setPiece(whitePawn);
+        Pawn whitePawn = new Pawn(board, Side.WHITE);
+        board.link(whiteField, whitePawn);
 
         Field blackField = board.getField("d5");
-        Pawn blackPawn = new Pawn(Side.BLACK, board, blackField);
-        blackField.setPiece(blackPawn);
+        Pawn blackPawn = new Pawn(board, Side.BLACK);
+        board.link(blackField, blackPawn);
 
         Field otherBlackField = board.getField("f5");
-        Rook blackRook = new Rook(Side.BLACK, board, otherBlackField);
-        otherBlackField.setPiece(blackRook);
+        Rook blackRook = new Rook(board, Side.BLACK);
+        board.link(otherBlackField, blackRook);
 
         List<Move> moves = whitePawn.getMoves();
         System.out.printf("%d Possible moves from %s (%s): %s%n", moves.size(), whiteField, whitePawn, moves);
@@ -81,12 +81,12 @@ public class PawnTest {
     @Test
     void testPawnBlocked() {
         Field whiteField = board.getField("e4");
-        Pawn whitePawn = new Pawn(Side.WHITE, board, whiteField);
-        whiteField.setPiece(whitePawn);
+        Pawn whitePawn = new Pawn(board, Side.WHITE);
+        board.link(whiteField, whitePawn);
 
         Field blockingField = board.getField("e5");
-        Rook blockingPiece = new Rook(Side.BLACK, board, blockingField);
-        blockingField.setPiece(blockingPiece);
+        Rook blockingPiece = new Rook(board, Side.BLACK);
+        board.link(blockingField, blockingPiece);
 
         List<Move> moves = whitePawn.getMoves();
         System.out.printf("%d Possible moves from %s (%s): %s%n", moves.size(), whiteField, whitePawn, moves);
@@ -98,8 +98,8 @@ public class PawnTest {
     @Test
     void testPawnPromotionMove() {
         Field whiteField = board.getField("e7");
-        Pawn whitePawn = new Pawn(Side.WHITE, board, whiteField);
-        whiteField.setPiece(whitePawn);
+        Pawn whitePawn = new Pawn(board, Side.WHITE);
+        board.link(whiteField, whitePawn);
 
         List<Move> moves = whitePawn.getMoves();
 
@@ -119,15 +119,15 @@ public class PawnTest {
         // 3. White pawn can capture d5 by moving to d6
 
         Field e5 = board.getField("e5");
-        Pawn whitePawn = new Pawn(Side.WHITE, board, e5);
-        e5.setPiece(whitePawn);
+        Pawn whitePawn = new Pawn(board, Side.WHITE);
+        board.link(e5, whitePawn);
 
         Field d7 = board.getField("d7");
-        Pawn blackPawn = new Pawn(Side.BLACK, board, d7);
-        d7.setPiece(blackPawn);
+        Pawn blackPawn = new Pawn(board, Side.BLACK);
+        board.link(d7, blackPawn);
 
         Field d5 = board.getField("d5");
-        PawnJump jump = new PawnJump(d7, d5);
+        PawnJump jump = new PawnJump(board, d7, d5);
         board.getGame().executeMove(jump);
 
         List<Move> moves = whitePawn.getMoves();

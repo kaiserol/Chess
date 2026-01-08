@@ -24,8 +24,8 @@ public class RookTest {
     @Test
     void testRookMovesCenter() {
         Field field = board.getField("d4");
-        Rook rook = new Rook(Side.WHITE, board, field);
-        field.setPiece(rook);
+        Rook rook = new Rook(board, Side.WHITE);
+        board.link(field, rook);
 
         List<Move> moves = rook.getMoves();
         List<String> targetFields = moves.stream().map(Move::toString).toList();
@@ -44,11 +44,11 @@ public class RookTest {
     @Test
     void testRookMovesBlocked() {
         Field field = board.getField("d4");
-        Rook rook = new Rook(Side.WHITE, board, field);
-        field.setPiece(rook);
+        Rook rook = new Rook(board, Side.WHITE);
+        board.link(field, rook);
 
         // Block d6
-        board.getField("d6").setPiece(new Pawn(Side.WHITE, board, board.getField("d6")));
+        board.link(board.getField("d6"), new Pawn(board, Side.WHITE));
 
         List<Move> moves = rook.getMoves();
         List<String> targetFields = moves.stream().map(Move::toString).toList();
