@@ -10,13 +10,15 @@ public class Main {
         Game game = new Game();
 
         if (args.length > 0 && args[0].equalsIgnoreCase("-simulation")) {
-            TerminalChessSimulator simulator = new TerminalChessSimulator();
+            TerminalChessSimulator simulator = new TerminalChessSimulator(game);
 
             // Pawn Promotion
-            String[] whiteMoves = {"a2a4", "a4a5", "a5a6", "a6b7", "b7a8"};
+            String[] whiteMoves = {"a2a4", "a4a5", "a5a6", "a6b7", "b7a8", "d", "d"};
             String[] blackMoves = {"h7h6", "h6h5", "h5h4", "h4h3", "h3g2"};
+            simulator.addSimulation(whiteMoves, blackMoves);
 
-            simulator.runSimulation(whiteMoves, blackMoves);
+            // Runs the simulator
+            simulator.run();
         } else if (args.length > 0 && args[0].equalsIgnoreCase("-terminal")) {
             new TerminalChess(game).run();
         } else {
