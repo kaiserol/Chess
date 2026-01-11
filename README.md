@@ -1,67 +1,72 @@
 # Chess
 
-Ein modernes Schach-Projekt in Java mit geplanter Multiplayer-Funktionalität.
+A modern chess project in Java with planned multiplayer functionality.
 
-## 🛠️ Entwicklung
+## 🛠️ Development
 
-### Technologie-Stack
+### Technology Stack
 
 - **IDE:** IntelliJ IDEA (Community / Ultimate)
-- **Sprache**: Java
-- **Build-Tool**: Maven
-- **Testen**: JUnit 5
-- **Architektur**: Objektorientiertes Design mit klarer Trennung von Spielelogik und Darstellung
+- **Language**: Java
+- **Build Tool**: Maven
+- **Testing**: JUnit 5
+- **Architecture**: Object-oriented design with clear separation of game logic and presentation
 
-### Hinweise für IntelliJ IDEA
+### Notes for IntelliJ IDEA
 
-1. Projekt öffnen → `Chess/`
-2. Project SDK auswählen: **JDK 24**
-3. IntelliJ erkennt automatisch das Maven-Projekt
-4. Zum Starten:
-    - Menü: *Run → Run 'Main'*
-    - oder eigene Run-Konfiguration mit Main-Class (z. B. `kaiserol.Main`)
+1. Open project → `Chess/`
+2. Select Project SDK: **JDK 24**
+3. IntelliJ automatically recognizes the Maven project
+4. To start:
+    - Menu: *Run → Run 'Main'*
+    - or custom Run configuration with Main-Class (e.g., `kaiserol.Main`)
 
-### Wichtige Maven-Befehle
+### Important Maven Commands
 
-| Befehl                   | Zweck                            |
+| Command                  | Purpose                          |
 |--------------------------|----------------------------------|
-| `mvn clean install`      | Projekt bereinigen und neu bauen |
-| `mvn compile`            | Kompilieren des Projekts         |
-| `mvn dependency:resolve` | Nur Abhängigkeiten aktualisieren |
-| `mvn test`               | Tests ausführen                  |
+| `mvn clean install`      | Clean and rebuild project        |
+| `mvn compile`            | Compile the project              |
+| `mvn dependency:resolve` | Only update dependencies         |
+| `mvn test`               | Run tests                        |
 
 ## ⚙️ Troubleshooting
 
-### Java-Version prüfen
+### Check Java Version
 
-- Prüfen Sie, ob Java 24 installiert ist:
+- Check if Java 24 is installed:
     ```bash
     java -version
     ```
-- Beispielsausgabe:
+- Example output:
     ```bash
     openjdk version "24.0.1" 2025-04-15
     ```
 
-Falls eine andere Version angezeigt wird, ggf. `JAVA_HOME` anpassen oder eine passende JDK-Version installieren.
+If another version is displayed, adjust `JAVA_HOME` if necessary or install a suitable JDK version.
 
-## 📋 Projektbeschreibung
+## 📋 Project Description
 
-**Chess** ist eine Schach-Implementierung in Java. Das Projekt
-befindet sich in aktiver Entwicklung und wird um neue Features erweitert.
+**Chess** is a chess implementation in Java. The project
+is under active development and is being expanded with new features.
 
-### 🎯 Aktuelle Features
+### 🎯 Implemented Features
 
-- Vollständige Implementierung aller Schachfiguren (König, Dame, Turm, Läufer, Springer, Bauer)
-- Regelkonforme Zugvalidierung für alle Figuren
-- 8x8 Schachbrett mit Feldverwaltung
-- Konsolenbasierte Darstellung des Spielbretts
-- Umfangreiche Unit-Tests für Spiellogik
+- [x] 8x8 chessboard with field management
+- [x] Chess pieces (King, Queen, Rook, Bishop, Knight, Pawn)
+- [x] Implemented chess piece movements (Castling, En Passant, Pawn Promotion, moving and capturing)
+- [x] Rule-compliant move validation for all pieces
+- [x] Extensive unit tests for game logic
+- [x] Chess rules for ending the game (Checkmate, Stalemate)
+- [x] Various handlers (Terminal Chess, Simulation Chess, GUI Chess)
+  - [x] Console-based representation of the board (Terminal chess)
+  - [x] Chess simulation mode (Simulation chess)
 
-### 🚀 Geplante Features
+### 🚀 Planned Features
 
-- **Multiplayer-Server**: Online-Schach gegen andere Spieler
-- Grafische Benutzeroberfläche (GUI)
-- Spielstandspeicherung und -wiederherstellung
-- Schach-Notation (PGN-Format)
-- KI-Gegner mit verschiedenen Schwierigkeitsgraden
+- [ ] Pawn promotion implemented in handlers
+- [ ] 50-move rule, 3-fold repetition
+- [ ] Chess notation (PGN format)
+- [ ] Graphical User Interface (GUI)
+- [ ] Game state saving and restoration
+- [ ] Server-client implementation (Multiplayer server)
