@@ -104,8 +104,7 @@ public class ChessBoard {
         return field.isOccupied() && field.getPiece().getSide() == side;
     }
 
-    // TODO: Rename to toConsole
-    public void printBoard() {
+    public void toConsole() {
         System.out.println(this);
     }
 

@@ -36,7 +36,7 @@ public class KingTest {
 
         List<Move> moves = king.getPseudoLegalMoves();
         System.out.printf("%d Pseudo legal moves from %s (%s): %s%n", moves.size(), field, king, moves);
-        board.printBoard();
+        board.toConsole();
 
         assertEquals(8, moves.size());
     }
@@ -54,7 +54,7 @@ public class KingTest {
 
         List<Move> legalMoves = king.getLegalMoves();
         System.out.printf("%d Legal moves from %s (%s): %s%n", legalMoves.size(), field, king, legalMoves);
-        board.printBoard();
+        board.toConsole();
 
         List<String> targetFields = legalMoves.stream().map(Move::toString).toList();
 
@@ -74,7 +74,7 @@ public class KingTest {
 
         List<Move> moves = king.getPseudoLegalMoves();
         System.out.printf("%d Pseudo legal moves from %s (%s): %s%n", moves.size(), king.getField(), king, moves);
-        board.printBoard();
+        board.toConsole();
 
         boolean hasCastling = moves.stream().anyMatch(m -> m instanceof Castling && m.getTargetField().toString().equals("g1"));
         assertTrue(hasCastling, "Should have kingside castling to g1");
@@ -90,7 +90,7 @@ public class KingTest {
 
         List<Move> moves = king.getPseudoLegalMoves();
         System.out.printf("%d Pseudo legal moves from %s (%s): %s%n", moves.size(), king.getField(), king, moves);
-        board.printBoard();
+        board.toConsole();
 
         boolean hasCastling = moves.stream().anyMatch(m -> m instanceof Castling && m.getTargetField().toString().equals("c1"));
         assertTrue(hasCastling, "Should have queenside castling to c1");
@@ -108,7 +108,7 @@ public class KingTest {
 
         List<Move> moves = king.getPseudoLegalMoves();
         System.out.printf("%d Pseudo legal moves from %s (%s): %s%n", moves.size(), king.getField(), king, moves);
-        board.printBoard();
+        board.toConsole();
 
         boolean hasCastling = moves.stream().anyMatch(m -> m instanceof Castling);
         assertFalse(hasCastling, "Should not have castling when path is blocked");
@@ -127,7 +127,7 @@ public class KingTest {
 
         List<Move> moves = king.getPseudoLegalMoves();
         System.out.printf("%d Pseudo legal moves from %s (%s): %s%n", moves.size(), king.getField(), king, moves);
-        board.printBoard();
+        board.toConsole();
 
         boolean hasCastling = moves.stream().anyMatch(m -> m instanceof Castling);
         assertFalse(hasCastling, "Should not have castling when moving through check");

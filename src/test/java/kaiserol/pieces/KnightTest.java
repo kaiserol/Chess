@@ -31,7 +31,7 @@ public class KnightTest {
         List<String> targetFields = moves.stream().map(Move::toString).toList();
 
         System.out.printf("%d Pseudo legal moves from %s (%s): %s%n", moves.size(), field, knight, moves);
-        board.printBoard();
+        board.toConsole();
 
         // d4 -> c6, e6, f5, f3, e2, c2, b3, b5
         assertEquals(8, moves.size());
@@ -55,7 +55,7 @@ public class KnightTest {
         List<String> targetFields = moves.stream().map(Move::toString).toList();
 
         System.out.printf("%d Pseudo legal moves from %s (%s): %s%n", moves.size(), field, knight, moves);
-        board.printBoard();
+        board.toConsole();
 
         // a1 -> b3, c2
         assertEquals(2, moves.size());
@@ -76,7 +76,7 @@ public class KnightTest {
         List<String> targetFields = moves.stream().map(Move::toString).toList();
 
         System.out.printf("%d Pseudo legal moves from %s (%s): %s%n", moves.size(), field, knight, moves);
-        board.printBoard();
+        board.toConsole();
 
         assertEquals(7, moves.size());
         assertFalse(targetFields.contains("c6"));

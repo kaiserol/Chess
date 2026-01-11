@@ -31,7 +31,7 @@ public class QueenTest {
         List<String> targetFields = moves.stream().map(Move::toString).toList();
 
         System.out.printf("%d Pseudo legal moves from %s (%s): %s%n", moves.size(), field, queen, moves);
-        board.printBoard();
+        board.toConsole();
 
         // Queen = Rook (14) + Bishop (13) = 27
         assertTrue(targetFields.contains("d1"));

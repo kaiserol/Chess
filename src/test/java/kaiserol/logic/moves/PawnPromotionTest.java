@@ -32,9 +32,9 @@ public class PawnPromotionTest {
         PawnPromotion promotion = new PawnPromotion(board, startField, targetField);
         Queen promotedQueen = (Queen) promotion.choosePromotedPiece(PawnPromotion.Choice.QUEEN);
 
-        board.printBoard();
+        board.toConsole();
         promotion.execute();
-        board.printBoard();
+        board.toConsole();
 
         assertEquals(1, pawn.getMoveCount());
         assertNull(startField.getPiece());
@@ -54,11 +54,11 @@ public class PawnPromotionTest {
         PawnPromotion promotion = new PawnPromotion(board, startField, targetField);
         Queen promotedQueen = (Queen) promotion.choosePromotedPiece(PawnPromotion.Choice.QUEEN);
 
-        board.printBoard();
+        board.toConsole();
         promotion.execute();
-        board.printBoard();
+        board.toConsole();
         promotion.undo();
-        board.printBoard();
+        board.toConsole();
 
         assertEquals(0, pawn.getMoveCount());
         assertNull(targetField.getPiece());
@@ -81,9 +81,9 @@ public class PawnPromotionTest {
         PawnPromotion promotion = new PawnPromotion(board, startField, targetField);
         Queen promotedQueen = (Queen) promotion.choosePromotedPiece(PawnPromotion.Choice.QUEEN);
 
-        board.printBoard();
+        board.toConsole();
         promotion.execute();
-        board.printBoard();
+        board.toConsole();
 
         assertEquals(1, pawn.getMoveCount());
         assertNull(startField.getPiece());
@@ -107,11 +107,11 @@ public class PawnPromotionTest {
         PawnPromotion promotion = new PawnPromotion(board, startField, targetField);
         Queen promotedQueen = (Queen) promotion.choosePromotedPiece(PawnPromotion.Choice.QUEEN);
 
-        board.printBoard();
+        board.toConsole();
         promotion.execute();
-        board.printBoard();
+        board.toConsole();
         promotion.undo();
-        board.printBoard();
+        board.toConsole();
 
         assertEquals(0, pawn.getMoveCount());
         assertNull(promotedQueen.getField());

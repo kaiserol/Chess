@@ -13,7 +13,7 @@ public class TerminalChess extends ChessController {
     @Override
     public void run() {
         start();
-        game.getBoard().printBoard();
+        game.getBoard().toConsole();
 
         while (true) {
             String input = readMove();
@@ -23,13 +23,13 @@ public class TerminalChess extends ChessController {
                     break;
                 } else if (input.equalsIgnoreCase("restart")) {
                     restart();
-                    game.getBoard().printBoard();
+                    game.getBoard().toConsole();
                 } else if (input.equalsIgnoreCase("undo")) {
                     game.undoMove();
-                    game.getBoard().printBoard();
+                    game.getBoard().toConsole();
                 } else {
                     game.executeMove(input);
-                    game.getBoard().printBoard();
+                    game.getBoard().toConsole();
                     handleGameState();
                 }
             } catch (Exception e) {

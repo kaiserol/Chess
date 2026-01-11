@@ -31,7 +31,7 @@ public class BishopTest {
         List<String> targetFields = moves.stream().map(Move::toString).toList();
 
         System.out.printf("%d Pseudo legal moves from %s (%s): %s%n", moves.size(), field, bishop, moves);
-        board.printBoard();
+        board.toConsole();
 
         // Diagonals from d4:
         // a1, b2, c3, e5, f6, g7, h8 (7 fields)
@@ -58,7 +58,7 @@ public class BishopTest {
         List<String> targetFields = moves.stream().map(Move::toString).toList();
 
         System.out.printf("%d Pseudo legal moves from %s (%s): %s%n", moves.size(), field, bishop, moves);
-        board.printBoard();
+        board.toConsole();
 
         // Should not contain e5, f6, g7, h8, ...
         assertEquals(6, moves.size()); // 13 - 7 = 6
@@ -85,7 +85,7 @@ public class BishopTest {
         List<String> targetFields = moves.stream().map(Move::toString).toList();
 
         System.out.printf("%d Pseudo legal moves from %s (%s): %s%n", moves.size(), field, bishop, moves);
-        board.printBoard();
+        board.toConsole();
 
         // Should contain e5, but not f6, g7, h8, ...
         assertEquals(9, moves.size()); // 13 - 4 = 9
