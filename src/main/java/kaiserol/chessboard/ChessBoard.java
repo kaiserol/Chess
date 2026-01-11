@@ -9,60 +9,17 @@ public class ChessBoard {
     private final ChessField[][] fields;
     private final Stack<Move> moveHistory;
 
-    public ChessBoard(boolean initPieces) {
+    public ChessBoard() {
         this.fields = new ChessField[8][8];
         initFields();
 
-        if (initPieces) {
-            initPieces();
-        }
-
         this.moveHistory = new Stack<>();
-    }
-
-    public ChessBoard() {
-        this(false);
-    }
-
-    public void executeMove(Move move) {
-        moveHistory.push(move);
-        move.execute();
-    }
-
-    public void undoMove() {
-        Move move = moveHistory.pop();
-        move.undo();
-    }
-
-    public Move getLastMove() {
-        return moveHistory.empty() ? null : moveHistory.peek();
     }
 
     private void initFields() {
         for (int y = 1; y <= 8; y++) {
             for (int x = 1; x <= 8; x++) {
                 initField(x, y);
-            }
-        }
-    }
-
-    private void initPieces() {
-        for (int y = 1; y <= 8; y++) {
-            for (int x = 1; x <= 8; x++) {
-                ChessField field = getField(x, y);
-                Side side = y <= 4 ? Side.WHITE : Side.BLACK;
-
-                if (y == 1 || y == 8) {
-                    switch (x) {
-                        case 1, 8 -> link(field, new Rook(this, side));
-                        case 2, 7 -> link(field, new Knight(this, side));
-                        case 3, 6 -> link(field, new Bishop(this, side));
-                        case 4 -> link(field, new Queen(this, side));
-                        case 5 -> link(field, new King(this, side));
-                    }
-                } else if (y == 2 || y == 7) {
-                    link(field, new Pawn(this, side));
-                }
             }
         }
     }
@@ -88,16 +45,49 @@ public class ChessBoard {
         return getField(cleanCoord.charAt(0) - 'a' + 1, cleanCoord.charAt(1) - '1' + 1);
     }
 
-    public boolean isOccupiedBySide(ChessField field, Side side) {
-        return field.isOccupied() && field.getPiece().getSide() == side;
+    public void executeMove(Move move) {
+        if (move == null) return;
+        moveHistory.push(move);
+        move.execute();
+    }
+
+    public void undoMove() {
+        if (moveHistory.empty()) return;
+        Move move = moveHistory.pop();
+        move.undo();
+    }
+
+    public Move getLastMove() {
+        return moveHistory.empty() ? null : moveHistory.peek();
+    }
+
+    public void setInitialStartingPositions() {
+        for (int y = 1; y <= 8; y++) {
+            for (int x = 1; x <= 8; x++) {
+                ChessField field = getField(x, y);
+                Side side = y <= 2 ? Side.WHITE : y <= 6 ? null : Side.BLACK;
+
+                if (y == 1 || y == 8) {
+                    switch (x) {
+                        case 1, 8 -> link(field, new Rook(this, side));
+                        case 2, 7 -> link(field, new Knight(this, side));
+                        case 3, 6 -> link(field, new Bishop(this, side));
+                        case 4 -> link(field, new Queen(this, side));
+                        case 5 -> link(field, new King(this, side));
+                    }
+                } else if (y == 2 || y == 7) {
+                    link(field, new Pawn(this, side));
+                } else {
+                    if (field.isOccupied()) {
+                        unlink(field, field.getPiece());
+                    }
+                }
+            }
+        }
     }
 
     public boolean inside(int x, int y) {
         return x >= 1 && x <= 8 && y >= 1 && y <= 8;
-    }
-
-    public void printBoard() {
-        System.out.println(this);
     }
 
     public void link(ChessField field, Piece piece) {
@@ -108,6 +98,15 @@ public class ChessBoard {
     public void unlink(ChessField field, Piece piece) {
         if (field != null) field.removePiece();
         if (piece != null) piece.removeField();
+    }
+
+    public boolean isOccupiedBySide(ChessField field, Side side) {
+        return field.isOccupied() && field.getPiece().getSide() == side;
+    }
+
+    // TODO: Rename to toConsole
+    public void printBoard() {
+        System.out.println(this);
     }
 
     @Override
