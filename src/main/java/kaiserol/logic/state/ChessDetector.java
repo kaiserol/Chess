@@ -11,18 +11,11 @@ import java.util.List;
 
 public class ChessDetector {
 
-    public static boolean isInCheck(ChessBoard board, Side side) {
-        ChessField kingField = findKingField(board, side);
-        if (kingField == null) throw new IllegalStateException("King not found!");
-
-        return isFieldAttacked(board, kingField, side.opposite());
-    }
-
-    public static boolean isFieldAttacked(ChessBoard board, ChessField field, Side side) {
+    public static boolean isFieldAttacked(ChessBoard board, ChessField field, Side attackerSide) {
         for (int y = 1; y <= 8; y++) {
             for (int x = 1; x <= 8; x++) {
                 ChessField currentField = board.getField(x, y);
-                if (board.isOccupiedBySide(currentField, side)) {
+                if (board.isOccupiedBySide(currentField, attackerSide)) {
                     Piece piece = currentField.getPiece();
 
                     // Checks pseudolegal moves of the piece
@@ -36,6 +29,13 @@ public class ChessDetector {
             }
         }
         return false;
+    }
+
+    public static boolean isInCheck(ChessBoard board, Side side) {
+        ChessField kingField = findKingField(board, side);
+        if (kingField == null) throw new IllegalStateException("King not found!");
+
+        return isFieldAttacked(board, kingField, side.opposite());
     }
 
     private static ChessField findKingField(ChessBoard board, Side side) {

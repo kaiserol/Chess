@@ -61,10 +61,10 @@ is under active development and is being expanded with new features.
 - [x] Various handlers (Terminal Chess, Simulation Chess, GUI Chess)
   - [x] Console-based representation of the board (Terminal chess)
   - [x] Chess simulation mode (Simulation chess)
+- [x] Pawn promotion implemented in handlers
 
 ### 🚀 Planned Features
 
-- [ ] Pawn promotion implemented in handlers
 - [ ] 50-move rule, 3-fold repetition
 - [ ] Chess notation (PGN format)
 - [ ] Graphical User Interface (GUI)

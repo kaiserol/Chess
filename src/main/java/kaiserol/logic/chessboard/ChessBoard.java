@@ -25,24 +25,29 @@ public class ChessBoard {
     }
 
     private void initField(int x, int y) {
-        if (x < 1 || x > 8) throw new IllegalArgumentException("x must be between 1 and 8");
-        if (y < 1 || y > 8) throw new IllegalArgumentException("y must be between 1 and 8");
+        checkCoordinates(x, y);
         this.fields[x - 1][y - 1] = new ChessField(x, y);
     }
 
     public ChessField getField(int x, int y) {
-        if (x < 1 || x > 8) throw new IllegalArgumentException("x must be between 1 and 8");
-        if (y < 1 || y > 8) throw new IllegalArgumentException("y must be between 1 and 8");
+        checkCoordinates(x, y);
         return this.fields[x - 1][y - 1];
     }
 
+    private void checkCoordinates(int x, int y) {
+        if (x < 1 || x > 8) throw new CoordinateException("x must be between 1 and 8");
+        if (y < 1 || y > 8) throw new CoordinateException("y must be between 1 and 8");
+    }
+
     public ChessField getField(String coord) {
-        if (coord.length() != 2) throw new IllegalArgumentException("coord must be a 2-character string");
-        if (!Character.isLetter(coord.charAt(0))) throw new IllegalArgumentException("coord must start with a letter");
-        if (!Character.isDigit(coord.charAt(1))) throw new IllegalArgumentException("coord must end with a number");
+        if (coord.length() != 2) throw new CoordinateException("coord must be a 2-character string");
+        if (!Character.isLetter(coord.charAt(0))) throw new CoordinateException("coord must start with a letter");
+        if (!Character.isDigit(coord.charAt(1))) throw new CoordinateException("coord must end with a number");
 
         String cleanCoord = coord.toLowerCase();
-        return getField(cleanCoord.charAt(0) - 'a' + 1, cleanCoord.charAt(1) - '1' + 1);
+        int x = cleanCoord.charAt(0) - 'a' + 1;
+        int y = cleanCoord.charAt(1) - '1' + 1;
+        return getField(x, y);
     }
 
     public void executeMove(Move move) {
@@ -125,7 +130,9 @@ public class ChessBoard {
         }
 
         builder.append("  ").append("+---".repeat(8)).append("+\n  ");
-        for (int x = 1; x <= 8; x++) builder.append("  %s ".formatted((char) ('a' + (x - 1))));
+        for (int x = 1; x <= 8; x++) {
+            builder.append("  %s ".formatted((char) ('a' + (x - 1))));
+        }
         builder.append(" ");
 
         return builder.toString();

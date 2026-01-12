@@ -61,7 +61,7 @@ public class TerminalChessSimulator extends ChessController {
 
     private void runSimulation(String[] whiteMoves, String[] blackMoves, int simulationNumber) {
         String SEP = "-".repeat(8);
-        printMessage(SEP + simulationNumber + ". Simulation started " + SEP);
+        printMessage("%s %d. Simulation started %s".formatted(SEP, simulationNumber, SEP));
         printMessage("Initial state of the game:");
         game.getBoard().toConsole();
 
@@ -90,7 +90,7 @@ public class TerminalChessSimulator extends ChessController {
             }
         }
 
-        printMessage(SEP + simulationNumber + ". Simulation ended " + SEP);
+        printMessage("%s %d. Simulation ended %s".formatted(SEP, simulationNumber, SEP));
     }
 
     private void printMessage(String message) {

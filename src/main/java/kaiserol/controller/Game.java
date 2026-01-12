@@ -4,7 +4,6 @@ import kaiserol.logic.chessboard.ChessBoard;
 import kaiserol.logic.chessboard.ChessField;
 import kaiserol.logic.chessboard.Side;
 import kaiserol.logic.pieces.Piece;
-import kaiserol.logic.state.ChessDetector;
 import kaiserol.logic.moves.Move;
 import kaiserol.logic.moves.MoveException;
 import kaiserol.logic.state.GameState;
@@ -60,8 +59,7 @@ public class Game {
                 for (Move move : piece.getLegalMoves()) {
                     if (move.getTargetField().equals(targetField)) {
                         board.executeMove(move);
-                        this.currentSide = currentSide.opposite();
-                        updateGameState();
+                        updateState();
                         return;
                     }
                 }
@@ -76,32 +74,11 @@ public class Game {
         }
 
         board.undoMove();
-        this.currentSide = currentSide.opposite();
-        updateGameState();
+        updateState();
     }
 
-    private void updateGameState() {
-        boolean hasLegalMoves = false;
-        for (int y = 1; y <= 8; y++) {
-            for (int x = 1; x <= 8; x++) {
-                ChessField field = board.getField(x, y);
-                if (board.isOccupiedBySide(field, currentSide)) {
-                    if (!field.getPiece().getLegalMoves().isEmpty()) {
-                        hasLegalMoves = true;
-                        break;
-                    }
-                }
-            }
-            if (hasLegalMoves) break;
-        }
-
-        boolean inCheck = ChessDetector.isInCheck(board, currentSide);
-        if (!hasLegalMoves) {
-            if (inCheck) gameState = GameState.CHECKMATE;
-            else gameState = GameState.STALEMATE;
-        } else {
-            if (inCheck) gameState = GameState.CHECK;
-            else gameState = GameState.ACTIVE;
-        }
+    private void updateState() {
+        this.currentSide = currentSide.opposite();
+        this.gameState = GameState.getGameState(board, currentSide);
     }
 }
