@@ -1,13 +1,10 @@
-package kaiserol.pieces;
+package kaiserol.logic.pieces;
 
 import kaiserol.logic.chessboard.ChessBoard;
 import kaiserol.logic.chessboard.ChessField;
 import kaiserol.logic.chessboard.Side;
-import kaiserol.logic.pieces.King;
-import kaiserol.logic.pieces.Rook;
-import kaiserol.logic.pieces.Queen;
-import kaiserol.logic.moves.Move;
 import kaiserol.logic.moves.Castling;
+import kaiserol.logic.moves.Move;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -102,7 +99,7 @@ public class KingTest {
         Rook rook = new Rook(board, Side.WHITE);
         board.link(board.getField("e1"), king);
         board.link(board.getField("h1"), rook);
-        
+
         // Block with Bishop
         board.link(board.getField("f1"), new Queen(board, Side.WHITE));
 
@@ -120,7 +117,7 @@ public class KingTest {
         Rook rook = new Rook(board, Side.WHITE);
         board.link(board.getField("e1"), king);
         board.link(board.getField("h1"), rook);
-        
+
         // Black Rook attacking f1
         Rook enemyRook = new Rook(board, Side.BLACK);
         board.link(board.getField("f8"), enemyRook);

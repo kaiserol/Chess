@@ -1,9 +1,7 @@
-package kaiserol.pieces;
+package kaiserol.logic.pieces;
 
 import kaiserol.logic.chessboard.ChessBoard;
 import kaiserol.logic.chessboard.ChessField;
-import kaiserol.logic.pieces.Pawn;
-import kaiserol.logic.pieces.Rook;
 import kaiserol.logic.chessboard.Side;
 import kaiserol.logic.moves.Move;
 import org.junit.jupiter.api.BeforeEach;
