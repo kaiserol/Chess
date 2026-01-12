@@ -53,6 +53,7 @@ public class Game {
         ChessField startField = board.getField(fromCoord);
         ChessField targetField = board.getField(toCoord);
 
+        // Find the correct move and execute it
         if (startField.isOccupied()) {
             Piece piece = startField.getPiece();
             if (currentSide == piece.getSide()) {

@@ -1,8 +1,10 @@
 package kaiserol.logic.state;
 
 import kaiserol.logic.chessboard.ChessBoard;
-import kaiserol.logic.chessboard.ChessField;
 import kaiserol.logic.chessboard.Side;
+import kaiserol.logic.pieces.Piece;
+
+import java.util.List;
 
 public enum GameState {
     ACTIVE,
@@ -12,18 +14,14 @@ public enum GameState {
     DRAW;
 
     public static GameState getGameState(ChessBoard board, Side currentSide) {
+        List<Piece> pieces = board.getPieces(currentSide);
         boolean hasLegalMoves = false;
-        for (int y = 1; y <= 8; y++) {
-            for (int x = 1; x <= 8; x++) {
-                ChessField field = board.getField(x, y);
-                if (board.isOccupiedBySide(field, currentSide)) {
-                    if (!field.getPiece().getLegalMoves().isEmpty()) {
-                        hasLegalMoves = true;
-                        break;
-                    }
-                }
+
+        for (Piece piece : pieces) {
+            if (!piece.getLegalMoves().isEmpty()) {
+                hasLegalMoves = true;
+                break;
             }
-            if (hasLegalMoves) break;
         }
 
         boolean inCheck = ChessDetector.isInCheck(board, currentSide);

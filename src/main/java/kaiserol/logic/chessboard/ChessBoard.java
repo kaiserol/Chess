@@ -3,6 +3,8 @@ package kaiserol.logic.chessboard;
 import kaiserol.logic.moves.Move;
 import kaiserol.logic.pieces.*;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Stack;
 
 public class ChessBoard {
@@ -107,6 +109,19 @@ public class ChessBoard {
 
     public boolean isOccupiedBySide(ChessField field, Side side) {
         return field.isOccupied() && field.getPiece().getSide() == side;
+    }
+
+    public List<Piece> getPieces(Side side) {
+        List<Piece> pieces = new ArrayList<>();
+        for (int y = 1; y <= 8; y++) {
+            for (int x = 1; x < 8; x++) {
+                ChessField field = getField(x, y);
+                if (isOccupiedBySide(field, side)) {
+                    pieces.add(field.getPiece());
+                }
+            }
+        }
+        return pieces;
     }
 
     public void toConsole() {

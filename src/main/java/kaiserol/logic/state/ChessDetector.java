@@ -3,53 +3,42 @@ package kaiserol.logic.state;
 import kaiserol.logic.chessboard.ChessBoard;
 import kaiserol.logic.chessboard.ChessField;
 import kaiserol.logic.chessboard.Side;
+import kaiserol.logic.moves.Move;
 import kaiserol.logic.pieces.King;
 import kaiserol.logic.pieces.Piece;
-import kaiserol.logic.moves.Move;
 
 import java.util.List;
 
 public class ChessDetector {
 
-    public static boolean isFieldAttacked(ChessBoard board, ChessField field, Side attackerSide) {
-        for (int y = 1; y <= 8; y++) {
-            for (int x = 1; x <= 8; x++) {
-                ChessField currentField = board.getField(x, y);
-                if (board.isOccupiedBySide(currentField, attackerSide)) {
-                    Piece piece = currentField.getPiece();
+    public static boolean isInCheck(ChessBoard board, Side side) {
+        King king = findKing(board, side);
+        if (king == null) throw new IllegalStateException("King not found!");
 
-                    // Checks pseudolegal moves of the piece
-                    List<Move> pseudoLegalMoves = piece.getPseudoLegalMoves();
-                    for (Move move : pseudoLegalMoves) {
-                        if (move.getTargetField().equals(field)) {
-                            return true;
-                        }
-                    }
+        return isFieldAttacked(board, king.getField(), side.opposite());
+    }
+
+    private static King findKing(ChessBoard board, Side kingSide) {
+        List<Piece> pieces = board.getPieces(kingSide);
+        for (Piece piece : pieces) {
+            if (piece instanceof King king) {
+                return king;
+            }
+        }
+        return null;
+    }
+
+    public static boolean isFieldAttacked(ChessBoard board, ChessField field, Side attackerSide) {
+        List<Piece> attackers = board.getPieces(attackerSide);
+        for (Piece attacker : attackers) {
+            // Checks pseudolegal moves of the piece
+            List<Move> pseudoLegalMoves = attacker.getPseudoLegalMoves();
+            for (Move move : pseudoLegalMoves) {
+                if (move.getTargetField().equals(field)) {
+                    return true;
                 }
             }
         }
         return false;
-    }
-
-    public static boolean isInCheck(ChessBoard board, Side side) {
-        ChessField kingField = findKingField(board, side);
-        if (kingField == null) throw new IllegalStateException("King not found!");
-
-        return isFieldAttacked(board, kingField, side.opposite());
-    }
-
-    private static ChessField findKingField(ChessBoard board, Side side) {
-        for (int y = 1; y <= 8; y++) {
-            for (int x = 1; x <= 8; x++) {
-                ChessField field = board.getField(x, y);
-                if (board.isOccupiedBySide(field, side)) {
-                    Piece piece = field.getPiece();
-                    if (piece instanceof King) {
-                        return field;
-                    }
-                }
-            }
-        }
-        return null;
     }
 }
