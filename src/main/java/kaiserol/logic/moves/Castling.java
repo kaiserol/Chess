@@ -1,9 +1,9 @@
 package kaiserol.logic.moves;
 
-import kaiserol.chessboard.ChessBoard;
-import kaiserol.chessboard.ChessField;
-import kaiserol.chessboard.pieces.King;
-import kaiserol.chessboard.pieces.Rook;
+import kaiserol.logic.chessboard.ChessBoard;
+import kaiserol.logic.chessboard.ChessField;
+import kaiserol.logic.pieces.King;
+import kaiserol.logic.pieces.Rook;
 
 public final class Castling extends Move {
     private final ChessField rookStartField;

@@ -1,9 +1,9 @@
 package kaiserol.logic.moves;
 
-import kaiserol.chessboard.ChessBoard;
-import kaiserol.chessboard.ChessField;
-import kaiserol.chessboard.pieces.Piece;
-import kaiserol.logic.ChessDetector;
+import kaiserol.logic.state.ChessDetector;
+import kaiserol.logic.chessboard.ChessBoard;
+import kaiserol.logic.chessboard.ChessField;
+import kaiserol.logic.pieces.Piece;
 
 public abstract sealed class Move permits NormalMove, Castling, EnPassant, PawnJump, PawnPromotion {
     protected final ChessBoard board;

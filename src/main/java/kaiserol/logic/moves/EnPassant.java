@@ -1,8 +1,8 @@
 package kaiserol.logic.moves;
 
-import kaiserol.chessboard.ChessBoard;
-import kaiserol.chessboard.ChessField;
-import kaiserol.chessboard.pieces.Pawn;
+import kaiserol.logic.chessboard.ChessBoard;
+import kaiserol.logic.chessboard.ChessField;
+import kaiserol.logic.pieces.Pawn;
 
 public final class EnPassant extends Move {
     private final ChessField captureField;

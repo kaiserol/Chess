@@ -1,6 +1,6 @@
-package kaiserol.chessboard;
+package kaiserol.logic.chessboard;
 
-import kaiserol.chessboard.pieces.Piece;
+import kaiserol.logic.pieces.Piece;
 import org.jetbrains.annotations.NotNull;
 
 public class ChessField implements Comparable<ChessField> {

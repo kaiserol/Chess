@@ -1,10 +1,10 @@
 package kaiserol.controller;
 
-import kaiserol.chessboard.ChessBoard;
-import kaiserol.chessboard.ChessField;
-import kaiserol.chessboard.Side;
-import kaiserol.chessboard.pieces.Piece;
-import kaiserol.logic.ChessDetector;
+import kaiserol.logic.chessboard.ChessBoard;
+import kaiserol.logic.chessboard.ChessField;
+import kaiserol.logic.chessboard.Side;
+import kaiserol.logic.pieces.Piece;
+import kaiserol.logic.state.ChessDetector;
 import kaiserol.logic.moves.Move;
 import kaiserol.logic.moves.MoveException;
 import kaiserol.logic.state.GameState;

@@ -1,8 +1,8 @@
-package kaiserol.chessboard.pieces;
+package kaiserol.logic.pieces;
 
-import kaiserol.chessboard.ChessBoard;
-import kaiserol.chessboard.ChessField;
-import kaiserol.chessboard.Side;
+import kaiserol.logic.chessboard.ChessBoard;
+import kaiserol.logic.chessboard.ChessField;
+import kaiserol.logic.chessboard.Side;
 import kaiserol.logic.moves.Move;
 import kaiserol.logic.moves.NormalMove;
 

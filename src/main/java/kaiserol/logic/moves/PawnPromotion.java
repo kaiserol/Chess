@@ -1,11 +1,11 @@
 package kaiserol.logic.moves;
 
 import kaiserol.Main;
-import kaiserol.chessboard.ChessBoard;
-import kaiserol.chessboard.ChessField;
-import kaiserol.chessboard.Side;
-import kaiserol.chessboard.pieces.*;
+import kaiserol.logic.chessboard.ChessBoard;
+import kaiserol.logic.chessboard.ChessField;
+import kaiserol.logic.chessboard.Side;
 import kaiserol.controller.ChessController;
+import kaiserol.logic.pieces.*;
 
 public final class PawnPromotion extends Move {
     private final Pawn attackingPawn;

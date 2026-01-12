@@ -1,7 +1,7 @@
-package kaiserol.chessboard;
+package kaiserol.logic.chessboard;
 
-import kaiserol.chessboard.pieces.*;
 import kaiserol.logic.moves.Move;
+import kaiserol.logic.pieces.*;
 
 import java.util.Stack;
 
