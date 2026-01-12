@@ -1,4 +1,5 @@
 package kaiserol.controller;
+import kaiserol.logic.moves.PawnPromotion;
 
 public abstract class ChessController {
     protected final Game game;
@@ -8,4 +9,6 @@ public abstract class ChessController {
     }
 
     public abstract void run();
+
+    public abstract PawnPromotion.Choice getPromotionChoice();
 }

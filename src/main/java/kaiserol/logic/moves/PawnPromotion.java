@@ -1,9 +1,11 @@
 package kaiserol.logic.moves;
 
+import kaiserol.Main;
 import kaiserol.chessboard.ChessBoard;
 import kaiserol.chessboard.ChessField;
 import kaiserol.chessboard.Side;
 import kaiserol.chessboard.pieces.*;
+import kaiserol.controller.ChessController;
 
 public final class PawnPromotion extends Move {
     private final Pawn attackingPawn;
@@ -17,6 +19,14 @@ public final class PawnPromotion extends Move {
         this.promotedPiece = null;
     }
 
+    public Piece getPromotedPiece() {
+        return promotedPiece;
+    }
+
+    public void setPromotedPiece(Choice promotionChoice) {
+        promotedPiece = createPromotedPiece(promotionChoice);
+    }
+
     @Override
     public void execute() {
         // Removes the captured pawn and moves the attacking pawn one field forward
@@ -25,9 +35,7 @@ public final class PawnPromotion extends Move {
         board.link(targetField, attackingPawn);
 
         // Query the promotion piece, if not already set
-        if (promotedPiece == null) {
-            promotedPiece = waitForPromotionChoice();
-        }
+        choosePromotedPiece();
 
         // Removes the attacking pawn and promotes the pawn
         board.unlink(targetField, attackingPawn);
@@ -50,16 +58,26 @@ public final class PawnPromotion extends Move {
         attackingPawn.decreaseMoveCount();
     }
 
-    private Piece waitForPromotionChoice() {
-        // TODO: Implement method
-        throw new UnsupportedOperationException("Promotion choice not yet implemented");
+    @Override
+    public boolean isLegal() {
+        Piece oldPromotedPiece = promotedPiece;
+        if (promotedPiece == null) {
+            promotedPiece = createPromotedPiece(Choice.QUEEN);
+        }
+
+        boolean legal = super.isLegal();
+        promotedPiece = oldPromotedPiece;
+        return legal;
     }
 
-    public Piece choosePromotedPiece(Choice promotionChoice) {
-        return this.promotedPiece = createPromotedPiece(promotionChoice);
+    private void choosePromotedPiece() {
+        if (promotedPiece != null) return;
+        ChessController chessController = Main.getController();
+        Choice choice = chessController.getPromotionChoice();
+        promotedPiece = createPromotedPiece(choice);
     }
 
-    public Piece createPromotedPiece(Choice promotionChoice) {
+    private Piece createPromotedPiece(Choice promotionChoice) {
         final Side side = attackingPawn.getSide();
         final ChessBoard board = attackingPawn.getBoard();
 

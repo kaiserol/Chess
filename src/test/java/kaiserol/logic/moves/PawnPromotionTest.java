@@ -5,7 +5,6 @@ import kaiserol.chessboard.ChessField;
 import kaiserol.chessboard.Side;
 import kaiserol.chessboard.pieces.Pawn;
 import kaiserol.chessboard.pieces.Piece;
-import kaiserol.chessboard.pieces.Queen;
 import kaiserol.chessboard.pieces.Rook;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -30,7 +29,8 @@ public class PawnPromotionTest {
         board.link(startField, pawn);
 
         PawnPromotion promotion = new PawnPromotion(board, startField, targetField);
-        Queen promotedQueen = (Queen) promotion.choosePromotedPiece(PawnPromotion.Choice.QUEEN);
+        promotion.setPromotedPiece(PawnPromotion.Choice.QUEEN);
+        Piece promotedQueen = promotion.getPromotedPiece();
 
         board.toConsole();
         promotion.execute();
@@ -52,7 +52,8 @@ public class PawnPromotionTest {
         board.link(startField, pawn);
 
         PawnPromotion promotion = new PawnPromotion(board, startField, targetField);
-        Queen promotedQueen = (Queen) promotion.choosePromotedPiece(PawnPromotion.Choice.QUEEN);
+        promotion.setPromotedPiece(PawnPromotion.Choice.QUEEN);
+        Piece promotedQueen = promotion.getPromotedPiece();
 
         board.toConsole();
         promotion.execute();
@@ -79,7 +80,8 @@ public class PawnPromotionTest {
         board.link(targetField, blackRook);
 
         PawnPromotion promotion = new PawnPromotion(board, startField, targetField);
-        Queen promotedQueen = (Queen) promotion.choosePromotedPiece(PawnPromotion.Choice.QUEEN);
+        promotion.setPromotedPiece(PawnPromotion.Choice.QUEEN);
+        Piece promotedQueen = promotion.getPromotedPiece();
 
         board.toConsole();
         promotion.execute();
@@ -105,7 +107,8 @@ public class PawnPromotionTest {
         board.link(targetField, blackRook);
 
         PawnPromotion promotion = new PawnPromotion(board, startField, targetField);
-        Queen promotedQueen = (Queen) promotion.choosePromotedPiece(PawnPromotion.Choice.QUEEN);
+        promotion.setPromotedPiece(PawnPromotion.Choice.QUEEN);
+        Piece promotedQueen = promotion.getPromotedPiece();
 
         board.toConsole();
         promotion.execute();

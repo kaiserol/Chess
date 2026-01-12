@@ -1,5 +1,7 @@
 package kaiserol.controller;
 
+import kaiserol.logic.moves.PawnPromotion;
+
 import java.util.Scanner;
 
 public class TerminalChess extends ChessController {
@@ -38,6 +40,28 @@ public class TerminalChess extends ChessController {
         }
 
         scanner.close();
+    }
+
+    @Override
+    public PawnPromotion.Choice getPromotionChoice() {
+        while (true) {
+            System.out.print("Pawn promotion! Choose a piece (Q, R, B, N): ");
+            String input = scanner.nextLine().trim().toUpperCase();
+
+            PawnPromotion.Choice choice = switch (input) {
+                case "Q" -> PawnPromotion.Choice.QUEEN;
+                case "R" -> PawnPromotion.Choice.ROOK;
+                case "B" -> PawnPromotion.Choice.BISHOP;
+                case "N" -> PawnPromotion.Choice.KNIGHT;
+                default -> null;
+            };
+
+            if (choice != null) {
+                return choice;
+            } else {
+                printError("Invalid choice.");
+            }
+        }
     }
 
     private String readMove() {

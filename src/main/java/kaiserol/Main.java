@@ -1,11 +1,10 @@
 package kaiserol;
 
-import kaiserol.controller.TerminalChessSimulator;
-import kaiserol.controller.Game;
-import kaiserol.controller.GrafikChess;
-import kaiserol.controller.TerminalChess;
+import kaiserol.controller.*;
 
 public class Main {
+    private static ChessController controller;
+
     public static void main(String[] args) {
         Game game = new Game();
 
@@ -17,12 +16,18 @@ public class Main {
             String[] blackMoves = {"h7h6", "h6h5", "h5h4", "h4h3", "h3g2"};
             simulator.addSimulation(whiteMoves, blackMoves);
 
-            // Runs the simulator
-            simulator.run();
+            controller = simulator;
         } else if (args.length > 0 && args[0].equalsIgnoreCase("-terminal")) {
-            new TerminalChess(game).run();
+            controller = new TerminalChess(game);
         } else {
-            new GrafikChess(game).run();
+            controller = new GrafikChess(game);
         }
+
+        // Starts the controller
+        controller.run();
+    }
+
+    public static ChessController getController() {
+        return controller;
     }
 }

@@ -3,7 +3,6 @@ package kaiserol.chessboard.pieces;
 import kaiserol.chessboard.ChessBoard;
 import kaiserol.chessboard.ChessField;
 import kaiserol.chessboard.Side;
-import kaiserol.logic.ChessDetector;
 import kaiserol.logic.moves.Move;
 import kaiserol.logic.moves.NormalMove;
 
@@ -109,12 +108,7 @@ public abstract class Piece {
         List<Move> legalMoves = new ArrayList<>();
 
         for (Move move : pseudoLegalMoves) {
-            move.execute();
-
-            boolean isInCheck = ChessDetector.isInCheck(board, side);
-            if (!isInCheck) legalMoves.add(move);
-
-            move.undo();
+            if (move.isLegal()) legalMoves.add(move);
         }
 
         legalMoves.sort(Comparator.comparing(Move::getTargetField));

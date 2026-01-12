@@ -1,14 +1,19 @@
 package kaiserol.controller;
 
+import kaiserol.logic.moves.PawnPromotion;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class TerminalChessSimulator extends ChessController {
     private final List<Simulation> simulations;
+    private final Scanner scanner;
 
     public TerminalChessSimulator(Game game) {
         super(game);
         this.simulations = new ArrayList<>();
+        this.scanner = new Scanner(System.in);
     }
 
     public void addSimulation(String[] whiteMoves, String[] blackMoves) {
@@ -27,6 +32,30 @@ public class TerminalChessSimulator extends ChessController {
         for (int i = 0; i < simulations.size(); i++) {
             Simulation simulation = simulations.get(i);
             runSimulation(simulation.whiteMoves(), simulation.blackMoves(), i + 1);
+        }
+
+        scanner.close();
+    }
+
+    @Override
+    public PawnPromotion.Choice getPromotionChoice() {
+        while (true) {
+            System.out.print("Pawn promotion! Choose a piece (Q, R, B, N): ");
+            String input = scanner.nextLine().trim().toUpperCase();
+
+            PawnPromotion.Choice choice = switch (input) {
+                case "Q" -> PawnPromotion.Choice.QUEEN;
+                case "R" -> PawnPromotion.Choice.ROOK;
+                case "B" -> PawnPromotion.Choice.BISHOP;
+                case "N" -> PawnPromotion.Choice.KNIGHT;
+                default -> null;
+            };
+
+            if (choice != null) {
+                return choice;
+            } else {
+                printError("Invalid choice.");
+            }
         }
     }
 
