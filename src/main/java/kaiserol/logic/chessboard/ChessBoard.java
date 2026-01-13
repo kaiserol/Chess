@@ -25,11 +25,10 @@ public class ChessBoard {
         moveHistory.push(move);
     }
 
-    public Move undoMove() {
-        if (moveHistory.empty()) return null;
+    public void undoMove() {
+        if (moveHistory.empty()) return;
         Move move = moveHistory.pop();
         move.undo();
-        return move;
     }
 
     public Move getLastMove() {

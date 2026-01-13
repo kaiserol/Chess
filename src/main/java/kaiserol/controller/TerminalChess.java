@@ -29,6 +29,9 @@ public class TerminalChess extends ChessController {
                 } else if (input.equalsIgnoreCase("undo")) {
                     game.undoMove();
                     game.getBoard().toConsole();
+                } else if (input.equalsIgnoreCase("redo")) {
+                    game.redoMove();
+                    game.getBoard().toConsole();
                 } else {
                     game.executeMove(input);
                     game.getBoard().toConsole();
@@ -58,6 +61,7 @@ public class TerminalChess extends ChessController {
         printMessage("- Enter moves in the format 'e2e4'");
         printMessage("- Enter 'restart' to start a new game");
         printMessage("- Enter 'undo' to undo");
+        printMessage("- Enter 'redo' to redo");
         printMessage("- Enter 'exit' to quit.");
         printMessage("=".repeat(40));
     }

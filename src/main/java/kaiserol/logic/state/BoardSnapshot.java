@@ -1,5 +1,6 @@
 package kaiserol.logic.state;
 
+import kaiserol.controller.Game;
 import kaiserol.logic.chessboard.ChessBoard;
 import kaiserol.logic.chessboard.ChessField;
 import kaiserol.logic.chessboard.Side;
@@ -9,6 +10,15 @@ public class BoardSnapshot {
     private final String fen;
     private final int halfMoveCount;
     private final int fullMoveCount;
+
+    public BoardSnapshot(Game game) {
+        this(
+                game.getBoard(),
+                game.getCurrentSide(),
+                game.getHalfMoveCount(),
+                game.getFullMoveCount()
+        );
+    }
 
     public BoardSnapshot(ChessBoard chessBoard, Side currentSide, int halfMoveCount, int fullMoveCount) {
         this.halfMoveCount = halfMoveCount;

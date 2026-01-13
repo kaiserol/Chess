@@ -1,5 +1,6 @@
 package kaiserol.logic.state;
 
+import kaiserol.controller.Game;
 import kaiserol.logic.chessboard.ChessBoard;
 import kaiserol.logic.chessboard.Side;
 import kaiserol.logic.pieces.Piece;
@@ -16,6 +17,15 @@ public enum GameState {
 
     public boolean isFinal() {
         return this == CHECKMATE || this == STALEMATE || this == DRAW;
+    }
+
+    public static GameState getGameState(Game game) {
+        return getGameState(
+                game.getBoard(),
+                game.getCurrentSide(),
+                game.getBoardHistory(),
+                game.getHalfMoveCount()
+        );
     }
 
     public static GameState getGameState(ChessBoard chessBoard, Side currentSide, Stack<BoardSnapshot> boardHistory, int halfMoveCount) {
