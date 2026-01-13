@@ -26,9 +26,8 @@ public class QueenTest {
         Queen queen = new Queen(board, Side.WHITE);
         board.link(field, queen);
 
-        List<Move> moves = queen.getPseudoLegalMoves();
+        List<Move> moves = queen.getSortedPseudoLegalMoves();
         List<String> targetFields = moves.stream().map(Move::toString).toList();
-
         System.out.printf("%d Pseudo legal moves from %s (%s): %s%n", moves.size(), field, queen, moves);
         board.toConsole();
 

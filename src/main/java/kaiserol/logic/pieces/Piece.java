@@ -53,30 +53,37 @@ public abstract class Piece {
         moveCount--;
     }
 
-    private boolean breakWhileAddingMove(int targetX, int targetY, List<Move> moves) {
+    private boolean addMoveAndShouldStop(int targetX, int targetY, List<Move> moves) {
         ChessField targetField = board.getField(targetX, targetY);
-        if (board.isOccupiedBySide(targetField, side)) return true;
 
+        // Stop if the target field is occupied by an own piece
+        if (board.isOccupiedBySide(targetField, side)) {
+            return true;
+        }
+
+        // Add the move to the list
         moves.add(new NormalMove(board, field, targetField));
+
+        // Stop if the target field is occupied
         return targetField.isOccupied();
     }
 
-    protected final List<Move> getLinearMoves() {
+    protected final List<Move> generateOrthogonalMoves() {
         final List<Move> moves = new ArrayList<>();
         if (field == null) return moves;
 
         final int fieldX = field.getX();
         final int fieldY = field.getY();
 
-        for (int x = fieldX - 1; x >= 1; x--) if (breakWhileAddingMove(x, fieldY, moves)) break; // West
-        for (int x = fieldX + 1; x <= 8; x++) if (breakWhileAddingMove(x, fieldY, moves)) break; // East
-        for (int y = fieldY - 1; y >= 1; y--) if (breakWhileAddingMove(fieldX, y, moves)) break; // South
-        for (int y = fieldY + 1; y <= 8; y++) if (breakWhileAddingMove(fieldX, y, moves)) break; // North
+        for (int x = fieldX - 1; x >= 1; x--) if (addMoveAndShouldStop(x, fieldY, moves)) break; // West
+        for (int x = fieldX + 1; x <= 8; x++) if (addMoveAndShouldStop(x, fieldY, moves)) break; // East
+        for (int y = fieldY - 1; y >= 1; y--) if (addMoveAndShouldStop(fieldX, y, moves)) break; // South
+        for (int y = fieldY + 1; y <= 8; y++) if (addMoveAndShouldStop(fieldX, y, moves)) break; // North
 
         return moves;
     }
 
-    protected final List<Move> getDiagonalMoves() {
+    protected final List<Move> generateDiagonalMoves() {
         final List<Move> moves = new ArrayList<>();
         if (field == null) return moves;
 
@@ -84,34 +91,32 @@ public abstract class Piece {
         final int fieldY = field.getY();
 
         for (int i = 1; fieldX - i >= 1 && fieldY - i >= 1; i++)
-            if (breakWhileAddingMove(fieldX - i, fieldY - i, moves)) break; // South-West
+            if (addMoveAndShouldStop(fieldX - i, fieldY - i, moves)) break; // South-West
         for (int i = 1; fieldX + i <= 8 && fieldY + i <= 8; i++)
-            if (breakWhileAddingMove(fieldX + i, fieldY + i, moves)) break; // North-East
+            if (addMoveAndShouldStop(fieldX + i, fieldY + i, moves)) break; // North-East
         for (int i = 1; fieldX - i >= 1 && fieldY + i <= 8; i++)
-            if (breakWhileAddingMove(fieldX - i, fieldY + i, moves)) break; // North-West
+            if (addMoveAndShouldStop(fieldX - i, fieldY + i, moves)) break; // North-West
         for (int i = 1; fieldX + i <= 8 && fieldY - i >= 1; i++)
-            if (breakWhileAddingMove(fieldX + i, fieldY - i, moves)) break; // South-East
+            if (addMoveAndShouldStop(fieldX + i, fieldY - i, moves)) break; // South-East
 
         return moves;
     }
 
-    protected abstract List<Move> getPseudoLegalMovesHelper();
+    protected abstract List<Move> generatePseudoLegalMoves();
 
-    public final List<Move> getPseudoLegalMoves() {
-        List<Move> moves = new ArrayList<>(getPseudoLegalMovesHelper());
+    public final List<Move> getSortedPseudoLegalMoves() {
+        List<Move> moves = new ArrayList<>(generatePseudoLegalMoves());
         moves.sort(Comparator.comparing(Move::getTargetField));
         return moves;
     }
 
     public final List<Move> getLegalMoves() {
-        List<Move> pseudoLegalMoves = getPseudoLegalMoves();
+        List<Move> pseudoLegalMoves = getSortedPseudoLegalMoves();
         List<Move> legalMoves = new ArrayList<>();
 
         for (Move move : pseudoLegalMoves) {
             if (move.isLegal()) legalMoves.add(move);
         }
-
-        legalMoves.sort(Comparator.comparing(Move::getTargetField));
         return legalMoves;
     }
 

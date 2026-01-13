@@ -31,7 +31,7 @@ public class KingTest {
         Rook rook = new Rook(board, Side.BLACK);
         board.link(rookField, rook);
 
-        List<Move> moves = king.getPseudoLegalMoves();
+        List<Move> moves = king.getSortedPseudoLegalMoves();
         System.out.printf("%d Pseudo legal moves from %s (%s): %s%n", moves.size(), field, king, moves);
         board.toConsole();
 
@@ -50,10 +50,9 @@ public class KingTest {
         board.link(rookField, rook);
 
         List<Move> legalMoves = king.getLegalMoves();
+        List<String> targetFields = legalMoves.stream().map(Move::toString).toList();
         System.out.printf("%d Legal moves from %s (%s): %s%n", legalMoves.size(), field, king, legalMoves);
         board.toConsole();
-
-        List<String> targetFields = legalMoves.stream().map(Move::toString).toList();
 
         assertFalse(targetFields.contains("d5"));
         assertFalse(targetFields.contains("e5"));
@@ -69,7 +68,7 @@ public class KingTest {
         board.link(board.getField("e1"), king);
         board.link(board.getField("h1"), rook);
 
-        List<Move> moves = king.getPseudoLegalMoves();
+        List<Move> moves = king.getSortedPseudoLegalMoves();
         System.out.printf("%d Pseudo legal moves from %s (%s): %s%n", moves.size(), king.getField(), king, moves);
         board.toConsole();
 
@@ -85,7 +84,7 @@ public class KingTest {
         board.link(board.getField("e1"), king);
         board.link(board.getField("a1"), rook);
 
-        List<Move> moves = king.getPseudoLegalMoves();
+        List<Move> moves = king.getSortedPseudoLegalMoves();
         System.out.printf("%d Pseudo legal moves from %s (%s): %s%n", moves.size(), king.getField(), king, moves);
         board.toConsole();
 
@@ -103,7 +102,7 @@ public class KingTest {
         // Block with Bishop
         board.link(board.getField("f1"), new Queen(board, Side.WHITE));
 
-        List<Move> moves = king.getPseudoLegalMoves();
+        List<Move> moves = king.getSortedPseudoLegalMoves();
         System.out.printf("%d Pseudo legal moves from %s (%s): %s%n", moves.size(), king.getField(), king, moves);
         board.toConsole();
 
@@ -122,7 +121,7 @@ public class KingTest {
         Rook enemyRook = new Rook(board, Side.BLACK);
         board.link(board.getField("f8"), enemyRook);
 
-        List<Move> moves = king.getPseudoLegalMoves();
+        List<Move> moves = king.getSortedPseudoLegalMoves();
         System.out.printf("%d Pseudo legal moves from %s (%s): %s%n", moves.size(), king.getField(), king, moves);
         board.toConsole();
 

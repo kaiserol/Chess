@@ -25,7 +25,7 @@ public class CheckDetector {
         List<Piece> attackers = board.getPieces(attackerSide);
         for (Piece attacker : attackers) {
             // Check pseudolegal moves of the piece
-            List<Move> pseudoLegalMoves = attacker.getPseudoLegalMoves();
+            List<Move> pseudoLegalMoves = attacker.getSortedPseudoLegalMoves();
             for (Move move : pseudoLegalMoves) {
                 if (move.getTargetField().equals(field)) {
                     return true;

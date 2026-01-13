@@ -37,9 +37,9 @@ public abstract sealed class Move permits NormalMove, Castling, EnPassant, PawnJ
         Piece startingPiece = startField.getPiece();
 
         execute();
-        boolean legal = !CheckDetector.isInCheck(startingPiece.getBoard(), startingPiece.getSide());
+        boolean isInCheck = CheckDetector.isInCheck(startingPiece.getBoard(), startingPiece.getSide());
         undo();
 
-        return legal;
+        return !isInCheck;
     }
 }

@@ -25,9 +25,8 @@ public class RookTest {
         Rook rook = new Rook(board, Side.WHITE);
         board.link(field, rook);
 
-        List<Move> moves = rook.getPseudoLegalMoves();
+        List<Move> moves = rook.getSortedPseudoLegalMoves();
         List<String> targetFields = moves.stream().map(Move::toString).toList();
-
         System.out.printf("%d Pseudo legal moves from %s (%s): %s%n", moves.size(), field, rook, moves);
         board.toConsole();
 
@@ -48,9 +47,8 @@ public class RookTest {
         // Block d6
         board.link(board.getField("d6"), new Pawn(board, Side.WHITE));
 
-        List<Move> moves = rook.getPseudoLegalMoves();
+        List<Move> moves = rook.getSortedPseudoLegalMoves();
         List<String> targetFields = moves.stream().map(Move::toString).toList();
-
         System.out.printf("%d Pseudo legal moves from %s (%s): %s%n", moves.size(), field, rook, moves);
         board.toConsole();
 

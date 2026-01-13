@@ -25,9 +25,8 @@ public class KnightTest {
         Knight knight = new Knight(board, Side.WHITE);
         board.link(field, knight);
 
-        List<Move> moves = knight.getPseudoLegalMoves();
+        List<Move> moves = knight.getSortedPseudoLegalMoves();
         List<String> targetFields = moves.stream().map(Move::toString).toList();
-
         System.out.printf("%d Pseudo legal moves from %s (%s): %s%n", moves.size(), field, knight, moves);
         board.toConsole();
 
@@ -49,9 +48,8 @@ public class KnightTest {
         Knight knight = new Knight(board, Side.WHITE);
         board.link(field, knight);
 
-        List<Move> moves = knight.getPseudoLegalMoves();
+        List<Move> moves = knight.getSortedPseudoLegalMoves();
         List<String> targetFields = moves.stream().map(Move::toString).toList();
-
         System.out.printf("%d Pseudo legal moves from %s (%s): %s%n", moves.size(), field, knight, moves);
         board.toConsole();
 
@@ -69,8 +67,7 @@ public class KnightTest {
 
         // Block c6
         board.link(board.getField("c6"), new Pawn(board, Side.WHITE));
-
-        List<Move> moves = knight.getPseudoLegalMoves();
+        List<Move> moves = knight.getSortedPseudoLegalMoves();
         List<String> targetFields = moves.stream().map(Move::toString).toList();
 
         System.out.printf("%d Pseudo legal moves from %s (%s): %s%n", moves.size(), field, knight, moves);

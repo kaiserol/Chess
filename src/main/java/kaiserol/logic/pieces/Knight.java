@@ -16,7 +16,7 @@ public final class Knight extends Piece {
     }
 
     @Override
-    protected List<Move> getPseudoLegalMovesHelper() {
+    protected List<Move> generatePseudoLegalMoves() {
         final List<Move> moves = new ArrayList<>();
         if (field == null) return moves;
 

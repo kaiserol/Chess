@@ -25,9 +25,8 @@ public class BishopTest {
         Bishop bishop = new Bishop(board, Side.WHITE);
         board.link(field, bishop);
 
-        List<Move> moves = bishop.getPseudoLegalMoves();
+        List<Move> moves = bishop.getSortedPseudoLegalMoves();
         List<String> targetFields = moves.stream().map(Move::toString).toList();
-
         System.out.printf("%d Pseudo legal moves from %s (%s): %s%n", moves.size(), field, bishop, moves);
         board.toConsole();
 
@@ -52,9 +51,8 @@ public class BishopTest {
         board.link(board.getField("b6"), new Pawn(board, Side.WHITE));
         board.link(board.getField("e5"), new Pawn(board, Side.WHITE));
 
-        List<Move> moves = bishop.getPseudoLegalMoves();
+        List<Move> moves = bishop.getSortedPseudoLegalMoves();
         List<String> targetFields = moves.stream().map(Move::toString).toList();
-
         System.out.printf("%d Pseudo legal moves from %s (%s): %s%n", moves.size(), field, bishop, moves);
         board.toConsole();
 
@@ -79,9 +77,8 @@ public class BishopTest {
         board.link(board.getField("b6"), new Pawn(board, Side.BLACK));
         board.link(board.getField("e5"), new Pawn(board, Side.BLACK));
 
-        List<Move> moves = bishop.getPseudoLegalMoves();
+        List<Move> moves = bishop.getSortedPseudoLegalMoves();
         List<String> targetFields = moves.stream().map(Move::toString).toList();
-
         System.out.printf("%d Pseudo legal moves from %s (%s): %s%n", moves.size(), field, bishop, moves);
         board.toConsole();
 

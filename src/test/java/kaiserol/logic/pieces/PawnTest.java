@@ -25,8 +25,7 @@ public class PawnTest {
         Pawn whitePawn = new Pawn(board, Side.WHITE);
         board.link(whiteField, whitePawn);
 
-        List<Move> moves = whitePawn.getPseudoLegalMoves();
-
+        List<Move> moves = whitePawn.getSortedPseudoLegalMoves();
         System.out.printf("%d Pseudo legal moves from %s (%s): %s%n", moves.size(), whiteField, whitePawn, moves);
         board.toConsole();
 
@@ -41,8 +40,7 @@ public class PawnTest {
         Pawn blackPawn = new Pawn(board, Side.BLACK);
         board.link(blackField, blackPawn);
 
-        List<Move> moves = blackPawn.getPseudoLegalMoves();
-
+        List<Move> moves = blackPawn.getSortedPseudoLegalMoves();
         System.out.printf("%d Pseudo legal moves from %s (%s): %s%n", moves.size(), blackField, blackPawn, moves);
         board.toConsole();
 
@@ -65,7 +63,7 @@ public class PawnTest {
         Rook blackRook = new Rook(board, Side.BLACK);
         board.link(otherBlackField, blackRook);
 
-        List<Move> moves = whitePawn.getPseudoLegalMoves();
+        List<Move> moves = whitePawn.getSortedPseudoLegalMoves();
         System.out.printf("%d Pseudo legal moves from %s (%s): %s%n", moves.size(), whiteField, whitePawn, moves);
         board.toConsole();
 
@@ -86,7 +84,7 @@ public class PawnTest {
         Rook blockingPiece = new Rook(board, Side.BLACK);
         board.link(blockingField, blockingPiece);
 
-        List<Move> moves = whitePawn.getPseudoLegalMoves();
+        List<Move> moves = whitePawn.getSortedPseudoLegalMoves();
         System.out.printf("%d Pseudo legal moves from %s (%s): %s%n", moves.size(), whiteField, whitePawn, moves);
         board.toConsole();
 
@@ -99,8 +97,7 @@ public class PawnTest {
         Pawn whitePawn = new Pawn(board, Side.WHITE);
         board.link(whiteField, whitePawn);
 
-        List<Move> moves = whitePawn.getPseudoLegalMoves();
-
+        List<Move> moves = whitePawn.getSortedPseudoLegalMoves();
         System.out.printf("%d Pseudo legal moves from %s (%s): %s%n", moves.size(), whiteField, whitePawn, moves);
         board.toConsole();
 
@@ -128,9 +125,7 @@ public class PawnTest {
         PawnJump jump = new PawnJump(board, d7, d5);
         board.executeMove(jump);
 
-
-        List<Move> moves = whitePawn.getPseudoLegalMoves();
-
+        List<Move> moves = whitePawn.getSortedPseudoLegalMoves();
         System.out.printf("%d Pseudo legal moves from %s (%s): %s%n", moves.size(), e5, whitePawn, moves);
         board.toConsole();
 

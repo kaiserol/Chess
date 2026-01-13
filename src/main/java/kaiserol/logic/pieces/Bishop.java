@@ -13,8 +13,8 @@ public final class Bishop extends Piece {
     }
 
     @Override
-    protected List<Move> getPseudoLegalMovesHelper() {
-        return getDiagonalMoves();
+    protected List<Move> generatePseudoLegalMoves() {
+        return generateDiagonalMoves();
     }
 
     @Override
