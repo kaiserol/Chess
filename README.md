@@ -1,72 +1,91 @@
-# Chess
+# ♟️ Java Chess
 
-A modern chess project in Java with planned multiplayer functionality.
+A modern chess engine and application, developed with a focus on clean object-oriented design, comprehensive test coverage, and extensibility.
 
-## 🛠️ Development
+---
 
-### Technology Stack
+## 🚀 Overview
 
-- **IDE:** IntelliJ IDEA (Community / Ultimate)
-- **Language**: Java
-- **Build Tool**: Maven
+This project provides a full chess logic implementation in Java. It supports all official FIDE rules, various user interfaces (Terminal & GUI), and is prepared for easy expansion (e.g., multiplayer, engine connection).
+
+### ✨ Key Features
+
+- **Complete Rule Sets**:
+  - All standard moves (En Passant, Castling, Pawn Promotion).
+  - Legal move validation (prevents moves that put one's own king in check).
+  - End-state detection: Checkmate, Stalemate, Draw (insufficient material, threefold repetition, 50-move rule).
+- **Flexible Interface System**:
+  - **Graphical User Interface (GUI)**: Intuitive operation for players.
+  - **Terminal Mode**: Lightweight control via the console.
+  - **Simulation Mode**: Automated move sequences for debugging and testing.
+- **Robust Undo/Redo**: Full support for undoing and redoing moves based on board snapshots (FEN-based).
+- **High Quality**: Extensive JUnit test suite for piece logic and game states.
+
+---
+
+## 🛠️ Technology Stack
+
+- **Language**: Java 24
+- **Build System**: Maven 3.9.11
 - **Testing**: JUnit 5
-- **Architecture**: Object-oriented design with clear separation of game logic and presentation
+- **Architecture**: MVC pattern (Model-View-Controller) with decoupled logic.
 
-### Notes for IntelliJ IDEA
+---
 
-1. Open project → `Chess/`
-2. Select Project SDK: **JDK 24**
-3. IntelliJ automatically recognizes the Maven project
-4. To start:
-    - Menu: *Run → Run 'Main'*
-    - or custom Run configuration with Main-Class (e.g., `kaiserol.Main`)
+## 🚦 Getting Started
+
+### Prerequisites
+- **JDK 24** or higher
+- **Maven** installed (or via IDE)
+
+### Installation
+1. Clone or download the repository.
+2. Open the project in IntelliJ IDEA or another IDE.
+3. Allow Maven dependencies to load.
+
+### Starting the Application
+
+The application can be started in different modes:
+
+| Mode              | Command / Parameter               | Description                          |
+|-------------------|-----------------------------------|--------------------------------------|
+| **GUI (Default)** | `java -jar chess.jar`             | Starts the graphical user interface. |
+| **Terminal**      | `java -jar chess.jar -terminal`   | Starts the game in the console.      |
+| **Simulation**    | `java -jar chess.jar -simulation` | Executes a predefined move sequence. |
+
+---
+
+## 💻 Development
 
 ### Important Maven Commands
 
-| Command                  | Purpose                          |
-|--------------------------|----------------------------------|
-| `mvn clean install`      | Clean and rebuild project        |
-| `mvn compile`            | Compile the project              |
-| `mvn dependency:resolve` | Only update dependencies         |
-| `mvn test`               | Run tests                        |
+- **Build project**: `mvn clean install`
+- **Run tests**: `mvn test`
+- **Compile**: `mvn compile`
 
-## ⚙️ Troubleshooting
+### Project Structure
 
-### Check Java Version
+- `kaiserol.logic`: Core logic, pieces, move validation, and state checking.
+- `kaiserol.controller`: Game control and state management.
+- `kaiserol.view`: (Planned) Separation of UI components.
+- `kaiserol.Main`: Entry point of the application.
 
-- Check if Java 24 is installed:
-    ```bash
-    java -version
-    ```
-- Example output:
-    ```bash
-    openjdk version "24.0.1" 2025-04-15
-    ```
+---
 
-If another version is displayed, adjust `JAVA_HOME` if necessary or install a suitable JDK version.
+## 🗺️ Roadmap & Progress
 
-## 📋 Project Description
+### ✅ Completed Milestones
+- [x] **Core Chess Logic**: Full implementation of FIDE rules, including special moves (Castling, En Passant, Promotion).
+- [x] **Move Validation**: Legal move calculation including check detection and mate/stalemate states.
+- [x] **Multi-Interface Support**: Terminal-based play, simulation mode, and a basic GUI.
+- [x] **Robust Test Suite**: High coverage for piece movement and edge cases.
+- [x] **Draw Detection**: Support for 50-move rule, threefold repetition, and insufficient material.
+- [x] **FEN-based State Management**: Efficient board snapshots for undo/redo and position tracking.
 
-**Chess** is a chess implementation in Java. The project
-is under active development and is being expanded with new features.
-
-### 🎯 Implemented Features
-
-- [x] 8x8 chessboard with field management
-- [x] Chess pieces (King, Queen, Rook, Bishop, Knight, Pawn)
-- [x] Implemented chess piece movements (Castling, En Passant, Pawn Promotion, moving and capturing)
-- [x] Rule-compliant move validation for all pieces
-- [x] Extensive unit tests for game logic
-- [x] Chess rules for ending the game (Checkmate, Stalemate)
-- [x] Various handlers (Terminal Chess, Simulation Chess, GUI Chess)
-  - [x] Console-based representation of the board (Terminal chess)
-  - [x] Chess simulation mode (Simulation chess)
-- [x] Pawn promotion implemented in handlers
-
-### 🚀 Planned Features
-
-- [ ] 50-move rule, 3-fold repetition
-- [ ] Chess notation (PGN format)
-- [ ] Graphical User Interface (GUI)
-- [ ] Game state saving and restoration
-- [ ] Server-client implementation (Multiplayer server)
+### 🚀 Upcoming Features
+- [ ] **PGN Support**: Import and export of games in the standardized Portable Game Notation format.
+- [ ] **Advanced GUI**: Better graphics, drag-and-drop support, and move animations.
+- [ ] **Multiplayer**: Server-client architecture for online play.
+- [ ] **Persistence System**: Save and load game states to/from files.
+- [ ] **AI Engine**: Integration of a basic move-finding algorithm or UCI support for external engines (like Stockfish).
+- [ ] **Clock System**: Blitz/Rapid/Standard timing support.
