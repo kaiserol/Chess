@@ -1,9 +1,9 @@
 package kaiserol.logic.moves;
 
-import kaiserol.logic.state.ChessDetector;
 import kaiserol.logic.chessboard.ChessBoard;
 import kaiserol.logic.chessboard.ChessField;
 import kaiserol.logic.pieces.Piece;
+import kaiserol.logic.state.CheckDetector;
 
 public abstract sealed class Move permits NormalMove, Castling, EnPassant, PawnJump, PawnPromotion {
     protected final ChessBoard board;
@@ -14,6 +14,10 @@ public abstract sealed class Move permits NormalMove, Castling, EnPassant, PawnJ
         this.board = board;
         this.startField = startField;
         this.targetField = targetField;
+    }
+
+    public ChessField getStartField() {
+        return startField;
     }
 
     public ChessField getTargetField() {
@@ -33,7 +37,7 @@ public abstract sealed class Move permits NormalMove, Castling, EnPassant, PawnJ
         Piece startingPiece = startField.getPiece();
 
         execute();
-        boolean legal = !ChessDetector.isInCheck(startingPiece.getBoard(), startingPiece.getSide());
+        boolean legal = !CheckDetector.isInCheck(startingPiece.getBoard(), startingPiece.getSide());
         undo();
 
         return legal;

@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
+// TODO: Consider whether counting moves is important; isn't a boolean sufficient? (see: #moveCount)
 public abstract class Piece {
     protected final ChessBoard board;
     protected final Side side;
@@ -117,10 +118,10 @@ public abstract class Piece {
 
     public abstract char getSymbol();
 
-    public abstract char getDisplayName();
+    public abstract char getLetter();
 
     @Override
     public String toString() {
-        return String.valueOf(getDisplayName());
+        return String.valueOf(getLetter());
     }
 }

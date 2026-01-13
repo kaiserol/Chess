@@ -3,7 +3,7 @@ package kaiserol.logic.pieces;
 import kaiserol.logic.chessboard.ChessBoard;
 import kaiserol.logic.chessboard.ChessField;
 import kaiserol.logic.chessboard.Side;
-import kaiserol.logic.state.ChessDetector;
+import kaiserol.logic.state.CheckDetector;
 import kaiserol.logic.moves.Castling;
 import kaiserol.logic.moves.Move;
 import kaiserol.logic.moves.NormalMove;
@@ -61,18 +61,18 @@ public final class King extends Piece {
         if (board.isOccupiedBySide(rookStartField, side) && rookStartField.getPiece() instanceof Rook rook) {
             if (rook.getMoveCount() != 0) return;
 
-            // Checks whether the fields between the king and the rook are empty
+            // Check whether the fields between the king and the rook are empty
             int startX = Math.min(field.getX(), rookX) + 1;
             int endX = Math.max(field.getX(), rookX) - 1;
             for (int tx = startX; tx <= endX; tx++) {
                 if (board.getField(tx, fieldY).isOccupied()) return;
             }
 
-            // Checks whether the king is in check or moves over attacked squares
+            // Check whether the king is in check or moves over attacked squares
             int direction = queenside ? -1 : 1;
             for (int i = 0; i <= 2; i++) {
                 int targetX = fieldX + direction * i;
-                if (ChessDetector.isFieldAttacked(board, board.getField(targetX, fieldY), side.opposite())) return;
+                if (CheckDetector.isFieldAttacked(board, board.getField(targetX, fieldY), side.opposite())) return;
             }
 
             // Everything is fine, add castling
@@ -88,7 +88,7 @@ public final class King extends Piece {
     }
 
     @Override
-    public char getDisplayName() {
+    public char getLetter() {
         return side.isWhite() ? 'K' : 'k';
     }
 }

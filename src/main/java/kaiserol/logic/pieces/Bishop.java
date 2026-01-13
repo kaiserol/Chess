@@ -23,7 +23,7 @@ public final class Bishop extends Piece {
     }
 
     @Override
-    public char getDisplayName() {
+    public char getLetter() {
         return side.isWhite() ? 'B' : 'b';
     }
 }

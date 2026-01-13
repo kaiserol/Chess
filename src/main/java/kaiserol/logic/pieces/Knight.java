@@ -51,7 +51,7 @@ public final class Knight extends Piece {
     }
 
     @Override
-    public char getDisplayName() {
+    public char getLetter() {
         return side.isWhite() ? 'N' : 'n';
     }
 }

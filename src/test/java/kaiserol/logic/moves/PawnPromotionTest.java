@@ -33,7 +33,7 @@ public class PawnPromotionTest {
         Piece promotedQueen = promotion.getPromotedPiece();
 
         board.toConsole();
-        promotion.execute();
+        board.executeMove(promotion);
         board.toConsole();
 
         assertEquals(1, pawn.getMoveCount());
@@ -56,9 +56,9 @@ public class PawnPromotionTest {
         Piece promotedQueen = promotion.getPromotedPiece();
 
         board.toConsole();
-        promotion.execute();
+        board.executeMove(promotion);
         board.toConsole();
-        promotion.undo();
+        board.undoMove();
         board.toConsole();
 
         assertEquals(0, pawn.getMoveCount());
@@ -84,7 +84,7 @@ public class PawnPromotionTest {
         Piece promotedQueen = promotion.getPromotedPiece();
 
         board.toConsole();
-        promotion.execute();
+        board.executeMove(promotion);
         board.toConsole();
 
         assertEquals(1, pawn.getMoveCount());
@@ -111,9 +111,9 @@ public class PawnPromotionTest {
         Piece promotedQueen = promotion.getPromotedPiece();
 
         board.toConsole();
-        promotion.execute();
+        board.executeMove(promotion);
         board.toConsole();
-        promotion.undo();
+        board.undoMove();
         board.toConsole();
 
         assertEquals(0, pawn.getMoveCount());

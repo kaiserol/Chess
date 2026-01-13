@@ -13,62 +13,39 @@ public class ChessBoard {
 
     public ChessBoard() {
         this.fields = new ChessField[8][8];
-        initFields();
+        initializeFields();
 
+        // History stacks
         this.moveHistory = new Stack<>();
-    }
-
-    private void initFields() {
-        for (int y = 1; y <= 8; y++) {
-            for (int x = 1; x <= 8; x++) {
-                initField(x, y);
-            }
-        }
-    }
-
-    private void initField(int x, int y) {
-        checkCoordinates(x, y);
-        this.fields[x - 1][y - 1] = new ChessField(x, y);
-    }
-
-    public ChessField getField(int x, int y) {
-        checkCoordinates(x, y);
-        return this.fields[x - 1][y - 1];
-    }
-
-    private void checkCoordinates(int x, int y) {
-        if (x < 1 || x > 8) throw new CoordinateException("x must be between 1 and 8");
-        if (y < 1 || y > 8) throw new CoordinateException("y must be between 1 and 8");
-    }
-
-    public ChessField getField(String coord) {
-        if (coord.length() != 2) throw new CoordinateException("coord must be a 2-character string");
-        if (!Character.isLetter(coord.charAt(0))) throw new CoordinateException("coord must start with a letter");
-        if (!Character.isDigit(coord.charAt(1))) throw new CoordinateException("coord must end with a number");
-
-        String cleanCoord = coord.toLowerCase();
-        int x = cleanCoord.charAt(0) - 'a' + 1;
-        int y = cleanCoord.charAt(1) - '1' + 1;
-        return getField(x, y);
     }
 
     public void executeMove(Move move) {
         if (move == null) return;
-        moveHistory.push(move);
         move.execute();
+        moveHistory.push(move);
     }
 
-    public void undoMove() {
-        if (moveHistory.empty()) return;
+    public Move undoMove() {
+        if (moveHistory.empty()) return null;
         Move move = moveHistory.pop();
         move.undo();
+        return move;
     }
 
     public Move getLastMove() {
         return moveHistory.empty() ? null : moveHistory.peek();
     }
 
-    public void setInitialStartingPositions() {
+    private void initializeFields() {
+        for (int y = 1; y <= 8; y++) {
+            for (int x = 1; x <= 8; x++) {
+                initializeField(x, y);
+            }
+        }
+    }
+
+    public void initializePieces() {
+        this.moveHistory.clear();
         for (int y = 1; y <= 8; y++) {
             for (int x = 1; x <= 8; x++) {
                 ChessField field = getField(x, y);
@@ -93,8 +70,34 @@ public class ChessBoard {
         }
     }
 
+    private void initializeField(int x, int y) {
+        checkCoordinates(x, y);
+        this.fields[x - 1][y - 1] = new ChessField(x, y);
+    }
+
+    public ChessField getField(int x, int y) {
+        checkCoordinates(x, y);
+        return this.fields[x - 1][y - 1];
+    }
+
+    private void checkCoordinates(int x, int y) {
+        if (x < 1 || x > 8) throw new CoordinateException("x must be between 1 and 8");
+        if (y < 1 || y > 8) throw new CoordinateException("y must be between 1 and 8");
+    }
+
     public boolean inside(int x, int y) {
         return x >= 1 && x <= 8 && y >= 1 && y <= 8;
+    }
+
+    public ChessField getField(String coord) {
+        if (coord.length() != 2) throw new CoordinateException("coord must be a 2-character string");
+        if (!Character.isLetter(coord.charAt(0))) throw new CoordinateException("coord must start with a letter");
+        if (!Character.isDigit(coord.charAt(1))) throw new CoordinateException("coord must end with a number");
+
+        String cleanCoord = coord.toLowerCase();
+        int x = cleanCoord.charAt(0) - 'a' + 1;
+        int y = cleanCoord.charAt(1) - '1' + 1;
+        return getField(x, y);
     }
 
     public void link(ChessField field, Piece piece) {
@@ -114,7 +117,7 @@ public class ChessBoard {
     public List<Piece> getPieces(Side side) {
         List<Piece> pieces = new ArrayList<>();
         for (int y = 1; y <= 8; y++) {
-            for (int x = 1; x < 8; x++) {
+            for (int x = 1; x <= 8; x++) {
                 ChessField field = getField(x, y);
                 if (isOccupiedBySide(field, side)) {
                     pieces.add(field.getPiece());
@@ -122,6 +125,24 @@ public class ChessBoard {
             }
         }
         return pieces;
+    }
+
+    public King getKing(List<Piece> pieces) {
+        for (Piece piece : pieces) {
+            if (piece instanceof King king) {
+                return king;
+            }
+        }
+        return null;
+    }
+
+    public Piece getNotKing(List<Piece> pieces) {
+        for (Piece piece : pieces) {
+            if (!(piece instanceof King)) {
+                return piece;
+            }
+        }
+        return null;
     }
 
     public void toConsole() {

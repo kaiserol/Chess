@@ -12,7 +12,7 @@ public class GrafikChess extends ChessController {
     }
 
     @Override
-    public PawnPromotion.Choice getPromotionChoice() {
+    public PawnPromotion.Choice waitForPromotionChoice() {
         return PawnPromotion.Choice.QUEEN;
     }
 }

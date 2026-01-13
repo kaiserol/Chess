@@ -27,7 +27,7 @@ public final class Queen extends Piece {
     }
 
     @Override
-    public char getDisplayName() {
+    public char getLetter() {
         return side.isWhite() ? 'Q' : 'q';
     }
 }

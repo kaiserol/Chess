@@ -24,7 +24,7 @@ public final class PawnPromotion extends Move {
     }
 
     public void setPromotedPiece(Choice promotionChoice) {
-        promotedPiece = createPromotedPiece(promotionChoice);
+        this.promotedPiece = createPromotedPiece(promotionChoice);
     }
 
     @Override
@@ -60,21 +60,29 @@ public final class PawnPromotion extends Move {
 
     @Override
     public boolean isLegal() {
-        Piece oldPromotedPiece = promotedPiece;
-        if (promotedPiece == null) {
-            promotedPiece = createPromotedPiece(Choice.QUEEN);
+        Piece oldPromotedPiece = this.promotedPiece;
+        if (this.promotedPiece == null) {
+            this.promotedPiece = createPromotedPiece(Choice.QUEEN);
         }
 
         boolean legal = super.isLegal();
-        promotedPiece = oldPromotedPiece;
+        this.promotedPiece = oldPromotedPiece;
         return legal;
     }
 
     private void choosePromotedPiece() {
-        if (promotedPiece != null) return;
+        if (this.promotedPiece != null) return;
+
+        // Check whether the chess controller is available
         ChessController chessController = Main.getController();
-        Choice choice = chessController.getPromotionChoice();
-        promotedPiece = createPromotedPiece(choice);
+        if (chessController == null) {
+            this.promotedPiece = createPromotedPiece(Choice.QUEEN);
+            return;
+        }
+
+        // Wait for the promotion choice from the user
+        Choice choice = chessController.waitForPromotionChoice();
+        this.promotedPiece = createPromotedPiece(choice);
     }
 
     private Piece createPromotedPiece(Choice promotionChoice) {

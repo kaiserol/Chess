@@ -43,25 +43,8 @@ public class TerminalChess extends ChessController {
     }
 
     @Override
-    public PawnPromotion.Choice getPromotionChoice() {
-        while (true) {
-            System.out.print("Pawn promotion! Choose a piece (Q, R, B, N): ");
-            String input = scanner.nextLine().trim().toUpperCase();
-
-            PawnPromotion.Choice choice = switch (input) {
-                case "Q" -> PawnPromotion.Choice.QUEEN;
-                case "R" -> PawnPromotion.Choice.ROOK;
-                case "B" -> PawnPromotion.Choice.BISHOP;
-                case "N" -> PawnPromotion.Choice.KNIGHT;
-                default -> null;
-            };
-
-            if (choice != null) {
-                return choice;
-            } else {
-                printError("Invalid choice.");
-            }
-        }
+    public PawnPromotion.Choice waitForPromotionChoice() {
+        return readPromotionChoice(scanner, this::printMessage);
     }
 
     private String readMove() {

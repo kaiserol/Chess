@@ -27,14 +27,14 @@ public final class Pawn extends Piece {
         final int fieldY = field.getY();
         final int direction = side.isWhite() ? 1 : -1;
 
-        // Moves one field forward
+        // Move one field forward
         int targetY = fieldY + direction;
         if (targetY >= 1 && targetY <= 8) {
             ChessField targetField = board.getField(fieldX, targetY);
             if (!targetField.isOccupied()) {
                 addNormalMove(moves, targetField);
 
-                // Moves two fields forward
+                // Move two fields forward
                 int jumpFieldY = fieldY + 2 * direction;
                 if (fieldY == START_ROW) {
                     ChessField jumpField = board.getField(fieldX, jumpFieldY);
@@ -46,7 +46,7 @@ public final class Pawn extends Piece {
             }
         }
 
-        // Hits diagonally to the left
+        // Hit diagonally to the left
         if (board.inside(fieldX - 1, targetY)) {
             ChessField targetField = board.getField(fieldX - 1, targetY);
             if (board.isOccupiedBySide(targetField, side.opposite())) {
@@ -54,7 +54,7 @@ public final class Pawn extends Piece {
             }
         }
 
-        // Hits diagonally to the right
+        // Hit diagonally to the right
         if (board.inside(fieldX + 1, targetY)) {
             ChessField targetField = board.getField(fieldX + 1, targetY);
             if (board.isOccupiedBySide(targetField, side.opposite())) {
@@ -73,11 +73,10 @@ public final class Pawn extends Piece {
                 moves.add(new EnPassant(board, field, targetField, pawnJump.getTargetField()));
             }
         }
-
         return moves;
     }
 
-    private void addNormalMove(List<Move> moves, ChessField targetField ) {
+    private void addNormalMove(List<Move> moves, ChessField targetField) {
         if (targetField.getY() == PROMOTION_ROW) {
             moves.add(new PawnPromotion(board, field, targetField));
         } else {
@@ -91,7 +90,7 @@ public final class Pawn extends Piece {
     }
 
     @Override
-    public char getDisplayName() {
+    public char getLetter() {
         return side.isWhite() ? 'P' : 'p';
     }
 }

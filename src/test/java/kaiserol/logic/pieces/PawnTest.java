@@ -128,6 +128,7 @@ public class PawnTest {
         PawnJump jump = new PawnJump(board, d7, d5);
         board.executeMove(jump);
 
+
         List<Move> moves = whitePawn.getPseudoLegalMoves();
 
         System.out.printf("%d Pseudo legal moves from %s (%s): %s%n", moves.size(), e5, whitePawn, moves);
