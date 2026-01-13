@@ -1,9 +1,11 @@
 package kaiserol.logic.state;
 
-import kaiserol.controller.Game;
+import kaiserol.logic.chessboard.ChessBoard;
+import kaiserol.logic.chessboard.Side;
 import kaiserol.logic.pieces.Piece;
 
 import java.util.List;
+import java.util.Stack;
 
 public enum GameState {
     ACTIVE,
@@ -16,13 +18,13 @@ public enum GameState {
         return this == CHECKMATE || this == STALEMATE || this == DRAW;
     }
 
-    public static GameState getGameState(Game game) {
+    public static GameState getGameState(ChessBoard chessBoard, Side currentSide, Stack<BoardSnapshot> boardHistory, int halfMoveCount) {
         // 1. Check whether legal moves exist
-        List<Piece> pieces = game.getBoard().getPieces(game.getCurrentSide());
+        List<Piece> pieces = chessBoard.getPieces(currentSide);
         boolean hasLegalMoves = pieces.stream().anyMatch(piece -> !piece.getLegalMoves().isEmpty());
 
         // 2. Check whether the king is in check
-        boolean inCheck = CheckDetector.isInCheck(game.getBoard(), game.getCurrentSide());
+        boolean inCheck = CheckDetector.isInCheck(chessBoard, currentSide);
 
         // 3. Check whether the end states are reached (without further rules)
         if (!hasLegalMoves) {
@@ -31,9 +33,9 @@ public enum GameState {
         }
 
         // 4. Check whether the draw rules are fulfilled
-        if (DrawDetector.hasInsufficientMaterial(game.getBoard())) return DRAW;
-        if (DrawDetector.isThreefoldRepetition(game.getBoardHistory())) return DRAW;
-        if (DrawDetector.is50MoveRule(game.getHalfMoveCount())) return DRAW;
+        if (DrawDetector.hasInsufficientMaterial(chessBoard)) return DRAW;
+        if (DrawDetector.isThreefoldRepetition(boardHistory)) return DRAW;
+        if (DrawDetector.is50MoveRule(halfMoveCount)) return DRAW;
 
         // 5. Return the current state
         if (inCheck) return GameState.CHECK;

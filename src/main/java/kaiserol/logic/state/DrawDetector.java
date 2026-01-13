@@ -55,6 +55,7 @@ public class DrawDetector {
     public static boolean isThreefoldRepetition(Stack<BoardSnapshot> boardHistory) {
         if (boardHistory.isEmpty()) return false;
 
+        // FEN fields: 0=placement, 1=active, 2=castling, 3=enpassant, 4=halfMove, 5=fullMove
         String currentFen = boardHistory.peek().getFEN();
         int count = 0;
 

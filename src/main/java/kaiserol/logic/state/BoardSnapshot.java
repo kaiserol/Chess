@@ -7,13 +7,25 @@ import org.jetbrains.annotations.NotNull;
 
 public class BoardSnapshot {
     private final String fen;
+    private final int halfMoveCount;
+    private final int fullMoveCount;
 
-    public BoardSnapshot(ChessBoard chessBoard, Side currentSide) {
-        this.fen = toFEN(chessBoard, currentSide);
+    public BoardSnapshot(ChessBoard chessBoard, Side currentSide, int halfMoveCount, int fullMoveCount) {
+        this.halfMoveCount = halfMoveCount;
+        this.fullMoveCount = fullMoveCount;
+        this.fen = toFEN(chessBoard, currentSide, halfMoveCount, fullMoveCount);
     }
 
     public String getFEN() {
         return fen;
+    }
+
+    public int getHalfMoveCount() {
+        return halfMoveCount;
+    }
+
+    public int getFullMoveCount() {
+        return fullMoveCount;
     }
 
     /**
@@ -31,7 +43,7 @@ public class BoardSnapshot {
      * @param chessBoard  the current board
      * @param currentSide the side whose turn it is
      */
-    private static String toFEN(ChessBoard chessBoard, Side currentSide) {
+    private static String toFEN(ChessBoard chessBoard, Side currentSide, int halfMoveCount, int fullMoveCount) {
         StringBuilder fen = new StringBuilder();
 
         // 1. Piece placement
@@ -67,11 +79,11 @@ public class BoardSnapshot {
         // TODO: 4. En passant target square
         fen.append(" -");
 
-        // TODO: 5. Half-move count
-        fen.append(" 0");
+        // 5. Half-move count
+        fen.append(" ").append(halfMoveCount);
 
-        // TODO: 6. Full move count
-        fen.append(" 0");
+        // 6. Full move count
+        fen.append(" ").append(fullMoveCount);
 
         return fen.toString();
     }

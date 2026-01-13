@@ -13,7 +13,6 @@ import kaiserol.logic.state.GameState;
 import java.util.Stack;
 
 // TODO: Implement redo
-// TODO: Implement functionality for halfMoveCount and fullMoveCount
 public class Game {
     private final ChessBoard board;
     private final Stack<BoardSnapshot> boardHistory;
@@ -50,14 +49,6 @@ public class Game {
 
     public Stack<BoardSnapshot> getBoardHistory() {
         return boardHistory;
-    }
-
-    public int getHalfMoveCount() {
-        return halfMoveCount;
-    }
-
-    public int getFullMoveCount() {
-        return fullMoveCount;
     }
 
     public Side getCurrentSide() {
@@ -107,34 +98,41 @@ public class Game {
         if (piece instanceof Pawn || move.getTargetField().isOccupied()) halfMoveCount = 0;
         else halfMoveCount++;
 
-        // Execute move
+        // Increment fullMoveCount after black move
+        if (currentSide == Side.BLACK) fullMoveCount++;
+
+        // Execute the move
         board.executeMove(move);
 
-        // Update the game state
+        // Update the current side and record the snapshot
         this.currentSide = currentSide.opposite();
         recordSnapshot();
-        this.gameState = GameState.getGameState(this);
+
+        // Update the game state
+        this.gameState = GameState.getGameState(board, currentSide, boardHistory, halfMoveCount);
     }
 
     public void undoMove() throws MoveException {
         if (board.getLastMove() == null) throw new MoveException("No moves to undo.");
 
-        // Undo move
-        Move move = board.undoMove();
+        // Undo the move
+        board.undoMove();
 
-        // Check if the move was a pawn move or a capture to reset halfMoveCount
-        Piece piece = move.getStartField().getPiece();
-        if (piece instanceof Pawn || move.getTargetField().isOccupied()) halfMoveCount = 0;
-        else halfMoveCount--;
-
-        // Update the game state
+        // Update the current side and remove the snapshot
         this.currentSide = currentSide.opposite();
         removeSnapshot();
-        this.gameState = GameState.getGameState(this);
+
+        // Restore move counts from the previous snapshot
+        BoardSnapshot previousSnapshot = boardHistory.peek();
+        this.halfMoveCount = previousSnapshot.getHalfMoveCount();
+        this.fullMoveCount = previousSnapshot.getFullMoveCount();
+
+        // Update the game state
+        this.gameState = GameState.getGameState(board, currentSide, boardHistory, halfMoveCount);
     }
 
     private void recordSnapshot() {
-        BoardSnapshot snapshot = new BoardSnapshot(board, currentSide);
+        BoardSnapshot snapshot = new BoardSnapshot(board, currentSide, halfMoveCount, fullMoveCount);
         boardHistory.add(snapshot);
     }
 
