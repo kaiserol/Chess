@@ -13,6 +13,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class BoardSnapshot {
     private final String fen;
+    private final Side currentSide;
     private final int halfMoveCount;
     private final int fullMoveCount;
 
@@ -26,6 +27,7 @@ public class BoardSnapshot {
     }
 
     public BoardSnapshot(ChessBoard chessBoard, Side currentSide, int halfMoveCount, int fullMoveCount) {
+        this.currentSide = currentSide;
         this.halfMoveCount = halfMoveCount;
         this.fullMoveCount = fullMoveCount;
         this.fen = toFEN(chessBoard, currentSide, halfMoveCount, fullMoveCount);
@@ -33,6 +35,10 @@ public class BoardSnapshot {
 
     public String getFEN() {
         return fen;
+    }
+
+    public Side getCurrentSide() {
+        return currentSide;
     }
 
     public int getHalfMoveCount() {

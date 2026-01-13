@@ -121,8 +121,10 @@ public class Game {
         // Execute the move
         board.executeMove(move);
 
-        // Update the current side and record the snapshot
+        // Update the current side
         this.currentSide = currentSide.opposite();
+
+        // Record the snapshot
         recordSnapshot();
 
         // Update the game state
@@ -139,12 +141,12 @@ public class Game {
         // Undo the move
         board.undoMove();
 
-        // Update the current side and remove the snapshot
-        this.currentSide = currentSide.opposite();
+        // Remove the latest snapshot (current state)
         removeSnapshot();
 
-        // Restore move counts from the previous snapshot
+        // Restore the current side and move counts from the previous snapshot
         BoardSnapshot previousSnapshot = boardHistory.peek();
+        this.currentSide = previousSnapshot.getCurrentSide();
         this.halfMoveCount = previousSnapshot.getHalfMoveCount();
         this.fullMoveCount = previousSnapshot.getFullMoveCount();
 
@@ -161,12 +163,10 @@ public class Game {
         // Execute move
         board.executeMove(move);
 
-        // Update counts from the stored snapshot (which represents the state AFTER the move)
+        // Update the current side and counts from the stored snapshot
+        this.currentSide = snapshot.getCurrentSide();
         this.halfMoveCount = snapshot.getHalfMoveCount();
         this.fullMoveCount = snapshot.getFullMoveCount();
-
-        // Update current side
-        this.currentSide = currentSide.opposite();
 
         // Re-record the snapshot
         recordSnapshot();
