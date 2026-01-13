@@ -1,4 +1,5 @@
 package kaiserol.controller;
+
 import kaiserol.logic.moves.PawnPromotion;
 
 import java.util.Scanner;
@@ -37,5 +38,17 @@ public abstract class ChessController {
             }
             output.accept("Invalid promotion choice.\n");
         }
+    }
+
+    protected void printMessage(String message) {
+        System.out.print(message);
+    }
+
+    protected void printlnMessage(String message) {
+        System.out.println(message);
+    }
+
+    protected void printlnError(String error) {
+        System.out.println("Error: " + error);
     }
 }

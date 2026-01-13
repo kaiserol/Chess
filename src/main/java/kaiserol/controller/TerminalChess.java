@@ -38,7 +38,7 @@ public class TerminalChess extends ChessController {
                     handleGameState();
                 }
             } catch (Exception e) {
-                printError(e.getMessage());
+                printlnError(e.getMessage());
             }
         }
 
@@ -51,30 +51,30 @@ public class TerminalChess extends ChessController {
     }
 
     private String readMove() {
-        System.out.print(game.getCurrentSide() + "'s turn: ");
+        printMessage(game.getCurrentSide() + "'s turn: ");
         return scanner.nextLine().trim();
     }
 
     private void start() {
-        printMessage("=".repeat(40));
-        printMessage("Welcome to the game of chess!");
-        printMessage("- Enter moves in the format 'e2e4'");
-        printMessage("- Enter 'restart' to start a new game");
-        printMessage("- Enter 'undo' to undo");
-        printMessage("- Enter 'redo' to redo");
-        printMessage("- Enter 'exit' to quit.");
-        printMessage("=".repeat(40));
+        printlnMessage("=".repeat(40));
+        printlnMessage("Welcome to the game of chess!");
+        printlnMessage("- Enter moves in the format 'e2e4'");
+        printlnMessage("- Enter 'restart' to start a new game");
+        printlnMessage("- Enter 'undo' to undo");
+        printlnMessage("- Enter 'redo' to redo");
+        printlnMessage("- Enter 'exit' to quit.");
+        printlnMessage("=".repeat(40));
     }
 
     private void restart() {
         game.buildBoard();
-        printMessage("=".repeat(40));
-        printMessage("Game restarted.");
-        printMessage("=".repeat(40));
+        printlnMessage("=".repeat(40));
+        printlnMessage("Game restarted.");
+        printlnMessage("=".repeat(40));
     }
 
     private void exit() {
-        printMessage("Bye!");
+        printlnMessage("Bye!");
     }
 
     private void handleGameState() {
@@ -87,15 +87,7 @@ public class TerminalChess extends ChessController {
         };
 
         if (result != null) {
-            printMessage(result);
+            printlnMessage(result);
         }
-    }
-
-    private void printMessage(String message) {
-        System.out.println(message);
-    }
-
-    private void printError(String error) {
-        System.out.println("Error: " + error);
     }
 }
