@@ -1,0 +1,9 @@
+Java Chess
+Copyright 2026 Oliver Kaiser
+
+This project includes the following software:
+- Java Chess developed by Oliver Kaiser (MIT License)
+
+This project may also use third-party libraries:
+- JUnit (Common Public License / Eclipse Public License)
+- JetBrains Annotations (Apache License 2.0)
