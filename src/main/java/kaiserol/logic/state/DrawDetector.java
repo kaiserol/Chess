@@ -55,16 +55,33 @@ public class DrawDetector {
     public static boolean isThreefoldRepetition(Stack<BoardSnapshot> boardHistory) {
         if (boardHistory.isEmpty()) return false;
 
-        // FEN fields: 0=placement, 1=active, 2=castling, 3=enpassant, 4=halfMove, 5=fullMove
+        // For threefold repetition, we only care about:
+        // 1. Piece placement
+        // 2. Active player
+        // 3. Castling availability
+        // 4. En passant target square
+        // We ignore halfMoveCount and fullMoveCount.
+
         String currentFen = boardHistory.peek().getFEN();
+        String currentBasePosition = getPositionalFEN(currentFen);
         int count = 0;
 
         for (BoardSnapshot snapshot : boardHistory) {
-            if (snapshot.getFEN().equals(currentFen)) {
+            String fen = snapshot.getFEN();
+            String basePosition = getPositionalFEN(fen);
+            if (basePosition.equals(currentBasePosition)) {
                 count++;
             }
         }
         return count >= 3;
+    }
+
+    private static String getPositionalFEN(String fen) {
+        String[] parts = fen.split(" ");
+        if (parts.length < 4) return fen;
+
+        // FEN fields: 0=placement, 1=active, 2=castling, 3=enpassant, 4=halfMove, 5=fullMove
+        return parts[0] + " " + parts[1] + " " + parts[2] + " " + parts[3];
     }
 
     /**

@@ -65,12 +65,11 @@ public final class Pawn extends Piece {
         // En Passant
         Move lastMove = board.getLastMove();
         if (lastMove instanceof PawnJump pawnJump) {
-            int lastPawnX = pawnJump.getTargetField().getX();
-            int lastPawnY = pawnJump.getTargetField().getY();
+            int enPassantX = pawnJump.getEnPassantField().getX();
+            int enPassantY = pawnJump.getEnPassantField().getY();
 
-            if (fieldY == lastPawnY && Math.abs(lastPawnX - fieldX) == 1) {
-                ChessField targetField = board.getField(lastPawnX, targetY);
-                moves.add(new EnPassant(board, field, targetField, pawnJump.getTargetField()));
+            if (Math.abs(enPassantX - fieldX) == 1 && targetY == enPassantY) {
+                moves.add(new EnPassant(board, field, pawnJump.getEnPassantField(), pawnJump.getTargetField()));
             }
         }
         return moves;

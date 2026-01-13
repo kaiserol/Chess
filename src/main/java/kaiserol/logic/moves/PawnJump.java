@@ -6,10 +6,18 @@ import kaiserol.logic.pieces.Pawn;
 
 public final class PawnJump extends Move {
     private final Pawn pawn;
+    private final ChessField enPassantField;
 
     public PawnJump(ChessBoard board, ChessField startField, ChessField targetField) {
         super(board, startField, targetField);
         this.pawn = (Pawn) startField.getPiece();
+        
+        int enPassantY = (startField.getY() + targetField.getY()) / 2;
+        this.enPassantField = board.getField(startField.getX(), enPassantY);
+    }
+
+    public ChessField getEnPassantField() {
+        return enPassantField;
     }
 
     @Override
