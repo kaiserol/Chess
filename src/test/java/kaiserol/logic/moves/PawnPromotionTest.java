@@ -9,8 +9,7 @@ import kaiserol.logic.pieces.Rook;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class PawnPromotionTest {
     private ChessBoard board;
@@ -36,7 +35,7 @@ public class PawnPromotionTest {
         board.executeMove(promotion);
         board.toConsole();
 
-        assertEquals(1, pawn.getMoveCount());
+        assertTrue(pawn.hasMoved());
         assertNull(startField.getPiece());
         assertNull(pawn.getField());
         assertEquals(promotedQueen, targetField.getPiece());
@@ -61,7 +60,7 @@ public class PawnPromotionTest {
         board.undoMove();
         board.toConsole();
 
-        assertEquals(0, pawn.getMoveCount());
+        assertFalse(pawn.hasMoved());
         assertNull(targetField.getPiece());
         assertNull(promotedQueen.getField());
         assertEquals(pawn, startField.getPiece());
@@ -87,7 +86,7 @@ public class PawnPromotionTest {
         board.executeMove(promotion);
         board.toConsole();
 
-        assertEquals(1, pawn.getMoveCount());
+        assertTrue(pawn.hasMoved());
         assertNull(startField.getPiece());
         assertNull(blackRook.getField());
         assertNull(pawn.getField());
@@ -116,7 +115,7 @@ public class PawnPromotionTest {
         board.undoMove();
         board.toConsole();
 
-        assertEquals(0, pawn.getMoveCount());
+        assertFalse(pawn.hasMoved());
         assertNull(promotedQueen.getField());
         assertEquals(pawn, startField.getPiece());
         assertEquals(startField, pawn.getField());

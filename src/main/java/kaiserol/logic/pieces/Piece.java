@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
-// TODO: Consider whether counting moves is important; isn't a boolean sufficient? (see: #moveCount)
 public abstract class Piece {
     protected final ChessBoard board;
     protected final Side side;
@@ -42,8 +41,8 @@ public abstract class Piece {
         this.field = null;
     }
 
-    public int getMoveCount() {
-        return moveCount;
+    public boolean hasMoved() {
+        return moveCount > 0;
     }
 
     public void increaseMoveCount() {

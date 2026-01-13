@@ -43,7 +43,7 @@ public final class King extends Piece {
         }
 
         // Castling
-        if (moveCount == 0) {
+        if (!this.hasMoved()) {
             // Long (Queenside)
             checkCastling(moves, 1, true);
             // Short (Kingside)
@@ -59,7 +59,7 @@ public final class King extends Piece {
         ChessField rookStartField = board.getField(rookX, fieldY);
 
         if (board.isOccupiedBySide(rookStartField, side) && rookStartField.getPiece() instanceof Rook rook) {
-            if (rook.getMoveCount() != 0) return;
+            if (rook.hasMoved()) return;
 
             // Check whether the fields between the king and the rook are empty
             int startX = Math.min(field.getX(), rookX) + 1;
