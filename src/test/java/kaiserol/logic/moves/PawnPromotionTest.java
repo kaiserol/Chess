@@ -27,8 +27,7 @@ public class PawnPromotionTest {
         Pawn pawn = new Pawn(board, Side.WHITE);
         board.link(startField, pawn);
 
-        PawnPromotion promotion = new PawnPromotion(board, startField, targetField);
-        promotion.setPromotedPiece(PawnPromotion.Choice.QUEEN);
+        PawnPromotion promotion = new PawnPromotion(board, startField, targetField, PawnPromotion.Choice.QUEEN);
         Piece promotedQueen = promotion.getPromotedPiece();
 
         board.toConsole();
@@ -50,8 +49,7 @@ public class PawnPromotionTest {
         Pawn pawn = new Pawn(board, Side.WHITE);
         board.link(startField, pawn);
 
-        PawnPromotion promotion = new PawnPromotion(board, startField, targetField);
-        promotion.setPromotedPiece(PawnPromotion.Choice.QUEEN);
+        PawnPromotion promotion = new PawnPromotion(board, startField, targetField, PawnPromotion.Choice.QUEEN);
         Piece promotedQueen = promotion.getPromotedPiece();
 
         board.toConsole();
@@ -78,8 +76,7 @@ public class PawnPromotionTest {
         Piece blackRook = new Rook(board, Side.BLACK);
         board.link(targetField, blackRook);
 
-        PawnPromotion promotion = new PawnPromotion(board, startField, targetField);
-        promotion.setPromotedPiece(PawnPromotion.Choice.QUEEN);
+        PawnPromotion promotion = new PawnPromotion(board, startField, targetField, PawnPromotion.Choice.QUEEN);
         Piece promotedQueen = promotion.getPromotedPiece();
 
         board.toConsole();
@@ -105,8 +102,7 @@ public class PawnPromotionTest {
         Piece blackRook = new Rook(board, Side.BLACK);
         board.link(targetField, blackRook);
 
-        PawnPromotion promotion = new PawnPromotion(board, startField, targetField);
-        promotion.setPromotedPiece(PawnPromotion.Choice.QUEEN);
+        PawnPromotion promotion = new PawnPromotion(board, startField, targetField, PawnPromotion.Choice.QUEEN);
         Piece promotedQueen = promotion.getPromotedPiece();
 
         board.toConsole();

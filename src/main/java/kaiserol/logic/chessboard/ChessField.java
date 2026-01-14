@@ -3,6 +3,8 @@ package kaiserol.logic.chessboard;
 import kaiserol.logic.pieces.Piece;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Objects;
+
 public class ChessField implements Comparable<ChessField> {
     private final int x;
     private final int y;
@@ -37,11 +39,20 @@ public class ChessField implements Comparable<ChessField> {
         this.piece = null;
     }
 
+    public boolean has(String coord) {
+        return toString().equals(coord);
+    }
+
     @Override
-    public String toString() {
-        char coord1 = (char) ('a' + (x - 1));
-        char coord2 = (char) ('1' + (y - 1));
-        return coord1 + "" + coord2;
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        ChessField that = (ChessField) o;
+        return x == that.x && y == that.y;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(x, y);
     }
 
     @Override
@@ -49,5 +60,12 @@ public class ChessField implements Comparable<ChessField> {
         int xComparison = Integer.compare(x, o.x);
         if (xComparison != 0) return xComparison;
         return Integer.compare(y, o.y);
+    }
+
+    @Override
+    public String toString() {
+        char col = (char) ('a' + (this.x - 1));
+        char row = (char) ('1' + (this.y - 1));
+        return col + "" + row;
     }
 }

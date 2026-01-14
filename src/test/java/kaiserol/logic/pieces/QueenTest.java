@@ -27,19 +27,18 @@ public class QueenTest {
         board.link(field, queen);
 
         List<Move> moves = queen.getSortedPseudoLegalMoves();
-        List<String> targetFields = moves.stream().map(Move::toString).toList();
         System.out.printf("%d Pseudo legal moves from %s (%s): %s%n", moves.size(), field, queen, moves);
         board.toConsole();
 
         // Queen = Rook (14) + Bishop (13) = 27
-        assertTrue(targetFields.contains("d1"));
-        assertTrue(targetFields.contains("d8"));
-        assertTrue(targetFields.contains("a4"));
-        assertTrue(targetFields.contains("h4"));
-        assertTrue(targetFields.contains("a1"));
-        assertTrue(targetFields.contains("h8"));
-        assertTrue(targetFields.contains("a7"));
-        assertTrue(targetFields.contains("g1"));
+        assertTrue(moves.stream().anyMatch(m -> m.getTargetField().has("d1")));
+        assertTrue(moves.stream().anyMatch(m -> m.getTargetField().has("d8")));
+        assertTrue(moves.stream().anyMatch(m -> m.getTargetField().has("a4")));
+        assertTrue(moves.stream().anyMatch(m -> m.getTargetField().has("h4")));
+        assertTrue(moves.stream().anyMatch(m -> m.getTargetField().has("a1")));
+        assertTrue(moves.stream().anyMatch(m -> m.getTargetField().has("h8")));
+        assertTrue(moves.stream().anyMatch(m -> m.getTargetField().has("a7")));
+        assertTrue(moves.stream().anyMatch(m -> m.getTargetField().has("g1")));
         assertEquals(27, moves.size());
     }
 }

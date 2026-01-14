@@ -1,20 +1,21 @@
-package kaiserol.controller;
+package kaiserol.logic;
 
 import kaiserol.logic.moves.PawnPromotion;
+import kaiserol.logic.moves.PawnPromotionProvider;
 
 import java.util.Scanner;
 import java.util.function.Consumer;
 
-public abstract class ChessController {
+public abstract class ChessController implements PawnPromotionProvider {
     protected final Game game;
 
     public ChessController(Game game) {
         this.game = game;
+        // Register the controller as a provider with the board
+        this.game.getBoard().setPromotionProvider(this);
     }
 
     public abstract void run();
-
-    public abstract PawnPromotion.Choice waitForPromotionChoice();
 
     protected PawnPromotion.Choice readPromotionChoice(Scanner scanner, Consumer<String> output) {
         while (true) {

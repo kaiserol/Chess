@@ -26,7 +26,6 @@ public class BishopTest {
         board.link(field, bishop);
 
         List<Move> moves = bishop.getSortedPseudoLegalMoves();
-        List<String> targetFields = moves.stream().map(Move::toString).toList();
         System.out.printf("%d Pseudo legal moves from %s (%s): %s%n", moves.size(), field, bishop, moves);
         board.toConsole();
 
@@ -34,10 +33,10 @@ public class BishopTest {
         // a1, b2, c3, e5, f6, g7, h8 (7 fields)
         // a7, b6, c5, e3, f2, g1 (6 fields)
         assertEquals(13, moves.size());
-        assertTrue(targetFields.contains("a1"));
-        assertTrue(targetFields.contains("h8"));
-        assertTrue(targetFields.contains("a7"));
-        assertTrue(targetFields.contains("g1"));
+        assertTrue(moves.stream().anyMatch(m -> m.getTargetField().has("a1")));
+        assertTrue(moves.stream().anyMatch(m -> m.getTargetField().has("h8")));
+        assertTrue(moves.stream().anyMatch(m -> m.getTargetField().has("a7")));
+        assertTrue(moves.stream().anyMatch(m -> m.getTargetField().has("g1")));
     }
 
     @Test
@@ -52,18 +51,17 @@ public class BishopTest {
         board.link(board.getField("e5"), new Pawn(board, Side.WHITE));
 
         List<Move> moves = bishop.getSortedPseudoLegalMoves();
-        List<String> targetFields = moves.stream().map(Move::toString).toList();
         System.out.printf("%d Pseudo legal moves from %s (%s): %s%n", moves.size(), field, bishop, moves);
         board.toConsole();
 
         // Should not contain e5, f6, g7, h8, ...
         assertEquals(6, moves.size()); // 13 - 7 = 6
-        assertFalse(targetFields.contains("a1"));
-        assertFalse(targetFields.contains("b6"));
-        assertFalse(targetFields.contains("e5"));
-        assertFalse(targetFields.contains("f6"));
-        assertFalse(targetFields.contains("g7"));
-        assertFalse(targetFields.contains("g8"));
+        assertFalse(moves.stream().anyMatch(m -> m.getTargetField().has("a1")));
+        assertFalse(moves.stream().anyMatch(m -> m.getTargetField().has("b6")));
+        assertFalse(moves.stream().anyMatch(m -> m.getTargetField().has("e5")));
+        assertFalse(moves.stream().anyMatch(m -> m.getTargetField().has("f6")));
+        assertFalse(moves.stream().anyMatch(m -> m.getTargetField().has("g7")));
+        assertFalse(moves.stream().anyMatch(m -> m.getTargetField().has("g8")));
     }
 
     @Test
@@ -78,17 +76,16 @@ public class BishopTest {
         board.link(board.getField("e5"), new Pawn(board, Side.BLACK));
 
         List<Move> moves = bishop.getSortedPseudoLegalMoves();
-        List<String> targetFields = moves.stream().map(Move::toString).toList();
         System.out.printf("%d Pseudo legal moves from %s (%s): %s%n", moves.size(), field, bishop, moves);
         board.toConsole();
 
         // Should contain e5, but not f6, g7, h8, ...
         assertEquals(9, moves.size()); // 13 - 4 = 9
-        assertTrue(targetFields.contains("a1"));
-        assertTrue(targetFields.contains("b6"));
-        assertTrue(targetFields.contains("e5"));
-        assertFalse(targetFields.contains("f6"));
-        assertFalse(targetFields.contains("g7"));
-        assertFalse(targetFields.contains("g8"));
+        assertTrue(moves.stream().anyMatch(m -> m.getTargetField().has("a1")));
+        assertTrue(moves.stream().anyMatch(m -> m.getTargetField().has("b6")));
+        assertTrue(moves.stream().anyMatch(m -> m.getTargetField().has("e5")));
+        assertFalse(moves.stream().anyMatch(m -> m.getTargetField().has("f6")));
+        assertFalse(moves.stream().anyMatch(m -> m.getTargetField().has("g7")));
+        assertFalse(moves.stream().anyMatch(m -> m.getTargetField().has("g8")));
     }
 }

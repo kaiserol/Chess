@@ -1,6 +1,6 @@
 package kaiserol.logic.state;
 
-import kaiserol.controller.Game;
+import kaiserol.logic.Game;
 import kaiserol.logic.chessboard.ChessBoard;
 import kaiserol.logic.chessboard.Side;
 import kaiserol.logic.pieces.King;
@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+// TODO: Extend the GameState enum with additional DRAW objects that describe the reason for the draw.
 public class DrawDetectorTest {
 
     @Test

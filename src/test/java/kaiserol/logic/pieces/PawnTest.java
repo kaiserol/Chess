@@ -30,8 +30,8 @@ public class PawnTest {
         board.toConsole();
 
         assertEquals(2, moves.size());
-        assertTrue(moves.stream().anyMatch(m -> m instanceof NormalMove && m.getTargetField().toString().equals("e3")));
-        assertTrue(moves.stream().anyMatch(m -> m instanceof PawnJump && m.getTargetField().toString().equals("e4")));
+        assertTrue(moves.stream().anyMatch(m -> m instanceof NormalMove && m.getTargetField().has("e3")));
+        assertTrue(moves.stream().anyMatch(m -> m instanceof PawnJump && m.getTargetField().has("e4")));
     }
 
     @Test
@@ -45,8 +45,8 @@ public class PawnTest {
         board.toConsole();
 
         assertEquals(2, moves.size());
-        assertTrue(moves.stream().anyMatch(m -> m instanceof NormalMove && m.getTargetField().toString().equals("e6")));
-        assertTrue(moves.stream().anyMatch(m -> m instanceof PawnJump && m.getTargetField().toString().equals("e5")));
+        assertTrue(moves.stream().anyMatch(m -> m instanceof NormalMove && m.getTargetField().has("e6")));
+        assertTrue(moves.stream().anyMatch(m -> m instanceof PawnJump && m.getTargetField().has("e5")));
     }
 
     @Test
@@ -69,9 +69,9 @@ public class PawnTest {
 
         // Forward (e5), Capture Left (d5), Capture Right (f5)
         assertEquals(3, moves.size());
-        assertTrue(moves.stream().anyMatch(m -> m.getTargetField().toString().equals("e5")));
-        assertTrue(moves.stream().anyMatch(m -> m.getTargetField().toString().equals("d5")));
-        assertTrue(moves.stream().anyMatch(m -> m.getTargetField().toString().equals("f5")));
+        assertTrue(moves.stream().anyMatch(m -> m.getTargetField().has("e5")));
+        assertTrue(moves.stream().anyMatch(m -> m.getTargetField().has("d5")));
+        assertTrue(moves.stream().anyMatch(m -> m.getTargetField().has("f5")));
     }
 
     @Test
@@ -129,7 +129,7 @@ public class PawnTest {
         System.out.printf("%d Pseudo legal moves from %s (%s): %s%n", moves.size(), e5, whitePawn, moves);
         board.toConsole();
 
-        assertTrue(moves.stream().anyMatch(m -> m instanceof EnPassant && m.getTargetField().toString().equals("d6")),
+        assertTrue(moves.stream().anyMatch(m -> m instanceof EnPassant && m.getTargetField().has("d6")),
                 "En Passant move to d6 should be available");
     }
 }

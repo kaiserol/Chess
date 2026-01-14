@@ -1,6 +1,5 @@
 package kaiserol.logic.state;
 
-import kaiserol.controller.Game;
 import kaiserol.logic.chessboard.ChessBoard;
 import kaiserol.logic.chessboard.ChessField;
 import kaiserol.logic.chessboard.Side;
@@ -12,29 +11,22 @@ import kaiserol.logic.pieces.Rook;
 import org.jetbrains.annotations.NotNull;
 
 public class BoardSnapshot {
-    private final String fen;
     private final Side currentSide;
     private final int halfMoveCount;
     private final int fullMoveCount;
+    private final Move lastMove;
+    private final String fen;
 
-    public BoardSnapshot(Game game) {
-        this(
-                game.getBoard(),
-                game.getCurrentSide(),
-                game.getHalfMoveCount(),
-                game.getFullMoveCount()
-        );
-    }
-
-    public BoardSnapshot(ChessBoard chessBoard, Side currentSide, int halfMoveCount, int fullMoveCount) {
+    public BoardSnapshot(ChessBoard board, Side currentSide, int halfMoveCount, int fullMoveCount, Move lastMove) {
         this.currentSide = currentSide;
         this.halfMoveCount = halfMoveCount;
         this.fullMoveCount = fullMoveCount;
-        this.fen = toFEN(chessBoard, currentSide, halfMoveCount, fullMoveCount);
+        this.lastMove = lastMove;
+        this.fen = toFEN(board, currentSide, halfMoveCount, fullMoveCount);
     }
 
-    public String getFEN() {
-        return fen;
+    public static BoardSnapshot initial(ChessBoard board) {
+        return new BoardSnapshot(board, Side.WHITE, 0, 1, null);
     }
 
     public Side getCurrentSide() {
@@ -49,6 +41,14 @@ public class BoardSnapshot {
         return fullMoveCount;
     }
 
+    public Move getLastMove() {
+        return lastMove;
+    }
+
+    public String getFEN() {
+        return fen;
+    }
+
     /**
      * Converts the current board position to FEN (Forsyth-Edwards Notation) format.
      * FEN consists of six fields separated by spaces:
@@ -61,24 +61,24 @@ public class BoardSnapshot {
      *     <li><b>Full move count</b>: Increments after Black's move, starts at 1</li>
      * </ol>
      *
-     * @param chessBoard  the current board
+     * @param board       the current board
      * @param currentSide the side whose turn it is
      */
-    private static String toFEN(ChessBoard chessBoard, Side currentSide, int halfMoveCount, int fullMoveCount) {
-        return getPiecePlacement(chessBoard) + " " +
+    private static String toFEN(ChessBoard board, Side currentSide, int halfMoveCount, int fullMoveCount) {
+        return getPiecePlacement(board) + " " +
                 getActivePlayer(currentSide) + " " +
-                getCastlingAvailability(chessBoard) + " " +
-                getEnPassantTargetSquare(chessBoard) + " " +
+                getCastlingAvailability(board) + " " +
+                getEnPassantTargetSquare(board) + " " +
                 halfMoveCount + " " +
                 fullMoveCount;
     }
 
-    private static String getPiecePlacement(ChessBoard chessBoard) {
+    private static String getPiecePlacement(ChessBoard board) {
         StringBuilder sb = new StringBuilder();
         for (int y = 8; y >= 1; y--) {
             int emptyFields = 0;
             for (int x = 1; x <= 8; x++) {
-                ChessField field = chessBoard.getField(x, y);
+                ChessField field = board.getField(x, y);
                 if (field.isOccupied()) {
                     if (emptyFields > 0) {
                         sb.append(emptyFields);
@@ -103,31 +103,31 @@ public class BoardSnapshot {
         return currentSide.isWhite() ? "w" : "b";
     }
 
-    private static String getCastlingAvailability(ChessBoard chessBoard) {
+    private static String getCastlingAvailability(ChessBoard board) {
         StringBuilder castling = new StringBuilder();
 
         // White side
-        if (isValidCastlingPiece(chessBoard, King.class, 5, 1)) {
-            if (isValidCastlingPiece(chessBoard, Rook.class, 8, 1)) castling.append("K");
-            if (isValidCastlingPiece(chessBoard, Rook.class, 1, 1)) castling.append("Q");
+        if (isValidCastlingPiece(board, King.class, 5, 1)) {
+            if (isValidCastlingPiece(board, Rook.class, 8, 1)) castling.append("K");
+            if (isValidCastlingPiece(board, Rook.class, 1, 1)) castling.append("Q");
         }
 
         // Black side
-        if (isValidCastlingPiece(chessBoard, King.class, 5, 8)) {
-            if (isValidCastlingPiece(chessBoard, Rook.class, 8, 8)) castling.append("k");
-            if (isValidCastlingPiece(chessBoard, Rook.class, 1, 8)) castling.append("q");
+        if (isValidCastlingPiece(board, King.class, 5, 8)) {
+            if (isValidCastlingPiece(board, Rook.class, 8, 8)) castling.append("k");
+            if (isValidCastlingPiece(board, Rook.class, 1, 8)) castling.append("q");
         }
 
         return castling.isEmpty() ? "-" : castling.toString();
     }
 
-    private static boolean isValidCastlingPiece(ChessBoard chessBoard, Class<? extends Piece> pieceClass, int x, int y) {
-        ChessField field = chessBoard.getField(x, y);
+    private static boolean isValidCastlingPiece(ChessBoard board, Class<? extends Piece> pieceClass, int x, int y) {
+        ChessField field = board.getField(x, y);
         return field.isOccupied() && field.getPiece().getClass().equals(pieceClass) && !field.getPiece().hasMoved();
     }
 
-    private static String getEnPassantTargetSquare(ChessBoard chessBoard) {
-        Move lastMove = chessBoard.getLastMove();
+    private static String getEnPassantTargetSquare(ChessBoard board) {
+        Move lastMove = board.getLastMove();
         if (lastMove instanceof PawnJump jump) {
             return jump.getEnPassantField().toString();
         }

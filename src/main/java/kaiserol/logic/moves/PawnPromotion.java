@@ -1,10 +1,8 @@
 package kaiserol.logic.moves;
 
-import kaiserol.Main;
 import kaiserol.logic.chessboard.ChessBoard;
 import kaiserol.logic.chessboard.ChessField;
 import kaiserol.logic.chessboard.Side;
-import kaiserol.controller.ChessController;
 import kaiserol.logic.pieces.*;
 
 public final class PawnPromotion extends Move {
@@ -16,15 +14,15 @@ public final class PawnPromotion extends Move {
         super(board, startField, targetField);
         this.attackingPawn = (Pawn) startField.getPiece();
         this.capturedPiece = targetField.getPiece();
-        this.promotedPiece = null;
+    }
+
+    public PawnPromotion(ChessBoard board, ChessField startField, ChessField targetField, Choice promotionChoice) {
+        this(board, startField, targetField);
+        this.promotedPiece = createPromotedPiece(promotionChoice);
     }
 
     public Piece getPromotedPiece() {
         return promotedPiece;
-    }
-
-    public void setPromotedPiece(Choice promotionChoice) {
-        this.promotedPiece = createPromotedPiece(promotionChoice);
     }
 
     @Override
@@ -73,15 +71,11 @@ public final class PawnPromotion extends Move {
     private void choosePromotedPiece() {
         if (this.promotedPiece != null) return;
 
-        // Check whether the chess controller is available
-        ChessController chessController = Main.getController();
-        if (chessController == null) {
-            this.promotedPiece = createPromotedPiece(Choice.QUEEN);
-            return;
-        }
+        // Get the provider from the board
+        PawnPromotionProvider provider = board.getPromotionProvider();
 
         // Wait for the promotion choice from the user
-        Choice choice = chessController.waitForPromotionChoice();
+        Choice choice = (provider != null) ? provider.getPromotionChoice() : Choice.QUEEN;
         this.promotedPiece = createPromotedPiece(choice);
     }
 

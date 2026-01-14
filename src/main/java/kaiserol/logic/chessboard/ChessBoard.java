@@ -1,6 +1,7 @@
 package kaiserol.logic.chessboard;
 
 import kaiserol.logic.moves.Move;
+import kaiserol.logic.moves.PawnPromotionProvider;
 import kaiserol.logic.pieces.*;
 
 import java.util.ArrayList;
@@ -10,6 +11,7 @@ import java.util.Stack;
 public class ChessBoard {
     private final ChessField[][] fields;
     private final Stack<Move> moveHistory;
+    private PawnPromotionProvider pawnPromotionProvider;
 
     public ChessBoard() {
         this.fields = new ChessField[8][8];
@@ -17,6 +19,14 @@ public class ChessBoard {
 
         // History stacks
         this.moveHistory = new Stack<>();
+    }
+
+    public PawnPromotionProvider getPromotionProvider() {
+        return pawnPromotionProvider;
+    }
+
+    public void setPromotionProvider(PawnPromotionProvider provider) {
+        this.pawnPromotionProvider = provider;
     }
 
     public void executeMove(Move move) {
@@ -89,13 +99,28 @@ public class ChessBoard {
     }
 
     public ChessField getField(String coord) {
-        if (coord.length() != 2) throw new CoordinateException("coord must be a 2-character string");
-        if (!Character.isLetter(coord.charAt(0))) throw new CoordinateException("coord must start with a letter");
-        if (!Character.isDigit(coord.charAt(1))) throw new CoordinateException("coord must end with a number");
+        if (coord == null) {
+            throw new CoordinateException("Coordinate must not be null.");
+        }
 
-        String cleanCoord = coord.toLowerCase();
-        int x = cleanCoord.charAt(0) - 'a' + 1;
-        int y = cleanCoord.charAt(1) - '1' + 1;
+        String c = coord.trim().toLowerCase();
+        if (c.length() != 2) {
+            throw new CoordinateException("Invalid coordinate '%s'. Expected <column><row> (e.g. a1, h8).".formatted(coord));
+        }
+
+        char col = c.charAt(0);
+        char row = c.charAt(1);
+
+        if (col < 'a' || col > 'h') {
+            throw new CoordinateException("Invalid coordinate '%s': column '%s' is out of range (a–h).".formatted(coord, col));
+        }
+
+        if (row < '1' || row > '8') {
+            throw new CoordinateException("Invalid coordinate '%s': row '%s' is out of range (1–8).".formatted(coord, row));
+        }
+
+        int x = col - 'a' + 1;
+        int y = row - '1' + 1;
         return getField(x, y);
     }
 

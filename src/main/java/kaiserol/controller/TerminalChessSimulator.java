@@ -1,5 +1,7 @@
 package kaiserol.controller;
 
+import kaiserol.logic.ChessController;
+import kaiserol.logic.Game;
 import kaiserol.logic.moves.PawnPromotion;
 
 import java.util.ArrayList;
@@ -40,7 +42,7 @@ public class TerminalChessSimulator extends ChessController {
     }
 
     @Override
-    public PawnPromotion.Choice waitForPromotionChoice() {
+    public PawnPromotion.Choice getPromotionChoice() {
         return readPromotionChoice(scanner, this::printMessage);
     }
 

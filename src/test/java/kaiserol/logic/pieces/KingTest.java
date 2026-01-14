@@ -50,14 +50,13 @@ public class KingTest {
         board.link(rookField, rook);
 
         List<Move> legalMoves = king.getLegalMoves();
-        List<String> targetFields = legalMoves.stream().map(Move::toString).toList();
         System.out.printf("%d Legal moves from %s (%s): %s%n", legalMoves.size(), field, king, legalMoves);
         board.toConsole();
 
-        assertFalse(targetFields.contains("d5"));
-        assertFalse(targetFields.contains("e5"));
-        assertFalse(targetFields.contains("f5"));
-        assertEquals(5, legalMoves.size(), "Should have 5 legal moves");
+        assertEquals(5, legalMoves.size());
+        assertFalse(legalMoves.stream().anyMatch(m -> m.getTargetField().has("d5")));
+        assertFalse(legalMoves.stream().anyMatch(m -> m.getTargetField().has("e5")));
+        assertFalse(legalMoves.stream().anyMatch(m -> m.getTargetField().has("f5")));
     }
 
     @Test
@@ -72,7 +71,7 @@ public class KingTest {
         System.out.printf("%d Pseudo legal moves from %s (%s): %s%n", moves.size(), king.getField(), king, moves);
         board.toConsole();
 
-        boolean hasCastling = moves.stream().anyMatch(m -> m instanceof Castling && m.getTargetField().toString().equals("g1"));
+        boolean hasCastling = moves.stream().anyMatch(m -> m instanceof Castling && m.getTargetField().has("g1"));
         assertTrue(hasCastling, "Should have kingside castling to g1");
     }
 
@@ -88,7 +87,7 @@ public class KingTest {
         System.out.printf("%d Pseudo legal moves from %s (%s): %s%n", moves.size(), king.getField(), king, moves);
         board.toConsole();
 
-        boolean hasCastling = moves.stream().anyMatch(m -> m instanceof Castling && m.getTargetField().toString().equals("c1"));
+        boolean hasCastling = moves.stream().anyMatch(m -> m instanceof Castling && m.getTargetField().has("c1"));
         assertTrue(hasCastling, "Should have queenside castling to c1");
     }
 

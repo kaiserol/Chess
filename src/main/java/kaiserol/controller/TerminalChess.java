@@ -1,5 +1,7 @@
 package kaiserol.controller;
 
+import kaiserol.logic.ChessController;
+import kaiserol.logic.Game;
 import kaiserol.logic.moves.PawnPromotion;
 
 import java.util.Scanner;
@@ -14,28 +16,30 @@ public class TerminalChess extends ChessController {
 
     @Override
     public void run() {
-        start();
+        startGame();
         game.getBoard().toConsole();
 
         while (true) {
-            String input = readMove();
+            String trimmed = readInput().trim().toLowerCase();
             try {
-                if (input.equalsIgnoreCase("exit")) {
-                    exit();
+                if (trimmed.equals("exit")) {
+                    exitGame();
                     break;
-                } else if (input.equalsIgnoreCase("restart")) {
-                    restart();
+                } else if (trimmed.equals("restart")) {
+                    restartGame();
                     game.getBoard().toConsole();
-                } else if (input.equalsIgnoreCase("undo")) {
+                } else if (trimmed.equals("undo")) {
                     game.undoMove();
                     game.getBoard().toConsole();
-                } else if (input.equalsIgnoreCase("redo")) {
+                } else if (trimmed.equals("redo")) {
                     game.redoMove();
                     game.getBoard().toConsole();
-                } else {
-                    game.executeMove(input);
+                } else if (trimmed.matches("(\\w|\\d){4}")) {
+                    game.executeMove(trimmed);
                     game.getBoard().toConsole();
                     handleGameState();
+                } else {
+                    printlnError("Invalid input.");
                 }
             } catch (Exception e) {
                 printlnError(e.getMessage());
@@ -46,34 +50,38 @@ public class TerminalChess extends ChessController {
     }
 
     @Override
-    public PawnPromotion.Choice waitForPromotionChoice() {
+    public PawnPromotion.Choice getPromotionChoice() {
         return readPromotionChoice(scanner, this::printMessage);
     }
 
-    private String readMove() {
+    private String readInput() {
         printMessage(game.getCurrentSide() + "'s turn: ");
-        return scanner.nextLine().trim();
+        return scanner.nextLine();
     }
 
-    private void start() {
+    private void startGame() {
         printlnMessage("=".repeat(40));
-        printlnMessage("Welcome to the game of chess!");
-        printlnMessage("- Enter moves in the format 'e2e4'");
-        printlnMessage("- Enter 'restart' to start a new game");
-        printlnMessage("- Enter 'undo' to undo");
-        printlnMessage("- Enter 'redo' to redo");
-        printlnMessage("- Enter 'exit' to quit.");
+        printlnMessage("Welcome to Chess");
+        printlnMessage("");
+        printlnMessage("Move format: <from><to> (e.g. e2e4)");
+        printlnMessage("Valid squares: a1 to h8");
+        printlnMessage("");
+        printlnMessage("Commands:");
+        printlnMessage("  restart  - start a new game");
+        printlnMessage("  undo     - undo last move");
+        printlnMessage("  redo     - redo last move");
+        printlnMessage("  exit     - quit the game");
         printlnMessage("=".repeat(40));
     }
 
-    private void restart() {
-        game.buildBoard();
+    private void restartGame() {
+        game.reset();
         printlnMessage("=".repeat(40));
         printlnMessage("Game restarted.");
         printlnMessage("=".repeat(40));
     }
 
-    private void exit() {
+    private void exitGame() {
         printlnMessage("Bye!");
     }
 

@@ -1,13 +1,14 @@
 package kaiserol;
 
 import kaiserol.controller.*;
+import kaiserol.logic.ChessController;
+import kaiserol.logic.Game;
 
 public class Main {
-    private static ChessController controller;
-
     public static void main(String[] args) {
         Game game = new Game();
 
+        ChessController controller;
         if (args.length > 0 && args[0].equalsIgnoreCase("-simulation")) {
             TerminalChessSimulator simulator = new TerminalChessSimulator(game);
 
@@ -25,9 +26,5 @@ public class Main {
 
         // Starts the controller
         controller.run();
-    }
-
-    public static ChessController getController() {
-        return controller;
     }
 }
