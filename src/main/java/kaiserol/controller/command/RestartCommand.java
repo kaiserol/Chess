@@ -4,7 +4,6 @@ import kaiserol.logic.Game;
 import org.jetbrains.annotations.NotNull;
 
 public class RestartCommand extends Command {
-
     private final Game game;
 
     public RestartCommand(@NotNull Game game) {

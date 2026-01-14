@@ -5,7 +5,6 @@ import kaiserol.logic.moves.MoveException;
 import org.jetbrains.annotations.NotNull;
 
 public class UndoCommand extends Command {
-
     private final Game game;
 
     public UndoCommand(@NotNull Game game) {
