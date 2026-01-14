@@ -5,70 +5,19 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>kaiserol</groupId>
-    <artifactId>Chess</artifactId>
+    <artifactId>chess-parent</artifactId>
     <version>1.0</version>
+    <packaging>pom</packaging>
 
     <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>24</maven.compiler.source>
         <maven.compiler.target>24</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
-    <dependencies>
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>4.13.2</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter</artifactId>
-            <version>6.0.1</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.jetbrains</groupId>
-            <artifactId>annotations</artifactId>
-            <version>26.0.2</version>
-            <scope>compile</scope>
-        </dependency>
-    </dependencies>
-    <!---->
-    <!--    <build>-->
-    <!--        <resources>-->
-    <!--            <resource>-->
-    <!--                <directory>src/main/resources</directory>-->
-    <!--            </resource>-->
-    <!---->
-    <!--            <resource>-->
-    <!--                <directory>${project.basedir}</directory>-->
-    <!--                <targetPath>META-INF</targetPath>-->
-    <!--            </resource>-->
-    <!--        </resources>-->
-    <!---->
-    <!--        <plugins>-->
-    <!--            <plugin>-->
-    <!--                <groupId>org.codehaus.mojo</groupId>-->
-    <!--                <artifactId>exec-maven-plugin</artifactId>-->
-    <!--                <version>3.6.2</version>-->
-    <!--                <configuration>-->
-    <!--                    <mainClass>kaiserol.Main</mainClass>-->
-    <!--                </configuration>-->
-    <!--            </plugin>-->
-    <!---->
-    <!--            <plugin>-->
-    <!--                <groupId>org.apache.maven.plugins</groupId>-->
-    <!--                <artifactId>maven-jar-plugin</artifactId>-->
-    <!--                <version>3.4.2</version>-->
-    <!--                <configuration>-->
-    <!--                    <archive>-->
-    <!--                        <manifest>-->
-    <!--                            <addClasspath>true</addClasspath>-->
-    <!--                            <mainClass>kaiserol.Main</mainClass>-->
-    <!--                        </manifest>-->
-    <!--                    </archive>-->
-    <!--                </configuration>-->
-    <!--            </plugin>-->
-    <!--        </plugins>-->
-    <!--    </build>-->
+
+    <modules>
+        <module>chess-core</module>
+        <module>chess-client</module>
+        <module>chess-server</module>
+    </modules>
 </project>
