@@ -36,10 +36,6 @@ public class Game {
         return boardHistory.peek().getFEN();
     }
 
-    public Stack<BoardSnapshot> getBoardHistory() {
-        return boardHistory;
-    }
-
     public Side getCurrentSide() {
         return currentSide;
     }

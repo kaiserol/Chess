@@ -87,10 +87,12 @@ public class TerminalChess extends ChessController {
 
     private void handleGameState() {
         String result = switch (game.getGameState()) {
-            case CHECKMATE -> "CHECKMATE" + game.getCurrentSide().opposite() + " wins.";
-            case CHECK -> "CHECK! " + game.getCurrentSide().opposite() + " is in check.";
-            case STALEMATE -> "STALEMATE! Draw.";
-            case DRAW -> "DRAW! Draw.";
+            case CHECKMATE -> "CHECKMATE! " + game.getCurrentSide().opposite() + " wins.";
+            case CHECK -> "CHECK! " + game.getCurrentSide() + " is in check.";
+            case STALEMATE -> "DRAW! Stalemate!";
+            case DRAW_INSUFFICIENT_MATERIAL -> "DRAW! Insufficient material.";
+            case DRAW_THREEFOLD_REPETITION -> "DRAW! Threefold repetition.";
+            case DRAW_50_MOVE_RULE -> "DRAW! 50-move rule reached.";
             default -> null;
         };
 

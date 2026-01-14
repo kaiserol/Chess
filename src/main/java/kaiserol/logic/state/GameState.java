@@ -12,7 +12,14 @@ public enum GameState {
     CHECK,
     CHECKMATE,
     STALEMATE,
+    DRAW_INSUFFICIENT_MATERIAL,
+    DRAW_THREEFOLD_REPETITION,
+    DRAW_50_MOVE_RULE,
     DRAW;
+
+    public boolean isDraw() {
+        return this == DRAW_INSUFFICIENT_MATERIAL || this == DRAW_THREEFOLD_REPETITION || this == DRAW_50_MOVE_RULE;
+    }
 
     public static GameState getGameState(ChessBoard board, Side currentSide, Stack<BoardSnapshot> boardHistory, int halfMoveCount) {
         // 1. Check whether legal moves exist
@@ -29,9 +36,9 @@ public enum GameState {
         }
 
         // 4. Check whether the draw rules are fulfilled
-        if (DrawDetector.hasInsufficientMaterial(board)) return DRAW;
-        if (DrawDetector.isThreefoldRepetition(boardHistory)) return DRAW;
-        if (DrawDetector.is50MoveRule(halfMoveCount)) return DRAW;
+        if (DrawDetector.hasInsufficientMaterial(board)) return DRAW_INSUFFICIENT_MATERIAL;
+        if (DrawDetector.isThreefoldRepetition(boardHistory)) return DRAW_THREEFOLD_REPETITION;
+        if (DrawDetector.is50MoveRule(halfMoveCount)) return DRAW_50_MOVE_RULE;
 
         // 5. Return the current state
         if (inCheck) return GameState.CHECK;

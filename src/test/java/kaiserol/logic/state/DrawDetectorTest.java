@@ -9,7 +9,6 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-// TODO: Extend the GameState enum with additional DRAW objects that describe the reason for the draw.
 public class DrawDetectorTest {
 
     @Test
@@ -19,7 +18,6 @@ public class DrawDetectorTest {
         // Only kings
         board.link(board.getField("e1"), new King(board, Side.WHITE));
         board.link(board.getField("e8"), new King(board, Side.BLACK));
-
         assertTrue(DrawDetector.hasInsufficientMaterial(board));
 
         // + One Rook (sufficient)
@@ -37,16 +35,14 @@ public class DrawDetectorTest {
         game.executeMove("g8f6");
         game.executeMove("f3g1");
         game.executeMove("f6g8");
-
-        assertFalse(DrawDetector.isThreefoldRepetition(game.getBoardHistory()));
+        assertNotEquals(GameState.DRAW_THREEFOLD_REPETITION, game.getGameState());
 
         // Moves: Nf3 Nf6 Ng1 Ng8 (Repetition 3x)
         game.executeMove("g1f3");
         game.executeMove("g8f6");
         game.executeMove("f3g1");
         game.executeMove("f6g8");
-
-        assertTrue(DrawDetector.isThreefoldRepetition(game.getBoardHistory()));
+        assertEquals(GameState.DRAW_THREEFOLD_REPETITION, game.getGameState());
     }
 
     @Test
@@ -58,14 +54,14 @@ public class DrawDetectorTest {
 
         for (int i = 0; i < 9; i++) { // 108 half moves
             for (int j = 0; j < 6; j++) {
-                if (game.getGameState() == GameState.DRAW) break;
+                if (game.getGameState().isDraw()) break;
                 game.executeMove(whiteMoves[j]);
-                if (game.getGameState() == GameState.DRAW) break;
+                if (game.getGameState().isDraw()) break;
                 game.executeMove(blackMoves[j]);
             }
-            if (game.getGameState() == GameState.DRAW) break;
+            if (game.getGameState().isDraw()) break;
         }
 
-        assertEquals(GameState.DRAW, game.getGameState());
+        assertTrue(game.getGameState().isDraw());
     }
 }
