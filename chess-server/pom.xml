@@ -8,6 +8,7 @@
         <artifactId>chess-parent</artifactId>
         <version>1.0</version>
     </parent>
+
     <artifactId>chess-server</artifactId>
     <properties>
         <maven.compiler.source>24</maven.compiler.source>
