@@ -1,8 +1,8 @@
 package kaiserol.controller;
 
-import kaiserol.controller.command.*;
 import kaiserol.ChessController;
 import kaiserol.Game;
+import kaiserol.controller.command.*;
 import kaiserol.moves.PawnPromotion;
 
 import java.util.Scanner;
@@ -69,7 +69,7 @@ public class TerminalChess extends ChessController {
 
     private Command getCommand(String input) {
         return commandRegistry.resolve(input)
-                .orElse(input.matches("(\\w|\\d){4}") ?
+                .orElse(input.matches("\\w\\d\\w\\d") ?
                         new MoveCommand(game, input) :
                         new InvalidCommand(input, this::printlnError));
     }
