@@ -1,5 +1,6 @@
 package kaiserol.controller;
 
+import kaiserol.controller.command.*;
 import kaiserol.logic.ChessController;
 import kaiserol.logic.Game;
 import kaiserol.logic.moves.PawnPromotion;
@@ -8,38 +9,45 @@ import java.util.Scanner;
 
 public class TerminalChess extends ChessController {
     private final Scanner scanner;
+    private final CommandRegistry commandRegistry;
+    private boolean running;
 
     public TerminalChess(Game game) {
         super(game);
         this.scanner = new Scanner(System.in);
+        this.commandRegistry = new CommandRegistry();
+        this.running = false;
+        registerCommands();
+    }
+
+    private void registerCommands() {
+        commandRegistry.add(new ExitCommand(this::exitGame));
+        commandRegistry.add(new RestartCommand(game));
+        commandRegistry.add(new UndoCommand(game));
+        commandRegistry.add(new RedoCommand(game));
+        commandRegistry.add(new HelpCommand(commandRegistry, this::printlnMessage));
     }
 
     @Override
     public void run() {
+        if (running) return;
+        else running = true;
+
         startGame();
         game.getBoard().toConsole();
 
-        while (true) {
-            String trimmed = readInput().trim().toLowerCase();
+        while (running) {
+            String input = readInput();
+            Command command = getCommand(input);
+
             try {
-                if (trimmed.equals("exit")) {
-                    exitGame();
-                    break;
-                } else if (trimmed.equals("restart")) {
-                    restartGame();
-                    game.getBoard().toConsole();
-                } else if (trimmed.equals("undo")) {
-                    game.undoMove();
-                    game.getBoard().toConsole();
-                } else if (trimmed.equals("redo")) {
-                    game.redoMove();
-                    game.getBoard().toConsole();
-                } else if (trimmed.matches("(\\w|\\d){4}")) {
-                    game.executeMove(trimmed);
+                command.execute();
+
+                // Print board after each move
+                if (command instanceof MoveCommand || command instanceof RestartCommand ||
+                        command instanceof UndoCommand || command instanceof RedoCommand) {
                     game.getBoard().toConsole();
                     handleGameState();
-                } else {
-                    printlnError("Invalid input.");
                 }
             } catch (Exception e) {
                 printlnError(e.getMessage());
@@ -56,33 +64,28 @@ public class TerminalChess extends ChessController {
 
     private String readInput() {
         printMessage(game.getCurrentSide() + "'s turn: ");
-        return scanner.nextLine();
+        return scanner.nextLine().trim();
+    }
+
+    private Command getCommand(String input) {
+        return commandRegistry.resolve(input)
+                .orElse(input.matches("(\\w|\\d){4}") ?
+                        new MoveCommand(game, input) :
+                        new InvalidCommand(input, this::printlnError));
     }
 
     private void startGame() {
-        printlnMessage("=".repeat(40));
         printlnMessage("Welcome to Chess");
-        printlnMessage("");
+        printlnMessage("-".repeat(40));
+        printlnMessage("Type 'help' for a list of commands.");
+        printlnMessage(".".repeat(40));
         printlnMessage("Move format: <from><to> (e.g. e2e4)");
         printlnMessage("Valid squares: a1 to h8");
-        printlnMessage("");
-        printlnMessage("Commands:");
-        printlnMessage("  restart  - start a new game");
-        printlnMessage("  undo     - undo last move");
-        printlnMessage("  redo     - redo last move");
-        printlnMessage("  exit     - quit the game");
-        printlnMessage("=".repeat(40));
-    }
-
-    private void restartGame() {
-        game.reset();
-        printlnMessage("=".repeat(40));
-        printlnMessage("Game restarted.");
-        printlnMessage("=".repeat(40));
+        printlnMessage("-".repeat(40));
     }
 
     private void exitGame() {
-        printlnMessage("Bye!");
+        running = false;
     }
 
     private void handleGameState() {

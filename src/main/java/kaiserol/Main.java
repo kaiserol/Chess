@@ -1,6 +1,7 @@
 package kaiserol;
 
 import kaiserol.controller.*;
+import kaiserol.controller.TerminalChess;
 import kaiserol.logic.ChessController;
 import kaiserol.logic.Game;
 
