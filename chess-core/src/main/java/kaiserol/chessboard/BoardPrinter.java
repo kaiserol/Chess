@@ -19,7 +19,7 @@ public class BoardPrinter {
 
             // Highlight legal target fields (Capture vs. target field)
             if (targetFields.contains(field)) {
-                return field.isOccupied() ? "(%s)".formatted(field.getPiece().getSymbol()) : " o ";
+                return field.isOccupied() ? "(%s)".formatted(field.getPiece().getSymbol()) : " x ";
             }
 
             // Normal field

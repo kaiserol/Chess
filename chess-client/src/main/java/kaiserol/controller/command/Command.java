@@ -4,8 +4,17 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Collections;
 import java.util.Map;
+import java.util.function.Consumer;
 
 public abstract class Command implements Comparable<Command> {
+    protected final Consumer<String> out;
+    protected final Consumer<String> err;
+
+    public Command(@NotNull Consumer<String> out, @NotNull Consumer<String> err) {
+        this.out = out;
+        this.err = err;
+    }
+
     public abstract void execute(String[] args) throws Exception;
 
     public abstract String keyword();

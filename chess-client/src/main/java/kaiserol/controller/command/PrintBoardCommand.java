@@ -1,11 +1,15 @@
 package kaiserol.controller.command;
 
 import kaiserol.chessboard.ChessBoard;
+import org.jetbrains.annotations.NotNull;
+
+import java.util.function.Consumer;
 
 public class PrintBoardCommand extends Command {
     private final ChessBoard board;
 
-    public PrintBoardCommand(ChessBoard board) {
+    public PrintBoardCommand(@NotNull Consumer<String> out, @NotNull Consumer<String> err, ChessBoard board) {
+        super(out, err);
         this.board = board;
     }
 

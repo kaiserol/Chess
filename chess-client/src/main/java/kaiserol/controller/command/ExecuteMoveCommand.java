@@ -4,11 +4,14 @@ import kaiserol.Game;
 import kaiserol.moves.MoveException;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.function.Consumer;
+
 public class ExecuteMoveCommand extends Command {
     private final Game game;
     private final String move;
 
-    public ExecuteMoveCommand(@NotNull Game game, @NotNull String move) {
+    public ExecuteMoveCommand(@NotNull Consumer<String> out, @NotNull Consumer<String> err, @NotNull Game game, @NotNull String move) {
+        super(out, err);
         this.game = game;
         this.move = move;
     }
@@ -25,6 +28,6 @@ public class ExecuteMoveCommand extends Command {
 
     @Override
     public String description() {
-        return "Executes the move '%s'".formatted(move);
+        return "Executes the move '%s'.".formatted(move);
     }
 }

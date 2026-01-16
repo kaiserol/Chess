@@ -6,17 +6,15 @@ import java.util.function.Consumer;
 
 public class InvalidCommand extends Command {
     private final String keyword;
-    private final Consumer<String> output;
 
-    public InvalidCommand(@NotNull String keyword, @NotNull Consumer<String> output) {
+    public InvalidCommand(@NotNull Consumer<String> out, @NotNull Consumer<String> err, @NotNull String keyword) {
+        super(out, err);
         this.keyword = keyword;
-        this.output = output;
     }
 
     @Override
     public void execute(String[] args) {
-        String result = "The command '%s' is invalid".formatted(keyword);
-        output.accept(result);
+        err.accept("The command '%s' is invalid.".formatted(keyword));
     }
 
     @Override

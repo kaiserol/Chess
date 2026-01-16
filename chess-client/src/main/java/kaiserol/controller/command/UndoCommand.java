@@ -4,10 +4,13 @@ import kaiserol.Game;
 import kaiserol.moves.MoveException;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.function.Consumer;
+
 public class UndoCommand extends Command {
     private final Game game;
 
-    public UndoCommand(@NotNull Game game) {
+    public UndoCommand(@NotNull Consumer<String> out, @NotNull Consumer<String> err, @NotNull Game game) {
+        super(out, err);
         this.game = game;
     }
 

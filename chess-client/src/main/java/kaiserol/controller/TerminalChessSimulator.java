@@ -43,7 +43,7 @@ public class TerminalChessSimulator extends ChessController {
 
     @Override
     public PawnPromotion.Choice getPromotionChoice() {
-        return readPromotionChoice(scanner, this::printMessage);
+        return readPromotionChoice(scanner, this::printMessage, this::printError);
     }
 
     private void runSimulation(String[] whiteMoves, String[] blackMoves, int simulationNumber) {

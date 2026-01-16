@@ -17,9 +17,9 @@ public abstract class ChessController implements PawnPromotionProvider {
 
     public abstract void run();
 
-    protected PawnPromotion.Choice readPromotionChoice(Scanner scanner, Consumer<String> output) {
+    protected PawnPromotion.Choice readPromotionChoice(Scanner scanner, Consumer<String> out, Consumer<String> err) {
         while (true) {
-            output.accept("Pawn promotion! Choose a piece (Q, R, B, N): ");
+            out.accept("Pawn promotion! Choose a piece (Q, R, B, N): ");
 
             if (!scanner.hasNextLine()) {
                 throw new IllegalStateException("Input stream closed during pawn promotion.");
@@ -37,7 +37,7 @@ public abstract class ChessController implements PawnPromotionProvider {
             if (choice != null) {
                 return choice;
             }
-            output.accept("Invalid promotion choice.\n");
+            err.accept("Invalid promotion choice.\n");
         }
     }
 
@@ -51,5 +51,9 @@ public abstract class ChessController implements PawnPromotionProvider {
 
     protected void printlnError(String error) {
         System.out.println("Error: " + error);
+    }
+
+    protected void printError(Object error) {
+        System.out.print("Error: " + error);
     }
 }
