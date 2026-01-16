@@ -53,10 +53,10 @@ public class BoardSnapshot {
      * Converts the current board position to FEN (Forsyth-Edwards Notation) format.
      * FEN consists of six fields separated by spaces:
      * <ol>
-     *     <li><b>Piece placement</b>: Rows from 8 to 1, pieces “a-zA-Z”, “/” separates rows, numbers indicate empty squares</li>
+     *     <li><b>Piece placement</b>: Rows from 8 to 1, pieces “a-zA-Z”, “/” separates rows, numbers indicate empty fields</li>
      *     <li><b>Active player</b>: 'w' for White, 'b' for Black</li>
      *     <li><b>Castling availability</b>: K/Q for White kingside/queenside, k/q for Black (or '-' if none possible)</li>
-     *     <li><b>En passant target square</b>: Square behind a pawn that just moved two squares (or '-' if not available)</li>
+     *     <li><b>En passant target field</b>: Field behind a pawn that just moved two fields (or '-' if not available)</li>
      *     <li><b>Half-move count</b>: Number of half-moves since last capture or pawn advance (for 50-move rule)</li>
      *     <li><b>Full move count</b>: Increments after Black's move, starts at 1</li>
      * </ol>
@@ -68,7 +68,7 @@ public class BoardSnapshot {
         return getPiecePlacement(board) + " " +
                 getActivePlayer(currentSide) + " " +
                 getCastlingAvailability(board) + " " +
-                getEnPassantTargetSquare(board) + " " +
+                getEnPassantTargetField(board) + " " +
                 halfMoveCount + " " +
                 fullMoveCount;
     }
@@ -126,7 +126,7 @@ public class BoardSnapshot {
         return field.isOccupied() && field.getPiece().getClass().equals(pieceClass) && !field.getPiece().hasMoved();
     }
 
-    private static String getEnPassantTargetSquare(ChessBoard board) {
+    private static String getEnPassantTargetField(ChessBoard board) {
         Move lastMove = board.getLastMove();
         if (lastMove instanceof PawnJump jump) {
             return jump.getEnPassantField().toString();

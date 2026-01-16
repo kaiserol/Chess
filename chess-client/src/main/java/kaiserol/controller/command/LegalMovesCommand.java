@@ -1,6 +1,9 @@
 package kaiserol.controller.command;
 
 import kaiserol.Game;
+import kaiserol.chessboard.BoardPrinter;
+import kaiserol.chessboard.ChessField;
+import kaiserol.chessboard.CoordinateException;
 import kaiserol.moves.Move;
 import kaiserol.pieces.Piece;
 import org.jetbrains.annotations.NotNull;
@@ -22,14 +25,11 @@ public class LegalMovesCommand extends Command {
 
     @Override
     public void execute(String[] args) throws Exception {
-        if (args.length == 0) {
-            printAllLegalMoves();
-        } else {
-            if (matchesOptions(args, new String[]{"-count"})) printAllLegalMovesCount();
-            else if (matchesOptions(args, new String[]{"<from>"})) printAllLegalMovesFrom(args[0]);
-            else if (matchesOptions(args, new String[]{"<from>", "-board"})) printBoardWithAllLegalMovesFrom(args[0]);
-            else throw new IllegalArgumentException("Invalid argument '%s'".formatted(String.join(" ", args)));
-        }
+        if (matchesOptions(args, new String[]{})) printAllLegalMoves();
+        else if (matchesOptions(args, new String[]{"-count"})) printAllLegalMovesCount();
+        else if (matchesOptions(args, new String[]{"\\w\\d"})) printAllLegalMovesFrom(args[0]);
+        else if (matchesOptions(args, new String[]{"\\w\\d", "-board"})) printBoardWithAllLegalMovesFrom(args[0]);
+        else output.accept("Invalid options '%s' for the lm command".formatted(String.join(" ", args)));
     }
 
     @Override
@@ -46,25 +46,23 @@ public class LegalMovesCommand extends Command {
     public @NotNull Map<String, String> options() {
         return Map.of(
                 "-count", "Returns the total number of legal moves",
-                "<from>", "Lists all legal moves from the given square (e.g. e2)",
-                "<from> -board", "Prints the board and highlights all legal moves starting from the specified square"
+                "<from>", "Lists all legal moves from the starting field (e.g. e2)",
+                "<from> -board", "Prints the board and highlights all legal moves from the starting field"
         );
     }
 
     private void printAllLegalMoves() {
         Map<Piece, List<Move>> map = getAllLegalMoves();
 
-        output.accept("Legal moves: ");
-
         List<Piece> sortedPieces = map.keySet().stream().sorted(Comparator.comparing(Piece::getField)).toList();
         for (Piece piece : sortedPieces) {
-            output.accept("  %s at %s: %s".formatted(piece.getSymbol(), piece.getField(), map.get(piece)));
+            output.accept("  %s on %s: %s".formatted(piece.getSymbol(), piece.getField(), map.get(piece)));
         }
     }
 
     private void printAllLegalMovesCount() {
         int count = getAllLegalMoves().values().stream().mapToInt(List::size).sum();
-        output.accept("Legal moves count: " + count);
+        output.accept("" + count);
     }
 
     private Map<Piece, List<Move>> getAllLegalMoves() {
@@ -80,11 +78,44 @@ public class LegalMovesCommand extends Command {
         return map;
     }
 
-    private void printAllLegalMovesFrom(String from) {
-        // TODO: Implement this method
+    private void printAllLegalMovesFrom(String coord) {
+        Piece piece = getPieceFrom(coord);
+        if (piece == null) return;
+
+        List<Move> legalMoves = piece.getLegalMoves();
+        output.accept("" + legalMoves);
     }
 
-    private void printBoardWithAllLegalMovesFrom(String from) {
-        // TODO: Implement this method
+    private void printBoardWithAllLegalMovesFrom(String coord) {
+        Piece piece = getPieceFrom(coord);
+        if (piece == null) return;
+
+        String boardView = BoardPrinter.formatWithHighlights(
+                game.getBoard(),
+                piece.getField()
+        );
+        output.accept(boardView);
+    }
+
+    private Piece getPieceFrom(String coord) {
+        try {
+            ChessField field = game.getBoard().getField(coord);
+
+            if (!field.isOccupied()) {
+                output.accept("No piece on '%s'".formatted(coord));
+                return null;
+            }
+
+            Piece piece = field.getPiece();
+            if (piece.getSide() != game.getCurrentSide()) {
+                output.accept("Piece on '%s' does not belong to the current side".formatted(coord));
+                return null;
+            }
+
+            return piece;
+        } catch (CoordinateException e) {
+            output.accept(e.getMessage());
+            return null;
+        }
     }
 }

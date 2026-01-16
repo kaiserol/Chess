@@ -3,6 +3,7 @@ package kaiserol.controller;
 import kaiserol.ChessController;
 import kaiserol.Game;
 import kaiserol.moves.PawnPromotion;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,15 +19,14 @@ public class TerminalChessSimulator extends ChessController {
         this.scanner = new Scanner(System.in);
     }
 
-    public void addSimulation(String[] whiteMoves, String[] blackMoves) {
-        if (whiteMoves == null || blackMoves == null) throw new IllegalArgumentException("Moves cannot be null");
+    public void addSimulation(@NotNull String[] whiteMoves, @NotNull String[] blackMoves) {
         if (whiteMoves.length == 0 || blackMoves.length == 0)
-            throw new IllegalArgumentException("Moves cannot be empty");
+            throw new IllegalArgumentException("Move lists must not be empty.");
 
         int difference = whiteMoves.length - blackMoves.length;
-        if (difference < 0) throw new IllegalArgumentException("White moves must be longer than black moves");
+        if (difference < 0) throw new IllegalArgumentException("White must not have fewer moves than Black.");
         if (difference > 1)
-            throw new IllegalArgumentException("White moves must not be longer than black moves by more than 1 move");
+            throw new IllegalArgumentException("White must not have more than one move more than Black.");
 
         simulations.add(new Simulation(whiteMoves, blackMoves));
     }

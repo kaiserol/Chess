@@ -40,7 +40,7 @@ public class DrawDetector {
             Piece whiteOther = board.getNotKing(whitePieces);
             Piece blackOther = board.getNotKing(blackPieces);
             if (whiteOther instanceof Bishop b1 && blackOther instanceof Bishop b2) {
-                // Check whether both bishops are on squares of the same color
+                // Check whether both bishops are on fields of the same color
                 return (b1.getField().getX() + b1.getField().getY()) % 2 ==
                         (b2.getField().getX() + b2.getField().getY()) % 2;
             }
@@ -59,7 +59,7 @@ public class DrawDetector {
         // 1. Piece placement
         // 2. Active player
         // 3. Castling availability
-        // 4. En passant target square
+        // 4. En passant target field
         // We ignore halfMoveCount and fullMoveCount.
 
         String currentFen = boardHistory.peek().getFEN();

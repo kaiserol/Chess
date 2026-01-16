@@ -61,7 +61,7 @@ public class KingTest {
 
     @Test
     void testCastlingKingside() {
-        // King at e1, Rook at h1
+        // King on e1, Rook on h1
         King king = new King(board, Side.WHITE);
         Rook rook = new Rook(board, Side.WHITE);
         board.link(board.getField("e1"), king);
@@ -77,7 +77,7 @@ public class KingTest {
 
     @Test
     void testCastlingQueenside() {
-        // King at e1, Rook at a1
+        // King on e1, Rook on a1
         King king = new King(board, Side.WHITE);
         Rook rook = new Rook(board, Side.WHITE);
         board.link(board.getField("e1"), king);

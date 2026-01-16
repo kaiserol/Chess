@@ -109,7 +109,7 @@ public class PawnTest {
     @Test
     void testEnPassant() {
         // En Passant setup:
-        // 1. White pawn at e5
+        // 1. White pawn on e5
         // 2. Black pawn jumps from d7 to d5
         // 3. White pawn can capture d5 by moving to d6
 

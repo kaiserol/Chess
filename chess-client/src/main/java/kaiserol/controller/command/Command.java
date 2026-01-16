@@ -29,9 +29,9 @@ public abstract class Command implements Comparable<Command> {
     public static boolean matchesOptions(@NotNull String[] args, @NotNull String[] options) {
         if (args.length != options.length) return false;
         for (int i = 0; i < args.length; i++) {
-            String arg1 = normalize(args[i]);
-            String arg2 = normalize(options[i]);
-            if (!arg1.equals(arg2)) return false;
+            String arg = normalize(args[i]);
+            String regex = options[i]; // No need to normalize regex
+            if (!arg.matches(regex)) return false;
         }
         return true;
     }
@@ -49,8 +49,6 @@ public abstract class Command implements Comparable<Command> {
     }
 
     private static String normalize(String keyword) {
-        return keyword
-                .toLowerCase()
-                .replaceAll("[^a-zA-Z0-9 ]", "");
+        return keyword.toLowerCase().replaceAll("\\s+", " ");
     }
 }

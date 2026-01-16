@@ -68,7 +68,7 @@ public final class King extends Piece {
                 if (board.getField(tx, fieldY).isOccupied()) return;
             }
 
-            // Check whether the king is in check or moves over attacked squares
+            // Check whether the king is in check or moves over attacked fields
             int direction = queenside ? -1 : 1;
             for (int i = 0; i <= 2; i++) {
                 int targetX = fieldX + direction * i;

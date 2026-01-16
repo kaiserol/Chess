@@ -3,6 +3,7 @@ package kaiserol.chessboard;
 import kaiserol.moves.Move;
 import kaiserol.moves.PawnPromotionProvider;
 import kaiserol.pieces.*;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -98,26 +99,14 @@ public class ChessBoard {
         return x >= 1 && x <= 8 && y >= 1 && y <= 8;
     }
 
-    public ChessField getField(String coord) {
-        if (coord == null) {
-            throw new CoordinateException("Coordinate must not be null.");
-        }
-
+    public ChessField getField(@NotNull String coord) {
         String c = coord.trim().toLowerCase();
-        if (c.length() != 2) {
+        if (!c.matches("[a-h][1-8]")) {
             throw new CoordinateException("Invalid coordinate '%s'. Expected <column><row> (e.g. a1, h8).".formatted(coord));
         }
 
         char col = c.charAt(0);
         char row = c.charAt(1);
-
-        if (col < 'a' || col > 'h') {
-            throw new CoordinateException("Invalid coordinate '%s': column '%s' is out of range (a–h).".formatted(coord, col));
-        }
-
-        if (row < '1' || row > '8') {
-            throw new CoordinateException("Invalid coordinate '%s': row '%s' is out of range (1–8).".formatted(coord, row));
-        }
 
         int x = col - 'a' + 1;
         int y = row - '1' + 1;
@@ -175,26 +164,6 @@ public class ChessBoard {
 
     @Override
     public String toString() {
-        StringBuilder builder = new StringBuilder();
-        builder.append("  ").append("+---".repeat(8)).append("+\n");
-
-        for (int y = 8; y >= 1; y--) {
-            builder.append(y).append(" ");
-
-            for (int x = 1; x <= 8; x++) {
-                ChessField field = getField(x, y);
-                if (!field.isOccupied()) builder.append("|   ");
-                else builder.append("| %s ".formatted(field.getPiece().getSymbol()));
-            }
-            builder.append("|\n");
-        }
-
-        builder.append("  ").append("+---".repeat(8)).append("+\n  ");
-        for (int x = 1; x <= 8; x++) {
-            builder.append("  %s ".formatted((char) ('a' + (x - 1))));
-        }
-        builder.append(" ");
-
-        return builder.toString();
+        return BoardPrinter.format(this);
     }
 }

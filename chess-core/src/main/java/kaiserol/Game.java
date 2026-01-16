@@ -51,7 +51,7 @@ public class Game {
         ChessField from = validateField(move.substring(0, 2), "start");
         ChessField to = validateField(move.substring(2, 4), "target");
 
-        // Validate the piece at the start field
+        // Validate the piece on the start field
         Piece piece = requireValidPiece(from);
 
         // Execute the move
@@ -179,7 +179,7 @@ public class Game {
 
         Piece piece = field.getPiece();
         if (piece.getSide() != this.currentSide) {
-            throw new MoveException("The piece at '%s' does not belong to the current side.".formatted(field));
+            throw new MoveException("The piece on '%s' does not belong to the current side.".formatted(field));
         }
         return piece;
     }

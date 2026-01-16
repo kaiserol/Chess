@@ -88,7 +88,7 @@ public class TerminalChess extends ChessController {
         printlnMessage("Type 'help' for a list of commands.");
         printlnMessage(".".repeat(40));
         printlnMessage("Move format: <from><to> (e.g. e2e4)");
-        printlnMessage("Valid squares: a1 to h8");
+        printlnMessage("Valid fields: a1 to h8");
         printlnMessage("=".repeat(40));
     }
 
