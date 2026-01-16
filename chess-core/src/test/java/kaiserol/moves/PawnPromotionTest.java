@@ -28,7 +28,7 @@ public class PawnPromotionTest {
         board.link(startField, pawn);
 
         PawnPromotion promotion = new PawnPromotion(board, startField, targetField, PawnPromotion.Choice.QUEEN);
-        Piece promotedQueen = promotion.getPromotedPiece();
+        Piece promotingQueen = promotion.getPromotingPiece();
 
         board.toConsole();
         board.executeMove(promotion);
@@ -37,8 +37,8 @@ public class PawnPromotionTest {
         assertTrue(pawn.hasMoved());
         assertNull(startField.getPiece());
         assertNull(pawn.getField());
-        assertEquals(promotedQueen, targetField.getPiece());
-        assertEquals(targetField, promotedQueen.getField());
+        assertEquals(promotingQueen, targetField.getPiece());
+        assertEquals(targetField, promotingQueen.getField());
     }
 
     @Test
@@ -50,7 +50,7 @@ public class PawnPromotionTest {
         board.link(startField, pawn);
 
         PawnPromotion promotion = new PawnPromotion(board, startField, targetField, PawnPromotion.Choice.QUEEN);
-        Piece promotedQueen = promotion.getPromotedPiece();
+        Piece promotingQueen = promotion.getPromotingPiece();
 
         board.toConsole();
         board.executeMove(promotion);
@@ -60,7 +60,7 @@ public class PawnPromotionTest {
 
         assertFalse(pawn.hasMoved());
         assertNull(targetField.getPiece());
-        assertNull(promotedQueen.getField());
+        assertNull(promotingQueen.getField());
         assertEquals(pawn, startField.getPiece());
         assertEquals(startField, pawn.getField());
     }
@@ -77,7 +77,7 @@ public class PawnPromotionTest {
         board.link(targetField, blackRook);
 
         PawnPromotion promotion = new PawnPromotion(board, startField, targetField, PawnPromotion.Choice.QUEEN);
-        Piece promotedQueen = promotion.getPromotedPiece();
+        Piece promotingQueen = promotion.getPromotingPiece();
 
         board.toConsole();
         board.executeMove(promotion);
@@ -87,8 +87,8 @@ public class PawnPromotionTest {
         assertNull(startField.getPiece());
         assertNull(blackRook.getField());
         assertNull(pawn.getField());
-        assertEquals(promotedQueen, targetField.getPiece());
-        assertEquals(targetField, promotedQueen.getField());
+        assertEquals(promotingQueen, targetField.getPiece());
+        assertEquals(targetField, promotingQueen.getField());
     }
 
     @Test
@@ -103,7 +103,7 @@ public class PawnPromotionTest {
         board.link(targetField, blackRook);
 
         PawnPromotion promotion = new PawnPromotion(board, startField, targetField, PawnPromotion.Choice.QUEEN);
-        Piece promotedQueen = promotion.getPromotedPiece();
+        Piece promotingQueen = promotion.getPromotingPiece();
 
         board.toConsole();
         board.executeMove(promotion);
@@ -112,7 +112,7 @@ public class PawnPromotionTest {
         board.toConsole();
 
         assertFalse(pawn.hasMoved());
-        assertNull(promotedQueen.getField());
+        assertNull(promotingQueen.getField());
         assertEquals(pawn, startField.getPiece());
         assertEquals(startField, pawn.getField());
         assertEquals(blackRook, targetField.getPiece());

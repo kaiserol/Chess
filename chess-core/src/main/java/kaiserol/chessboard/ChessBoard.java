@@ -1,6 +1,7 @@
 package kaiserol.chessboard;
 
 import kaiserol.moves.Move;
+import kaiserol.moves.PawnJump;
 import kaiserol.moves.PawnPromotionProvider;
 import kaiserol.pieces.*;
 import org.jetbrains.annotations.NotNull;
@@ -13,6 +14,7 @@ public class ChessBoard {
     private final ChessField[][] fields;
     private final Stack<Move> moveHistory;
     private PawnPromotionProvider pawnPromotionProvider;
+    private ChessField enPassantField;
 
     public ChessBoard() {
         this.fields = new ChessField[8][8];
@@ -30,20 +32,26 @@ public class ChessBoard {
         this.pawnPromotionProvider = provider;
     }
 
+    public ChessField getEnPassantField() {
+        return enPassantField;
+    }
+
     public void executeMove(Move move) {
         if (move == null) return;
         move.execute();
         moveHistory.push(move);
+
+        if (move instanceof PawnJump pawnJump) {
+            enPassantField = pawnJump.getEnPassantField();
+        } else {
+            enPassantField = null;
+        }
     }
 
     public void undoMove() {
         if (moveHistory.empty()) return;
         Move move = moveHistory.pop();
         move.undo();
-    }
-
-    public Move getLastMove() {
-        return moveHistory.empty() ? null : moveHistory.peek();
     }
 
     private void initializeFields() {

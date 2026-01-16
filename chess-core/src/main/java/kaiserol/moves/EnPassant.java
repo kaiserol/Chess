@@ -5,21 +5,21 @@ import kaiserol.chessboard.ChessField;
 import kaiserol.pieces.Pawn;
 
 public final class EnPassant extends Move {
-    private final ChessField captureField;
+    private final ChessField capturePawnField;
     private final Pawn attackingPawn;
-    private final Pawn capturedPawn;
+    private final Pawn dyingPawn;
 
-    public EnPassant(ChessBoard board, ChessField startField, ChessField targetField, ChessField captureField) {
+    public EnPassant(ChessBoard board, ChessField startField, ChessField targetField, ChessField capturePawnField) {
         super(board, startField, targetField);
-        this.captureField = captureField;
+        this.capturePawnField = capturePawnField;
         this.attackingPawn = (Pawn) startField.getPiece();
-        this.capturedPawn = (Pawn) captureField.getPiece();
+        this.dyingPawn = (Pawn) capturePawnField.getPiece();
     }
 
     @Override
     public void execute() {
-        // Removes the captured pawn and moves the attacking pawn diagonally forward
-        board.unlink(captureField, capturedPawn);
+        // Removes the dying pawn and moves the attacking pawn diagonally forward
+        board.unlink(capturePawnField, dyingPawn);
         board.unlink(startField, attackingPawn);
         board.link(targetField, attackingPawn);
 
@@ -29,10 +29,10 @@ public final class EnPassant extends Move {
 
     @Override
     public void undo() {
-        // Puts the attacking and captured pawn back
+        // Puts the attacking and dying pawn back
         board.unlink(targetField, attackingPawn);
         board.link(startField, attackingPawn);
-        board.link(captureField, capturedPawn);
+        board.link(capturePawnField, dyingPawn);
 
         // Decreases the moves
         attackingPawn.decreaseMoveCount();

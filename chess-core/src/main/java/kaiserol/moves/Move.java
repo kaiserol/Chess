@@ -34,10 +34,10 @@ public abstract sealed class Move permits NormalMove, Castling, EnPassant, PawnJ
     public abstract void undo();
 
     public boolean isLegal() {
-        Piece startingPiece = startField.getPiece();
+        Piece movingPiece = startField.getPiece();
 
         execute();
-        boolean isInCheck = CheckDetector.isInCheck(startingPiece.getBoard(), startingPiece.getSide());
+        boolean isInCheck = CheckDetector.isInCheck(movingPiece.getBoard(), movingPiece.getSide());
         undo();
 
         return !isInCheck;

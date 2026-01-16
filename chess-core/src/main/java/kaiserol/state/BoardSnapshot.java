@@ -4,7 +4,6 @@ import kaiserol.chessboard.ChessBoard;
 import kaiserol.chessboard.ChessField;
 import kaiserol.chessboard.Side;
 import kaiserol.moves.Move;
-import kaiserol.moves.PawnJump;
 import kaiserol.pieces.King;
 import kaiserol.pieces.Piece;
 import kaiserol.pieces.Rook;
@@ -127,10 +126,8 @@ public class BoardSnapshot {
     }
 
     private static String getEnPassantTargetField(ChessBoard board) {
-        Move lastMove = board.getLastMove();
-        if (lastMove instanceof PawnJump jump) {
-            return jump.getEnPassantField().toString();
-        }
+        ChessField enPassantField = board.getEnPassantField();
+        if (enPassantField != null) return enPassantField.toString();
         return "-";
     }
 

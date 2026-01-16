@@ -6,18 +6,18 @@ import kaiserol.pieces.Piece;
 
 public final class NormalMove extends Move {
     private final Piece attackingPiece;
-    private final Piece capturedPiece;
+    private final Piece dyingPiece;
 
     public NormalMove(ChessBoard board, ChessField startField, ChessField targetField) {
         super(board, startField, targetField);
         this.attackingPiece = startField.getPiece();
-        this.capturedPiece = targetField.getPiece();
+        this.dyingPiece = targetField.getPiece();
     }
 
     @Override
     public void execute() {
-        // Removes the captured piece and moves the attacking piece
-        board.unlink(targetField, capturedPiece);
+        // Removes the dying piece and moves the attacking piece
+        board.unlink(targetField, dyingPiece);
         board.unlink(startField, attackingPiece);
         board.link(targetField, attackingPiece);
 
@@ -27,10 +27,10 @@ public final class NormalMove extends Move {
 
     @Override
     public void undo() {
-        // Puts the attacking and captured piece back
+        // Puts the attacking and dying piece back
         board.unlink(targetField, attackingPiece);
         board.link(startField, attackingPiece);
-        board.link(targetField, capturedPiece);
+        board.link(targetField, dyingPiece);
 
         // Decreases the moves
         attackingPiece.decreaseMoveCount();
