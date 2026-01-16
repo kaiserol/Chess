@@ -4,17 +4,17 @@ import kaiserol.Game;
 import kaiserol.moves.MoveException;
 import org.jetbrains.annotations.NotNull;
 
-public class MoveCommand extends Command {
+public class ExecuteMoveCommand extends Command {
     private final Game game;
     private final String move;
 
-    public MoveCommand(@NotNull Game game, @NotNull String move) {
+    public ExecuteMoveCommand(@NotNull Game game, @NotNull String move) {
         this.game = game;
         this.move = move;
     }
 
     @Override
-    public void execute() throws MoveException {
+    public void execute(String[] args) throws MoveException {
         game.executeMove(move);
     }
 
@@ -25,6 +25,6 @@ public class MoveCommand extends Command {
 
     @Override
     public String description() {
-        return "Execute the move '%s'".formatted(move);
+        return "Executes the move '%s'".formatted(move);
     }
 }

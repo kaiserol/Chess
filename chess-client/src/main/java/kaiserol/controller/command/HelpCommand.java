@@ -9,27 +9,29 @@ public class HelpCommand extends Command {
     private final CommandRegistry registry;
     private final Consumer<String> output;
 
-    public HelpCommand(@NotNull  CommandRegistry registry, @NotNull Consumer<String> output) {
+    public HelpCommand(@NotNull CommandRegistry registry, @NotNull Consumer<String> output) {
         this.registry = registry;
         this.output = output;
     }
 
     @Override
-    public void execute() {
+    public void execute(String[] args) {
         List<Command> sortedCommands = registry.getAllCommands().stream().sorted().toList();
 
-        output.accept("=".repeat(40));
+        output.accept("=".repeat(80));
         output.accept("Available commands:");
-        int indent = sortedCommands.stream()
-                .mapToInt(command -> command.keyword().length())
-                .max()
-                .orElse(0);
 
         for (Command command : sortedCommands) {
-            String result = ("  %-" + indent + "s - %s").formatted(command.keyword(), command.description());
+            String result = ("  %-15s - %s").formatted(command.keyword(), command.description());
             output.accept(result);
+
+            List<String> sortedOptions = command.options().keySet().stream().sorted(Command::compareTo).toList();
+            for (String opt : sortedOptions) {
+                String desc = command.options().get(opt);
+                output.accept("%-20s%s%n  %-20s%s".formatted(" ", opt, " ", desc));
+            }
         }
-        output.accept("=".repeat(40));
+        output.accept("=".repeat(80));
     }
 
     @Override
@@ -39,6 +41,6 @@ public class HelpCommand extends Command {
 
     @Override
     public String description() {
-        return "Display all available commands";
+        return "Displays all available commands";
     }
 }

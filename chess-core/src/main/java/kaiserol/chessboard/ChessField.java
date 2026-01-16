@@ -3,12 +3,15 @@ package kaiserol.chessboard;
 import kaiserol.pieces.Piece;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Comparator;
 import java.util.Objects;
 
 public class ChessField implements Comparable<ChessField> {
     private final int x;
     private final int y;
     private Piece piece;
+
+    public enum SortOrder {X_ASC, X_DESC, Y_ASC, Y_DESC}
 
     public ChessField(int x, int y) {
         this.x = x;
@@ -56,16 +59,31 @@ public class ChessField implements Comparable<ChessField> {
     }
 
     @Override
-    public int compareTo(@NotNull ChessField o) {
-        int xComparison = Integer.compare(x, o.x);
-        if (xComparison != 0) return xComparison;
-        return Integer.compare(y, o.y);
-    }
-
-    @Override
     public String toString() {
         char col = (char) ('a' + (this.x - 1));
         char row = (char) ('1' + (this.y - 1));
         return col + "" + row;
+    }
+
+    @Override
+    public int compareTo(@NotNull ChessField o) {
+        return comparator(SortOrder.X_ASC, SortOrder.Y_ASC).compare(this, o);
+    }
+
+    public static Comparator<ChessField> comparator(SortOrder... orders) {
+        Comparator<ChessField> comp = null;
+        for (SortOrder order : orders) {
+            Comparator<ChessField> next = switch (order) {
+                case X_ASC -> Comparator.comparingInt(ChessField::getX);
+                case X_DESC -> Comparator.comparingInt(ChessField::getX).reversed();
+                case Y_ASC -> Comparator.comparingInt(ChessField::getY);
+                case Y_DESC -> Comparator.comparingInt(ChessField::getY).reversed();
+            };
+
+            comp = (comp == null) ? next : comp.thenComparing(next);
+        }
+
+        // Default: a1 bis h8
+        return comp != null ? comp : Comparator.comparingInt(ChessField::getX).thenComparingInt(ChessField::getY);
     }
 }

@@ -5,6 +5,7 @@ import kaiserol.Game;
 import kaiserol.controller.command.*;
 import kaiserol.moves.PawnPromotion;
 
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class TerminalChess extends ChessController {
@@ -21,6 +22,8 @@ public class TerminalChess extends ChessController {
     }
 
     private void registerCommands() {
+        commandRegistry.add(new LegalMovesCommand(game, this::printlnMessage));
+        commandRegistry.add(new PrintBoardCommand(game.getBoard()));
         commandRegistry.add(new ExitCommand(this::exitGame));
         commandRegistry.add(new RestartCommand(game));
         commandRegistry.add(new UndoCommand(game));
@@ -38,13 +41,18 @@ public class TerminalChess extends ChessController {
 
         while (running) {
             String input = readInput();
-            Command command = getCommand(input);
+            if (input.isBlank()) continue;
+
+            String[] allArguments = input.split("\\s+");
+            String keyword = allArguments[0];
+            String[] args = Arrays.copyOfRange(allArguments, 1, allArguments.length);
 
             try {
-                command.execute();
+                Command command = getCommand(keyword);
+                command.execute(args);
 
                 // Print board after each move
-                if (command instanceof MoveCommand || command instanceof RestartCommand ||
+                if (command instanceof ExecuteMoveCommand || command instanceof RestartCommand ||
                         command instanceof UndoCommand || command instanceof RedoCommand) {
                     game.getBoard().toConsole();
                     handleGameState();
@@ -67,11 +75,11 @@ public class TerminalChess extends ChessController {
         return scanner.nextLine().trim();
     }
 
-    private Command getCommand(String input) {
-        return commandRegistry.resolve(input)
-                .orElse(input.matches("\\w\\d\\w\\d") ?
-                        new MoveCommand(game, input) :
-                        new InvalidCommand(input, this::printlnError));
+    private Command getCommand(String keyword) {
+        return commandRegistry.resolve(keyword)
+                .orElse(keyword.matches("\\w\\d\\w\\d") ?
+                        new ExecuteMoveCommand(game, keyword) :
+                        new InvalidCommand(keyword, this::printlnError));
     }
 
     private void startGame() {

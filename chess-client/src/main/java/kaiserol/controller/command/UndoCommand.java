@@ -12,7 +12,7 @@ public class UndoCommand extends Command {
     }
 
     @Override
-    public void execute() throws MoveException {
+    public void execute(String[] args) throws MoveException {
         game.undoMove();
     }
 
@@ -23,6 +23,6 @@ public class UndoCommand extends Command {
 
     @Override
     public String description() {
-        return "Undo the last move";
+        return "Undoes the last move";
     }
 }

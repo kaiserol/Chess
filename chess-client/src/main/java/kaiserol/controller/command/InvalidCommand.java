@@ -14,7 +14,7 @@ public class InvalidCommand extends Command {
     }
 
     @Override
-    public void execute() {
+    public void execute(String[] args) {
         String result = "The command '%s' is invalid".formatted(keyword);
         output.accept(result);
     }

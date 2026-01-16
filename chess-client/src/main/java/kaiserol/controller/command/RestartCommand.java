@@ -11,7 +11,7 @@ public class RestartCommand extends Command {
     }
 
     @Override
-    public void execute() {
+    public void execute(String[] args) {
         game.reset();
     }
 
@@ -22,6 +22,6 @@ public class RestartCommand extends Command {
 
     @Override
     public String description() {
-        return "Restart the game";
+        return "Restarts the game";
     }
 }

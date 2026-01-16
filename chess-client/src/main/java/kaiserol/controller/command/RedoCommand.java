@@ -12,7 +12,7 @@ public class RedoCommand extends Command {
     }
 
     @Override
-    public void execute() throws MoveException {
+    public void execute(String[] args) throws MoveException {
         game.redoMove();
     }
 
@@ -23,6 +23,6 @@ public class RedoCommand extends Command {
 
     @Override
     public String description() {
-        return "Redo the last undone move";
+        return "Redoes the last undone move";
     }
 }

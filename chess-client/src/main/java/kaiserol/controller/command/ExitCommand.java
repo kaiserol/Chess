@@ -10,7 +10,7 @@ public class ExitCommand extends Command {
     }
 
     @Override
-    public void execute() {
+    public void execute(String[] args) {
         onExit.run();
     }
 
@@ -21,6 +21,6 @@ public class ExitCommand extends Command {
 
     @Override
     public String description() {
-        return "End the game";
+        return "Ends the game";
     }
 }
