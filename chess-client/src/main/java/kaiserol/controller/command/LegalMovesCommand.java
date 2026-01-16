@@ -27,7 +27,10 @@ public class LegalMovesCommand extends Command {
         else if (matchesOptions(args, new String[]{"-count"})) printAllLegalMovesCount();
         else if (matchesOptions(args, new String[]{"\\w\\d"})) printAllLegalMovesFrom(args[0]);
         else if (matchesOptions(args, new String[]{"\\w\\d", "-board"})) printBoardWithAllLegalMovesFrom(args[0]);
-        else err.accept("Invalid option(s) '%s' for lm command".formatted(String.join(" ", args)));
+        else err.accept("The option%s '%s' %s invalid for the command 'lm'.".formatted(
+                    args.length > 1 ? "s" : "",
+                    String.join(" ", args),
+                    args.length > 1 ? "are" : "is"));
     }
 
     @Override
@@ -96,13 +99,13 @@ public class LegalMovesCommand extends Command {
         try {
             ChessField field = game.getBoard().getField(coord);
             if (!field.isOccupied()) {
-                err.accept("No piece on '%s'".formatted(coord));
+                err.accept("There is no piece on '%s'.".formatted(coord));
                 return null;
             }
 
             Piece piece = field.getPiece();
             if (piece.getSide() != game.getCurrentSide()) {
-                err.accept("Piece on '%s' does not belong to the current side".formatted(coord));
+                err.accept("The piece on '%s' does not belong to the current side.".formatted(coord));
                 return null;
             }
             return piece;

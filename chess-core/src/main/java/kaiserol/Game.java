@@ -48,8 +48,8 @@ public class Game {
     public void executeMove(String move) throws MoveException {
         // Validate the move string
         validateMoveString(move);
-        ChessField from = validateField(move.substring(0, 2), "start");
-        ChessField to = validateField(move.substring(2, 4), "target");
+        ChessField from = validateField(move.substring(0, 2));
+        ChessField to = validateField(move.substring(2, 4));
 
         // Validate the piece on the start field
         Piece piece = requireValidPiece(from);
@@ -160,21 +160,21 @@ public class Game {
 
     private void validateMoveString(String move) throws MoveException {
         if (move == null || move.length() != 4) {
-            throw new MoveException("The move '%s' must consist of 4 characters.".formatted(move));
+            throw new MoveException("The move '%s' is invalid. It must consist of 4 characters.".formatted(move));
         }
     }
 
-    private ChessField validateField(String coord, String type) throws MoveException {
+    private ChessField validateField(String coord) throws MoveException {
         try {
             return board.getField(coord);
         } catch (CoordinateException e) {
-            throw new MoveException("Invalid %s field '%s': %s".formatted(type, coord, e.getMessage()));
+            throw new MoveException(e.getMessage());
         }
     }
 
     private Piece requireValidPiece(ChessField field) throws MoveException {
         if (!field.isOccupied()) {
-            throw new MoveException("The field '%s' is empty.".formatted(field));
+            throw new MoveException("There is no piece on '%s'.".formatted(field));
         }
 
         Piece piece = field.getPiece();
