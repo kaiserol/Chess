@@ -1,9 +1,9 @@
 package kaiserol.chessboard;
 
 import kaiserol.moves.Move;
-import kaiserol.moves.PawnJump;
 import kaiserol.moves.PawnPromotionProvider;
 import kaiserol.pieces.*;
+import kaiserol.state.CastlingRights;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -14,7 +14,12 @@ public class ChessBoard {
     private final ChessField[][] fields;
     private final Stack<Move> moveHistory;
     private PawnPromotionProvider pawnPromotionProvider;
-    private ChessField enPassantField;
+
+    // Castling rights
+    private CastlingRights castlingRights;
+
+    // En passant Target
+    private ChessField enPassantTarget;
 
     public ChessBoard() {
         this.fields = new ChessField[8][8];
@@ -22,6 +27,28 @@ public class ChessBoard {
 
         // History stacks
         this.moveHistory = new Stack<>();
+    }
+
+    public boolean canCastleKingSide(Side side) {
+        if (castlingRights == null) return false;
+        return side.isWhite() ? castlingRights.canWhiteCastleKingSide() : castlingRights.canBlackCastleKingSide();
+    }
+
+    public boolean canCastleQueenSide(Side side) {
+        if (castlingRights == null) return false;
+        return side.isWhite() ? castlingRights.canWhiteCastleQueenSide() : castlingRights.canBlackCastleQueenSide();
+    }
+
+    public void setCastlingRights(CastlingRights castlingRights) {
+        this.castlingRights = castlingRights;
+    }
+
+    public ChessField getEnPassantTarget() {
+        return enPassantTarget;
+    }
+
+    public void setEnPassantTarget(ChessField enPassantTarget) {
+        this.enPassantTarget = enPassantTarget;
     }
 
     public PawnPromotionProvider getPromotionProvider() {
@@ -32,20 +59,10 @@ public class ChessBoard {
         this.pawnPromotionProvider = provider;
     }
 
-    public ChessField getEnPassantField() {
-        return enPassantField;
-    }
-
     public void executeMove(Move move) {
         if (move == null) return;
         move.execute();
         moveHistory.push(move);
-
-        if (move instanceof PawnJump pawnJump) {
-            enPassantField = pawnJump.getEnPassantField();
-        } else {
-            enPassantField = null;
-        }
     }
 
     public void undoMove() {

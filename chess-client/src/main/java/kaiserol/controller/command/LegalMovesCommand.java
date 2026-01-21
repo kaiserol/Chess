@@ -68,7 +68,7 @@ public class LegalMovesCommand extends Command {
 
     private Map<Piece, List<Move>> getAllLegalMoves() {
         Map<Piece, List<Move>> map = new HashMap<>();
-        List<Piece> pieces = game.getBoard().getPieces(game.getCurrentSide());
+        List<Piece> pieces = game.getBoard().getPieces(game.getSideToMove());
 
         for (Piece piece : pieces) {
             List<Move> legalMoves = piece.getLegalMoves();
@@ -104,7 +104,7 @@ public class LegalMovesCommand extends Command {
             }
 
             Piece piece = field.getPiece();
-            if (piece.getSide() != game.getCurrentSide()) {
+            if (piece.getSide() != game.getSideToMove()) {
                 err.accept("The piece on '%s' does not belong to the current side.".formatted(coord));
                 return null;
             }

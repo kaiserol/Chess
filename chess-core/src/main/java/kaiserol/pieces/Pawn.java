@@ -62,15 +62,15 @@ public final class Pawn extends Piece {
             }
         }
 
-        // En Passant
-        ChessField enPassantField = board.getEnPassantField();
-        if (enPassantField != null) {
-            int enPassantX = enPassantField.getX();
-            int enPassantY = enPassantField.getY();
+        // En Passant Target
+        ChessField enPassantTarget = board.getEnPassantTarget();
+        if (enPassantTarget != null) {
+            int enPassantX = enPassantTarget.getX();
+            int enPassantY = enPassantTarget.getY();
 
             if (Math.abs(enPassantX - fieldX) == 1 && targetY == enPassantY) {
                 ChessField capturePawnField = board.getField(enPassantX, fieldY);
-                moves.add(new EnPassant(board, field, enPassantField, capturePawnField));
+                moves.add(new EnPassant(board, field, enPassantTarget, capturePawnField));
             }
         }
         return moves;

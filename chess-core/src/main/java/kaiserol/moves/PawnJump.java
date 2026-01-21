@@ -6,18 +6,18 @@ import kaiserol.pieces.Pawn;
 
 public final class PawnJump extends Move {
     private final Pawn pawn;
-    private final ChessField enPassantField;
+    private final ChessField enPassantTarget;
 
     public PawnJump(ChessBoard board, ChessField startField, ChessField targetField) {
         super(board, startField, targetField);
         this.pawn = (Pawn) startField.getPiece();
         
         int enPassantY = (startField.getY() + targetField.getY()) / 2;
-        this.enPassantField = board.getField(startField.getX(), enPassantY);
+        this.enPassantTarget = board.getField(startField.getX(), enPassantY);
     }
 
-    public ChessField getEnPassantField() {
-        return enPassantField;
+    public ChessField getEnPassantTarget() {
+        return enPassantTarget;
     }
 
     @Override
@@ -25,9 +25,6 @@ public final class PawnJump extends Move {
         // Moves the pawn two fields forward
         board.unlink(startField, pawn);
         board.link(targetField, pawn);
-
-        // Increases the moves
-        pawn.increaseMoveCount();
     }
 
     @Override
@@ -35,8 +32,5 @@ public final class PawnJump extends Move {
         // Puts the pawn back
         board.unlink(targetField, pawn);
         board.link(startField, pawn);
-
-        // Decreases the moves
-        pawn.decreaseMoveCount();
     }
 }

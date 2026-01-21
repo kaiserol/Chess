@@ -4,46 +4,58 @@ import kaiserol.chessboard.ChessBoard;
 import kaiserol.chessboard.ChessField;
 import kaiserol.chessboard.CoordinateException;
 import kaiserol.chessboard.Side;
+import kaiserol.fen.FENCreator;
 import kaiserol.moves.Move;
 import kaiserol.moves.MoveException;
-import kaiserol.pieces.Pawn;
 import kaiserol.pieces.Piece;
-import kaiserol.state.BoardSnapshot;
+import kaiserol.state.BoardHistory;
+import kaiserol.state.BoardState;
 import kaiserol.state.GameState;
-
-import java.util.Stack;
 
 public class Game {
     private final ChessBoard board;
-    private final Stack<BoardSnapshot> boardHistory;
-    private final Stack<BoardSnapshot> redoBoardHistory;
+    private final BoardHistory boardHistory;
     private GameState gameState;
-    private Side currentSide;
-    private int halfMoveCount;
-    private int fullMoveCount;
 
     public Game() {
         this.board = new ChessBoard();
-        this.boardHistory = new Stack<>();
-        this.redoBoardHistory = new Stack<>();
+        this.boardHistory = new BoardHistory();
         reset();
     }
 
-    public ChessBoard getBoard() {
-        return board;
+    // =======================
+    // Internal logic
+    // =======================
+
+    public void reset() {
+        board.initializePieces();
+        boardHistory.initialize();
+
+        // Update states
+        updatesStates();
     }
 
-    public String getLatestFEN() {
-        return boardHistory.peek().getFEN();
+    private void updatesStates() {
+        updateBoard(board, boardHistory);
+        gameState = GameState.getGameState(board, boardHistory);
     }
 
-    public Side getCurrentSide() {
-        return currentSide;
+    private void updateBoard(ChessBoard board, BoardHistory boardHistory) {
+        // Get the current state
+        BoardState currentState = boardHistory.current();
+
+        // Update the chess board
+        board.setCastlingRights(currentState.getCastlingRights());
+        board.setEnPassantTarget(currentState.getEnPassantTarget());
+
+        // Update the fen
+        currentState.setPositionalFEN(FENCreator.toPositionalFEN(board, currentState.getSideToMove()));
+        currentState.setFEN(FENCreator.toFEN(board, currentState.getSideToMove(), currentState.getHalfMoveCount(), currentState.getFullMoveCount()));
     }
 
-    public GameState getGameState() {
-        return gameState;
-    }
+    // =======================
+    // Execute / Undo / Redo
+    // =======================
 
     public void executeMove(String move) throws MoveException {
         // Validate the move string
@@ -63,95 +75,31 @@ public class Game {
         executeMove(legalMove);
     }
 
+    private void executeMove(Move move) throws MoveException {
+        // Execute the next move
+        boardHistory.update(move);
+        board.executeMove(move);
+
+        // Update states
+        updatesStates();
+    }
+
     public void undoMove() throws MoveException {
-        if (boardHistory.size() <= 1) {
-            throw new MoveException("No moves to undo.");
-        }
-
         // Undo the last move
-        BoardSnapshot last = boardHistory.pop();
-        redoBoardHistory.push(last);
         board.undoMove();
+        boardHistory.undo();
 
-        // Update game values
-        BoardSnapshot current = boardHistory.peek();
-        restoreFromSnapshot(current);
-        updateGameState();
+        // Update states
+        updatesStates();
     }
 
     public void redoMove() throws MoveException {
-        if (redoBoardHistory.isEmpty()) {
-            throw new MoveException("No moves to redo.");
-        }
+        // Redo the last undone move
+        Move undoneMove = boardHistory.redo();
+        board.executeMove(undoneMove);
 
-        // Get the last move from the redo stack
-        BoardSnapshot undone = redoBoardHistory.pop();
-        Move move = undone.getLastMove();
-
-        // Redo the move
-        boardHistory.push(undone);
-        board.executeMove(move);
-
-        // Update game values
-        restoreFromSnapshot(undone);
-        updateGameState();
-    }
-
-    public void reset() {
-        this.boardHistory.clear();
-        this.redoBoardHistory.clear();
-        this.board.initializePieces();
-
-        // Create an initial snapshot
-        BoardSnapshot initial = BoardSnapshot.initial(board);
-        boardHistory.push(initial);
-
-        // Update game values
-        restoreFromSnapshot(initial);
-        updateGameState();
-    }
-
-    private void restoreFromSnapshot(BoardSnapshot snapshot) {
-        this.currentSide = snapshot.getCurrentSide();
-        this.halfMoveCount = snapshot.getHalfMoveCount();
-        this.fullMoveCount = snapshot.getFullMoveCount();
-    }
-
-    // =======================
-    // Internal logic
-    // =======================
-    private void executeMove(Move move) {
-        // Clear the recovery stack when a new move is executed.
-        redoBoardHistory.clear();
-
-        // Calculate values
-        int nextHalfMove = calculateHalfMove(move);
-        int nextFullMove = fullMoveCount + (currentSide.isWhite() ? 0 : 1);
-        Side nextSide = currentSide.opposite();
-
-        // Execute the move
-        board.executeMove(move);
-
-        // Update local status variables
-        this.currentSide = nextSide;
-        this.halfMoveCount = nextHalfMove;
-        this.fullMoveCount = nextFullMove;
-
-        // Snapshot für den NEUEN Zustand speichern
-        boardHistory.push(new BoardSnapshot(board, currentSide, halfMoveCount, fullMoveCount, move));
-        updateGameState();
-    }
-
-    private int calculateHalfMove(Move move) {
-        Piece piece = move.getStartField().getPiece();
-
-        // 50-move rule: Reset after a pawn move or capture
-        return (piece instanceof Pawn || move.getTargetField().isOccupied())
-                ? 0 : halfMoveCount + 1;
-    }
-
-    private void updateGameState() {
-        this.gameState = GameState.getGameState(board, currentSide, boardHistory, halfMoveCount);
+        // Update states
+        updatesStates();
     }
 
     // =======================
@@ -178,9 +126,29 @@ public class Game {
         }
 
         Piece piece = field.getPiece();
-        if (piece.getSide() != this.currentSide) {
+        if (piece.getSide() != getSideToMove()) {
             throw new MoveException("The piece on '%s' does not belong to the current side.".formatted(field));
         }
         return piece;
+    }
+
+    // =======================
+    // Getter
+    // =======================
+
+    public ChessBoard getBoard() {
+        return board;
+    }
+
+    public Side getSideToMove() {
+        return boardHistory.current().getSideToMove();
+    }
+
+    public String getCurrentFEN() {
+        return boardHistory.current().getFEN();
+    }
+
+    public GameState getGameState() {
+        return gameState;
     }
 }

@@ -34,7 +34,6 @@ public class PawnPromotionTest {
         board.executeMove(promotion);
         board.toConsole();
 
-        assertTrue(pawn.hasMoved());
         assertNull(startField.getPiece());
         assertNull(pawn.getField());
         assertEquals(promotingQueen, targetField.getPiece());
@@ -58,7 +57,6 @@ public class PawnPromotionTest {
         board.undoMove();
         board.toConsole();
 
-        assertFalse(pawn.hasMoved());
         assertNull(targetField.getPiece());
         assertNull(promotingQueen.getField());
         assertEquals(pawn, startField.getPiece());
@@ -83,7 +81,6 @@ public class PawnPromotionTest {
         board.executeMove(promotion);
         board.toConsole();
 
-        assertTrue(pawn.hasMoved());
         assertNull(startField.getPiece());
         assertNull(blackRook.getField());
         assertNull(pawn.getField());
@@ -111,7 +108,6 @@ public class PawnPromotionTest {
         board.undoMove();
         board.toConsole();
 
-        assertFalse(pawn.hasMoved());
         assertNull(promotingQueen.getField());
         assertEquals(pawn, startField.getPiece());
         assertEquals(startField, pawn.getField());

@@ -1,8 +1,12 @@
 package kaiserol;
 
+import kaiserol.chessboard.ChessBoard;
+import kaiserol.chessboard.Side;
 import kaiserol.moves.PawnPromotion;
 import kaiserol.moves.PawnPromotionProvider;
+import kaiserol.pieces.*;
 
+import java.util.Arrays;
 import java.util.Scanner;
 import java.util.function.Consumer;
 
@@ -18,8 +22,15 @@ public abstract class ChessController implements PawnPromotionProvider {
     public abstract void run();
 
     protected PawnPromotion.Choice readPromotionChoice(Scanner scanner, Consumer<String> out, Consumer<String> err) {
+        final ChessBoard board = game.getBoard();
+        final Side side = game.getSideToMove();
+
+        Piece[] promotions = {new Queen(board, side), new Rook(board, side), new Bishop(board, side), new Knight(board, side)};
+        String[] selection = Arrays.stream(promotions)
+                .map(p -> "%s (%s)".formatted(p.getSymbol(), p.getLetter())).toArray(String[]::new);
+
         while (true) {
-            out.accept("Pawn promotion! Choose a piece (Q, R, B, N): ");
+            out.accept("Pawn promotion! Choose a piece %s: ".formatted(Arrays.toString(selection)));
 
             if (!scanner.hasNextLine()) {
                 throw new IllegalStateException("Input stream closed during pawn promotion.");

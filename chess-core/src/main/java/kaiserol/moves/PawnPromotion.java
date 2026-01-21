@@ -34,9 +34,6 @@ public final class PawnPromotion extends Move {
         // Removes the attacking pawn and promotes the pawn
         board.unlink(targetField, attackingPawn);
         board.link(targetField, promotingPiece);
-
-        // Increases the moves
-        attackingPawn.increaseMoveCount();
     }
 
     @Override
@@ -47,9 +44,6 @@ public final class PawnPromotion extends Move {
         // Puts the attacking pawn and dying piece back
         board.link(startField, attackingPawn);
         board.link(targetField, dyingPiece);
-
-        // Decreases the moves
-        attackingPawn.decreaseMoveCount();
     }
 
     @Override

@@ -20,9 +20,6 @@ public final class NormalMove extends Move {
         board.unlink(targetField, dyingPiece);
         board.unlink(startField, attackingPiece);
         board.link(targetField, attackingPiece);
-
-        // Increases the moves
-        attackingPiece.increaseMoveCount();
     }
 
     @Override
@@ -31,8 +28,5 @@ public final class NormalMove extends Move {
         board.unlink(targetField, attackingPiece);
         board.link(startField, attackingPiece);
         board.link(targetField, dyingPiece);
-
-        // Decreases the moves
-        attackingPiece.decreaseMoveCount();
     }
 }

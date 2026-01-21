@@ -60,7 +60,7 @@ public class KingTest {
     }
 
     @Test
-    void testCastlingKingside() {
+    void testCastlingKingSide() {
         // King on e1, Rook on h1
         King king = new King(board, Side.WHITE);
         Rook rook = new Rook(board, Side.WHITE);
@@ -76,7 +76,7 @@ public class KingTest {
     }
 
     @Test
-    void testCastlingQueenside() {
+    void testCastlingQueenSide() {
         // King on e1, Rook on a1
         King king = new King(board, Side.WHITE);
         Rook rook = new Rook(board, Side.WHITE);

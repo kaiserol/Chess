@@ -14,7 +14,6 @@ public abstract class Piece {
     protected final ChessBoard board;
     protected final Side side;
     protected ChessField field;
-    protected int moveCount;
 
     public Piece(ChessBoard board, Side side) {
         this.board = board;
@@ -39,18 +38,6 @@ public abstract class Piece {
 
     public void removeField() {
         this.field = null;
-    }
-
-    public boolean hasMoved() {
-        return moveCount > 0;
-    }
-
-    public void increaseMoveCount() {
-        moveCount++;
-    }
-
-    public void decreaseMoveCount() {
-        moveCount--;
     }
 
     private boolean addMoveAndShouldStop(int targetX, int targetY, List<Move> moves) {

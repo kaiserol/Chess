@@ -26,10 +26,6 @@ public final class Castling extends Move {
         board.unlink(rookStartField, rook);
         board.link(targetField, king);
         board.link(rookTargetField, rook);
-
-        // Increases the moves
-        king.increaseMoveCount();
-        rook.increaseMoveCount();
     }
 
     @Override
@@ -39,9 +35,5 @@ public final class Castling extends Move {
         board.unlink(targetField, king);
         board.link(rookStartField, rook);
         board.link(startField, king);
-
-        // Decreases the moves
-        king.decreaseMoveCount();
-        rook.decreaseMoveCount();
     }
 }

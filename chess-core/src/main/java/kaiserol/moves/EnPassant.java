@@ -22,9 +22,6 @@ public final class EnPassant extends Move {
         board.unlink(capturePawnField, dyingPawn);
         board.unlink(startField, attackingPawn);
         board.link(targetField, attackingPawn);
-
-        // Increases the moves
-        attackingPawn.increaseMoveCount();
     }
 
     @Override
@@ -33,8 +30,5 @@ public final class EnPassant extends Move {
         board.unlink(targetField, attackingPawn);
         board.link(startField, attackingPawn);
         board.link(capturePawnField, dyingPawn);
-
-        // Decreases the moves
-        attackingPawn.decreaseMoveCount();
     }
 }

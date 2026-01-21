@@ -3,10 +3,10 @@ package kaiserol.pieces;
 import kaiserol.chessboard.ChessBoard;
 import kaiserol.chessboard.ChessField;
 import kaiserol.chessboard.Side;
-import kaiserol.state.CheckDetector;
 import kaiserol.moves.Castling;
 import kaiserol.moves.Move;
 import kaiserol.moves.NormalMove;
+import kaiserol.state.CheckDetector;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,25 +42,23 @@ public final class King extends Piece {
             }
         }
 
-        // Castling
-        if (!this.hasMoved()) {
-            // Long (Queenside)
-            checkCastling(moves, 1, true);
-            // Short (Kingside)
-            checkCastling(moves, 8, false);
-        }
+        // Check Castling kingside
+        boolean castleKingSide = board.canCastleKingSide(side);
+        if (castleKingSide) addCastling(moves, 8);
+
+        // Check Castling queenside
+        boolean castleQueenSide = board.canCastleQueenSide(side);
+        if (castleQueenSide) addCastling(moves, 1);
 
         return moves;
     }
 
-    private void checkCastling(List<Move> moves, int rookX, boolean queenside) {
+    private void addCastling(List<Move> moves, int rookX) {
         int fieldX = field.getX();
         int fieldY = field.getY();
         ChessField rookStartField = board.getField(rookX, fieldY);
 
-        if (board.isOccupiedBySide(rookStartField, side) && rookStartField.getPiece() instanceof Rook rook) {
-            if (rook.hasMoved()) return;
-
+        if (board.isOccupiedBySide(rookStartField, side) && rookStartField.getPiece() instanceof Rook) {
             // Check whether the fields between the king and the rook are empty
             int startX = Math.min(field.getX(), rookX) + 1;
             int endX = Math.max(field.getX(), rookX) - 1;
@@ -69,7 +67,7 @@ public final class King extends Piece {
             }
 
             // Check whether the king is in check or moves over attacked fields
-            int direction = queenside ? -1 : 1;
+            int direction = rookX > 4 ? 1 : -1;
             for (int i = 0; i <= 2; i++) {
                 int targetX = fieldX + direction * i;
                 if (CheckDetector.isFieldAttacked(board, board.getField(targetX, fieldY), side.opposite())) return;
