@@ -19,7 +19,7 @@ public class TerminalChessSimulator extends ChessController {
         this.scanner = new Scanner(System.in);
     }
 
-    public void addSimulation(@NotNull String[] whiteMoves, @NotNull String[] blackMoves) {
+    public void addSimulation(@NotNull String name, String[] whiteMoves, @NotNull String[] blackMoves) {
         if (whiteMoves.length == 0 || blackMoves.length == 0)
             throw new IllegalArgumentException("Move lists must not be empty.");
 
@@ -28,14 +28,16 @@ public class TerminalChessSimulator extends ChessController {
         if (difference > 1)
             throw new IllegalArgumentException("White must not have more than one move more than Black.");
 
-        simulations.add(new Simulation(whiteMoves, blackMoves));
+        simulations.add(new Simulation(name, whiteMoves, blackMoves));
     }
 
     @Override
     public void run() {
         for (int i = 0; i < simulations.size(); i++) {
-            Simulation simulation = simulations.get(i);
-            runSimulation(simulation.whiteMoves(), simulation.blackMoves(), i + 1);
+            if (i > 0) printlnMessage("\n");
+            Simulation sim = simulations.get(i);
+            runSimulation(i + 1, sim);
+            game.reset();
         }
 
         scanner.close();
@@ -46,9 +48,13 @@ public class TerminalChessSimulator extends ChessController {
         return readPromotionChoice(scanner, this::printMessage, this::printError);
     }
 
-    private void runSimulation(String[] whiteMoves, String[] blackMoves, int simulationNumber) {
+    private void runSimulation(int simulationNumber, Simulation simulation) {
+        final String simulationName = simulation.name();
+        final String[] whiteMoves = simulation.whiteMoves();
+        final String[] blackMoves = simulation.blackMoves();
+
         String SEP = "-".repeat(8);
-        printlnMessage("%s %d. Simulation started %s".formatted(SEP, simulationNumber, SEP));
+        printlnMessage("%s %d. Simulation '%s' started %s".formatted(SEP, simulationNumber, simulationName, SEP));
         printlnMessage("Initial state of the game:");
         game.getBoard().toConsole();
 
@@ -77,9 +83,9 @@ public class TerminalChessSimulator extends ChessController {
             }
         }
 
-        printlnMessage("%s %d. Simulation ended %s".formatted(SEP, simulationNumber, SEP));
+        printlnMessage("%s %d. Simulation '%s' ended %s".formatted(SEP, simulationNumber, simulationName, SEP));
     }
 
-    private record Simulation(String[] whiteMoves, String[] blackMoves) {
+    private record Simulation(String name, String[] whiteMoves, String[] blackMoves) {
     }
 }
