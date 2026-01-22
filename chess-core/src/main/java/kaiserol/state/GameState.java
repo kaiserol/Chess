@@ -1,5 +1,6 @@
 package kaiserol.state;
 
+import kaiserol.chessboard.BoardHistory;
 import kaiserol.chessboard.ChessBoard;
 import kaiserol.pieces.Piece;
 

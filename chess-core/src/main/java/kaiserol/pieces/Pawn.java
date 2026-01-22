@@ -27,38 +27,38 @@ public final class Pawn extends Piece {
         final int fieldY = field.getY();
         final int direction = side.isWhite() ? 1 : -1;
 
-        // Move one field forward
         int targetY = fieldY + direction;
-        if (targetY >= 1 && targetY <= 8) {
-            ChessField targetField = board.getField(fieldX, targetY);
-            if (!targetField.isOccupied()) {
-                addNormalMove(moves, targetField);
+        if (targetY < 1 || targetY > 8) return moves;
 
-                // Move two fields forward
-                int jumpFieldY = fieldY + 2 * direction;
-                if (fieldY == START_ROW) {
-                    ChessField jumpField = board.getField(fieldX, jumpFieldY);
+        // Move one field forward
+        ChessField targetField = board.getField(fieldX, targetY);
+        if (!targetField.isOccupied()) {
+            addMove(moves, targetField);
 
-                    if (!jumpField.isOccupied()) {
-                        moves.add(new PawnJump(board, field, jumpField));
-                    }
+            // Move two fields forward
+            int jumpFieldY = fieldY + 2 * direction;
+            if (fieldY == START_ROW) {
+                ChessField jumpField = board.getField(fieldX, jumpFieldY);
+
+                if (!jumpField.isOccupied()) {
+                    moves.add(new PawnJump(board, field, jumpField));
                 }
             }
         }
 
         // Hit diagonally to the left
         if (board.inside(fieldX - 1, targetY)) {
-            ChessField targetField = board.getField(fieldX - 1, targetY);
-            if (board.isOccupiedBySide(targetField, side.opposite())) {
-                addNormalMove(moves, targetField);
+            ChessField captureField = board.getField(fieldX - 1, targetY);
+            if (board.isOccupiedBySide(captureField, side.opposite())) {
+                addMove(moves, captureField);
             }
         }
 
         // Hit diagonally to the right
         if (board.inside(fieldX + 1, targetY)) {
-            ChessField targetField = board.getField(fieldX + 1, targetY);
-            if (board.isOccupiedBySide(targetField, side.opposite())) {
-                addNormalMove(moves, targetField);
+            ChessField captureField = board.getField(fieldX + 1, targetY);
+            if (board.isOccupiedBySide(captureField, side.opposite())) {
+                addMove(moves, captureField);
             }
         }
 
@@ -76,7 +76,7 @@ public final class Pawn extends Piece {
         return moves;
     }
 
-    private void addNormalMove(List<Move> moves, ChessField targetField) {
+    private void addMove(List<Move> moves, ChessField targetField) {
         if (targetField.getY() == PROMOTION_ROW) {
             moves.add(new PawnPromotion(board, field, targetField));
         } else {

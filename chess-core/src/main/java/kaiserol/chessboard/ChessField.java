@@ -43,7 +43,7 @@ public class ChessField implements Comparable<ChessField> {
     }
 
     public boolean has(String coord) {
-        return toString().equals(coord);
+        return Objects.equals(toString(), coord);
     }
 
     @Override

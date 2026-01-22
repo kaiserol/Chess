@@ -9,7 +9,7 @@ public class FENCreator {
      * Converts the chess board position to FEN (Forsyth-Edwards Notation) format.
      * FEN consists of six fields separated by spaces:
      * <ol>
-     *     <li><b>Piece placement</b>: Rows from 8 to 1, pieces “a-zA-Z”, “/” separates rows, numbers indicate empty fields</li>
+     *     <li><b>Piece placement</b>: Rows from 8 to 1, pieces "a-zA-Z", "/" separates rows, numbers indicate empty fields</li>
      *     <li><b>Active player</b>: 'w' for White, 'b' for Black</li>
      *     <li><b>Castling availability</b>: K/Q for White kingside/queenside, k/q for Black (or '-' if none possible)</li>
      *     <li><b>En passant target</b>: Field behind a pawn that just moved two fields (or '-' if not available)</li>
@@ -32,7 +32,7 @@ public class FENCreator {
      * Converts the chess board position to FEN (Forsyth-Edwards Notation) format, without the move count.
      *
      * <ol>
-     *     <li><b>Piece placement</b>: Rows from 8 to 1, pieces “a-zA-Z”, “/” separates rows, numbers indicate empty fields</li>
+     *     <li><b>Piece placement</b>: Rows from 8 to 1, pieces "a-zA-Z", "/" separates rows, numbers indicate empty fields</li>
      *     <li><b>Active player</b>: 'w' for White, 'b' for Black</li>
      *     <li><b>Castling availability</b>: K/Q for White kingside/queenside, k/q for Black (or '-' if none possible)</li>
      *     <li><b>En passant target</b>: Field behind a pawn that just moved two fields (or '-' if not available)</li>
@@ -80,10 +80,10 @@ public class FENCreator {
 
     private static String getCastlingAvailability(ChessBoard board) {
         StringBuilder castling = new StringBuilder();
-        if (board.canCastleKingSide(Side.WHITE)) castling.append("K");
-        if (board.canCastleQueenSide(Side.WHITE)) castling.append("Q");
-        if (board.canCastleKingSide(Side.BLACK)) castling.append("k");
-        if (board.canCastleQueenSide(Side.BLACK)) castling.append("q");
+        if (board.canWhiteCastleKingSide()) castling.append("K");
+        if (board.canWhiteCastleQueenSide()) castling.append("Q");
+        if (board.canBlackCastleKingSide()) castling.append("k");
+        if (board.canBlackCastleQueenSide()) castling.append("q");
         return castling.isEmpty() ? "-" : castling.toString();
     }
 

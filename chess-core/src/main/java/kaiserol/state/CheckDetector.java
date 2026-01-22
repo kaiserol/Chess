@@ -8,6 +8,7 @@ import kaiserol.pieces.King;
 import kaiserol.pieces.Piece;
 
 import java.util.List;
+import java.util.Objects;
 
 public class CheckDetector {
 
@@ -27,7 +28,7 @@ public class CheckDetector {
             // Check pseudolegal moves of the piece
             List<Move> pseudoLegalMoves = attacker.getSortedPseudoLegalMoves();
             for (Move move : pseudoLegalMoves) {
-                if (move.getTargetField().equals(field)) {
+                if (Objects.equals(move.getTargetField(), field)) {
                     return true;
                 }
             }

@@ -12,9 +12,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 public final class King extends Piece {
+    private final int CASTLING_ROW;
+    private final int CASTLING_COLUMN_KING;
+    private final int CASTLING_COLUMN_ROOK_KING;
+    private final int CASTLING_COLUMN_ROOK_QUEEN;
 
     public King(ChessBoard board, Side side) {
         super(board, side);
+        this.CASTLING_ROW = side.isWhite() ? 1 : 8;
+        this.CASTLING_COLUMN_KING = 5;
+        this.CASTLING_COLUMN_ROOK_KING = 8;
+        this.CASTLING_COLUMN_ROOK_QUEEN = 1;
     }
 
     @Override
@@ -42,13 +50,16 @@ public final class King extends Piece {
             }
         }
 
-        // Check Castling kingside
-        boolean castleKingSide = board.canCastleKingSide(side);
-        if (castleKingSide) addCastling(moves, 8);
+        // Check whether the king is in the castle position
+        if (fieldX != CASTLING_COLUMN_KING || fieldY != CASTLING_ROW) {
+            return moves;
+        }
 
-        // Check Castling queenside
-        boolean castleQueenSide = board.canCastleQueenSide(side);
-        if (castleQueenSide) addCastling(moves, 1);
+        boolean castleKingSide = side.isWhite() ? board.canWhiteCastleKingSide() : board.canBlackCastleKingSide();
+        boolean castleQueenSide = side.isWhite() ? board.canWhiteCastleQueenSide() : board.canBlackCastleQueenSide();
+
+        if (castleKingSide) addCastling(moves, CASTLING_COLUMN_ROOK_KING); // Check Kingside Castling
+        if (castleQueenSide) addCastling(moves, CASTLING_COLUMN_ROOK_QUEEN); // Check Queenside Castling
 
         return moves;
     }

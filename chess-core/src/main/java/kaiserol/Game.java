@@ -4,22 +4,19 @@ import kaiserol.chessboard.ChessBoard;
 import kaiserol.chessboard.ChessField;
 import kaiserol.chessboard.CoordinateException;
 import kaiserol.chessboard.Side;
-import kaiserol.fen.FENCreator;
 import kaiserol.moves.Move;
 import kaiserol.moves.MoveException;
 import kaiserol.pieces.Piece;
-import kaiserol.state.BoardHistory;
-import kaiserol.state.BoardState;
 import kaiserol.state.GameState;
+
+import java.util.Objects;
 
 public class Game {
     private final ChessBoard board;
-    private final BoardHistory boardHistory;
     private GameState gameState;
 
     public Game() {
         this.board = new ChessBoard();
-        this.boardHistory = new BoardHistory();
         reset();
     }
 
@@ -29,28 +26,9 @@ public class Game {
 
     public void reset() {
         board.initializePieces();
-        boardHistory.initialize();
 
-        // Update states
-        updatesStates();
-    }
-
-    private void updatesStates() {
-        updateBoard(board, boardHistory);
-        gameState = GameState.getGameState(board, boardHistory);
-    }
-
-    private void updateBoard(ChessBoard board, BoardHistory boardHistory) {
-        // Get the current state
-        BoardState currentState = boardHistory.current();
-
-        // Update the chess board
-        board.setCastlingRights(currentState.getCastlingRights());
-        board.setEnPassantTarget(currentState.getEnPassantTarget());
-
-        // Update the fen
-        currentState.setPositionalFEN(FENCreator.toPositionalFEN(board, currentState.getSideToMove()));
-        currentState.setFEN(FENCreator.toFEN(board, currentState.getSideToMove(), currentState.getHalfMoveCount(), currentState.getFullMoveCount()));
+        // Update the game state
+        gameState = board.getGameState();
     }
 
     // =======================
@@ -68,7 +46,7 @@ public class Game {
 
         // Execute the move
         Move legalMove = piece.getLegalMoves().stream()
-                .filter(m -> m.getTargetField().equals(to))
+                .filter(m -> Objects.equals(m.getTargetField(), to))
                 .findFirst()
                 .orElseThrow(() -> new MoveException("The move is invalid"));
 
@@ -77,29 +55,29 @@ public class Game {
 
     private void executeMove(Move move) throws MoveException {
         // Execute the next move
-        boardHistory.update(move);
-        board.executeMove(move);
+        boolean executed = board.executeMove(move);
+        if (!executed) throw new MoveException("The move could not be executed.");
 
-        // Update states
-        updatesStates();
+        // Update the game state
+        gameState = board.getGameState();
     }
 
     public void undoMove() throws MoveException {
         // Undo the last move
-        board.undoMove();
-        boardHistory.undo();
+        boolean undone = board.undoMove();
+        if (!undone) throw new MoveException("No moves to undo.");
 
-        // Update states
-        updatesStates();
+        // Update the game state
+        gameState = board.getGameState();
     }
 
     public void redoMove() throws MoveException {
         // Redo the last undone move
-        Move undoneMove = boardHistory.redo();
-        board.executeMove(undoneMove);
+        boolean redone = board.redoMove();
+        if (!redone) throw new MoveException("No moves to redo.");
 
-        // Update states
-        updatesStates();
+        // Update the game state
+        gameState = board.getGameState();
     }
 
     // =======================
@@ -141,11 +119,11 @@ public class Game {
     }
 
     public Side getSideToMove() {
-        return boardHistory.current().getSideToMove();
+        return board.getCurrentState().getSideToMove();
     }
 
     public String getCurrentFEN() {
-        return boardHistory.current().getFEN();
+        return board.getCurrentState().getFEN();
     }
 
     public GameState getGameState() {

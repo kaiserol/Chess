@@ -1,5 +1,6 @@
 package kaiserol.state;
 
+import kaiserol.chessboard.ChessBoard;
 import kaiserol.chessboard.ChessField;
 import kaiserol.chessboard.Side;
 import kaiserol.moves.Move;
@@ -53,6 +54,29 @@ public class BoardState {
                 0,
                 1,
                 new CastlingRights(),
+                null,
+                null
+        );
+    }
+
+    /**
+     * Creates a board state based on the current ChessBoard.
+     * Ideal for FEN imports or manual setups in unit tests.
+     */
+    public static BoardState fromBoard(ChessBoard board) {
+        // TODO: implement castling right detection
+        CastlingRights rights = new CastlingRights(
+                false,
+                false,
+                false,
+                false
+        );
+
+        return new BoardState(
+                Side.WHITE,
+                0,
+                1,
+                rights,
                 null,
                 null
         );

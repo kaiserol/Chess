@@ -1,5 +1,6 @@
 package kaiserol.state;
 
+import kaiserol.chessboard.BoardHistory;
 import kaiserol.chessboard.ChessBoard;
 import kaiserol.chessboard.Side;
 import kaiserol.pieces.Bishop;
@@ -12,7 +13,7 @@ import java.util.List;
 public class DrawDetector {
 
     /**
-     * Check for insufficient material.
+     * Checks for insufficient material.
      */
     public static boolean hasInsufficientMaterial(ChessBoard board) {
         List<Piece> whitePieces = board.getPieces(Side.WHITE);
@@ -56,14 +57,14 @@ public class DrawDetector {
     }
 
     /**
-     * Check the three-fold position repetition.
+     * Checks the three-fold position repetition.
      */
     public static boolean isThreefoldRepetition(BoardHistory boardHistory) {
         return boardHistory.countRepetitions() >= 3;
     }
 
     /**
-     * Check the 50-move rule.
+     * Checks the 50-move rule.
      */
     public static boolean is50MoveRule(int halfMoveCount) {
         return halfMoveCount >= 100;

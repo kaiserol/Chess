@@ -1,54 +1,58 @@
 package kaiserol.chessboard;
 
+import kaiserol.fen.FENCreator;
 import kaiserol.moves.Move;
 import kaiserol.moves.PawnPromotionProvider;
 import kaiserol.pieces.*;
+import kaiserol.state.BoardState;
 import kaiserol.state.CastlingRights;
+import kaiserol.state.GameState;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Stack;
 
 public class ChessBoard {
     private final ChessField[][] fields;
-    private final Stack<Move> moveHistory;
     private PawnPromotionProvider pawnPromotionProvider;
 
-    // Castling rights
-    private CastlingRights castlingRights;
-
-    // En passant Target
-    private ChessField enPassantTarget;
+    // Board history
+    private final BoardHistory boardHistory;
 
     public ChessBoard() {
         this.fields = new ChessField[8][8];
         initializeFields();
 
-        // History stacks
-        this.moveHistory = new Stack<>();
+        // Initialize history
+        this.boardHistory = new BoardHistory();
     }
 
-    public boolean canCastleKingSide(Side side) {
-        if (castlingRights == null) return false;
-        return side.isWhite() ? castlingRights.canWhiteCastleKingSide() : castlingRights.canBlackCastleKingSide();
+    public BoardState getCurrentState() {
+        return boardHistory.current();
     }
 
-    public boolean canCastleQueenSide(Side side) {
-        if (castlingRights == null) return false;
-        return side.isWhite() ? castlingRights.canWhiteCastleQueenSide() : castlingRights.canBlackCastleQueenSide();
+    public boolean canWhiteCastleKingSide() {
+        CastlingRights castlingRights = getCurrentState().getCastlingRights();
+        return castlingRights.canWhiteCastleKingSide();
     }
 
-    public void setCastlingRights(CastlingRights castlingRights) {
-        this.castlingRights = castlingRights;
+    public boolean canWhiteCastleQueenSide() {
+        CastlingRights castlingRights = getCurrentState().getCastlingRights();
+        return castlingRights.canWhiteCastleQueenSide();
+    }
+
+    public boolean canBlackCastleKingSide() {
+        CastlingRights castlingRights = getCurrentState().getCastlingRights();
+        return castlingRights.canBlackCastleKingSide();
+    }
+
+    public boolean canBlackCastleQueenSide() {
+        CastlingRights castlingRights = getCurrentState().getCastlingRights();
+        return castlingRights.canBlackCastleQueenSide();
     }
 
     public ChessField getEnPassantTarget() {
-        return enPassantTarget;
-    }
-
-    public void setEnPassantTarget(ChessField enPassantTarget) {
-        this.enPassantTarget = enPassantTarget;
+        return getCurrentState().getEnPassantTarget();
     }
 
     public PawnPromotionProvider getPromotionProvider() {
@@ -59,48 +63,10 @@ public class ChessBoard {
         this.pawnPromotionProvider = provider;
     }
 
-    public void executeMove(Move move) {
-        if (move == null) return;
-        move.execute();
-        moveHistory.push(move);
-    }
-
-    public void undoMove() {
-        if (moveHistory.empty()) return;
-        Move move = moveHistory.pop();
-        move.undo();
-    }
-
     private void initializeFields() {
         for (int y = 1; y <= 8; y++) {
             for (int x = 1; x <= 8; x++) {
                 initializeField(x, y);
-            }
-        }
-    }
-
-    public void initializePieces() {
-        this.moveHistory.clear();
-        for (int y = 1; y <= 8; y++) {
-            for (int x = 1; x <= 8; x++) {
-                ChessField field = getField(x, y);
-                Side side = y <= 2 ? Side.WHITE : y <= 6 ? null : Side.BLACK;
-
-                if (y == 1 || y == 8) {
-                    switch (x) {
-                        case 1, 8 -> link(field, new Rook(this, side));
-                        case 2, 7 -> link(field, new Knight(this, side));
-                        case 3, 6 -> link(field, new Bishop(this, side));
-                        case 4 -> link(field, new Queen(this, side));
-                        case 5 -> link(field, new King(this, side));
-                    }
-                } else if (y == 2 || y == 7) {
-                    link(field, new Pawn(this, side));
-                } else {
-                    if (field.isOccupied()) {
-                        unlink(field, field.getPiece());
-                    }
-                }
             }
         }
     }
@@ -118,10 +84,6 @@ public class ChessBoard {
     private void checkCoordinates(int x, int y) {
         if (x < 1 || x > 8) throw new CoordinateException("x must be between 1 and 8");
         if (y < 1 || y > 8) throw new CoordinateException("y must be between 1 and 8");
-    }
-
-    public boolean inside(int x, int y) {
-        return x >= 1 && x <= 8 && y >= 1 && y <= 8;
     }
 
     public ChessField getField(@NotNull String coord) {
@@ -150,6 +112,90 @@ public class ChessBoard {
 
     public boolean isOccupiedBySide(ChessField field, Side side) {
         return field.isOccupied() && field.getPiece().getSide() == side;
+    }
+
+    public boolean inside(int x, int y) {
+        return x >= 1 && x <= 8 && y >= 1 && y <= 8;
+    }
+
+    /**
+     * Synchronizes the history with the current manual setup.
+     * Must be called in tests after placing the figures.
+     */
+    public void syncBoardHistory() {
+        boardHistory.initializeWithCurrentState(this);
+        updateCurrentFEN();
+    }
+
+    public void initializePieces() {
+        boardHistory.initialize();
+        for (int y = 1; y <= 8; y++) {
+            for (int x = 1; x <= 8; x++) {
+                ChessField field = getField(x, y);
+                Side side = y <= 2 ? Side.WHITE : y <= 6 ? null : Side.BLACK;
+
+                if (y == 1 || y == 8) {
+                    switch (x) {
+                        case 1, 8 -> link(field, new Rook(this, side));
+                        case 2, 7 -> link(field, new Knight(this, side));
+                        case 3, 6 -> link(field, new Bishop(this, side));
+                        case 4 -> link(field, new Queen(this, side));
+                        case 5 -> link(field, new King(this, side));
+                    }
+                } else if (y == 2 || y == 7) {
+                    link(field, new Pawn(this, side));
+                } else {
+                    if (field.isOccupied()) {
+                        unlink(field, field.getPiece());
+                    }
+                }
+            }
+        }
+        updateCurrentFEN();
+    }
+
+    public boolean executeMove(Move move) {
+        if (move == null) return false;
+
+        boardHistory.addMove(move);
+        move.execute();
+        updateCurrentFEN();
+        return true;
+    }
+
+    public boolean undoMove() {
+        if (!boardHistory.isUndoable()) {
+            return false;
+        }
+
+        Move move = boardHistory.undo();
+        move.undo();
+        updateCurrentFEN();
+        return true;
+    }
+
+    public boolean redoMove() {
+        if (!boardHistory.isRedoable()) {
+            return false;
+        }
+
+        Move move = boardHistory.redo();
+        move.execute();
+        updateCurrentFEN();
+        return true;
+    }
+
+    private void updateCurrentFEN() {
+        // Get the current state
+        BoardState currentState = getCurrentState();
+
+        // Update the fen of the current board
+        currentState.setPositionalFEN(FENCreator.toPositionalFEN(this, currentState.getSideToMove()));
+        currentState.setFEN(FENCreator.toFEN(this, currentState.getSideToMove(), currentState.getHalfMoveCount(), currentState.getFullMoveCount()));
+    }
+
+    public GameState getGameState() {
+        return GameState.getGameState(this, boardHistory);
     }
 
     public List<Piece> getPieces(Side side) {
