@@ -24,12 +24,12 @@ public class KingTest {
     void testKingMovesCenter() {
         ChessField field = board.getField("e4");
         King king = new King(board, Side.WHITE);
-        board.link(field, king);
+        board.occupyFieldAndSync(field, king);
 
         // Black Rook attacking e5, f5, g5
         ChessField rookField = board.getField("a5");
         Rook rook = new Rook(board, Side.BLACK);
-        board.link(rookField, rook);
+        board.occupyFieldAndSync(rookField, rook);
 
         List<Move> moves = king.getSortedPseudoLegalMoves();
         System.out.printf("%d Pseudo legal moves from %s (%s): %s%n", moves.size(), field, king, moves);
@@ -42,12 +42,12 @@ public class KingTest {
     void testKingCannotMoveIntoCheck() {
         ChessField field = board.getField("e4");
         King king = new King(board, Side.WHITE);
-        board.link(field, king);
+        board.occupyFieldAndSync(field, king);
 
         // Black Rook attacking e5, f5, g5
         ChessField rookField = board.getField("a5");
         Rook rook = new Rook(board, Side.BLACK);
-        board.link(rookField, rook);
+        board.occupyFieldAndSync(rookField, rook);
 
         List<Move> legalMoves = king.getLegalMoves();
         System.out.printf("%d Legal moves from %s (%s): %s%n", legalMoves.size(), field, king, legalMoves);
@@ -64,8 +64,8 @@ public class KingTest {
         // King on e1, Rook on h1
         King king = new King(board, Side.WHITE);
         Rook rook = new Rook(board, Side.WHITE);
-        board.link(board.getField("e1"), king);
-        board.link(board.getField("h1"), rook);
+        board.occupyFieldAndSync(board.getField("e1"), king);
+        board.occupyFieldAndSync(board.getField("h1"), rook);
 
         List<Move> moves = king.getSortedPseudoLegalMoves();
         System.out.printf("%d Pseudo legal moves from %s (%s): %s%n", moves.size(), king.getField(), king, moves);
@@ -80,8 +80,8 @@ public class KingTest {
         // King on e1, Rook on a1
         King king = new King(board, Side.WHITE);
         Rook rook = new Rook(board, Side.WHITE);
-        board.link(board.getField("e1"), king);
-        board.link(board.getField("a1"), rook);
+        board.occupyFieldAndSync(board.getField("e1"), king);
+        board.occupyFieldAndSync(board.getField("a1"), rook);
 
         List<Move> moves = king.getSortedPseudoLegalMoves();
         System.out.printf("%d Pseudo legal moves from %s (%s): %s%n", moves.size(), king.getField(), king, moves);
@@ -95,11 +95,11 @@ public class KingTest {
     void testCastlingBlockedByPiece() {
         King king = new King(board, Side.WHITE);
         Rook rook = new Rook(board, Side.WHITE);
-        board.link(board.getField("e1"), king);
-        board.link(board.getField("h1"), rook);
+        board.occupyFieldAndSync(board.getField("e1"), king);
+        board.occupyFieldAndSync(board.getField("h1"), rook);
 
         // Block with Bishop
-        board.link(board.getField("f1"), new Queen(board, Side.WHITE));
+        board.occupyFieldAndSync(board.getField("f1"), new Queen(board, Side.WHITE));
 
         List<Move> moves = king.getSortedPseudoLegalMoves();
         System.out.printf("%d Pseudo legal moves from %s (%s): %s%n", moves.size(), king.getField(), king, moves);
@@ -113,12 +113,12 @@ public class KingTest {
     void testCastlingThroughCheck() {
         King king = new King(board, Side.WHITE);
         Rook rook = new Rook(board, Side.WHITE);
-        board.link(board.getField("e1"), king);
-        board.link(board.getField("h1"), rook);
+        board.occupyFieldAndSync(board.getField("e1"), king);
+        board.occupyFieldAndSync(board.getField("h1"), rook);
 
         // Black Rook attacking f1
         Rook enemyRook = new Rook(board, Side.BLACK);
-        board.link(board.getField("f8"), enemyRook);
+        board.occupyFieldAndSync(board.getField("f8"), enemyRook);
 
         List<Move> moves = king.getSortedPseudoLegalMoves();
         System.out.printf("%d Pseudo legal moves from %s (%s): %s%n", moves.size(), king.getField(), king, moves);

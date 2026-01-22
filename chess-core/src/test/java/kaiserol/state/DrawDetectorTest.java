@@ -16,12 +16,12 @@ public class DrawDetectorTest {
         ChessBoard board = new ChessBoard();
 
         // Only kings
-        board.link(board.getField("e1"), new King(board, Side.WHITE));
-        board.link(board.getField("e8"), new King(board, Side.BLACK));
+        board.occupyFieldAndSync(board.getField("e1"), new King(board, Side.WHITE));
+        board.occupyFieldAndSync(board.getField("e8"), new King(board, Side.BLACK));
         assertTrue(DrawDetector.hasInsufficientMaterial(board));
 
         // + One Rook (sufficient)
-        board.link(board.getField("a1"), new Rook(board, Side.WHITE));
+        board.occupyFieldAndSync(board.getField("a1"), new Rook(board, Side.WHITE));
         assertFalse(DrawDetector.hasInsufficientMaterial(board));
     }
 

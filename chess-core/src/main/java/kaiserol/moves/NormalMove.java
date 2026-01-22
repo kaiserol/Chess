@@ -16,17 +16,14 @@ public final class NormalMove extends Move {
 
     @Override
     public void execute() {
-        // Removes the dying piece and moves the attacking piece
-        board.unlink(targetField, dyingPiece);
-        board.unlink(startField, attackingPiece);
-        board.link(targetField, attackingPiece);
+        // Moves the attacking piece and removes the dying piece
+        ChessBoard.occupyField(targetField, attackingPiece);
     }
 
     @Override
     public void undo() {
         // Puts the attacking and dying piece back
-        board.unlink(targetField, attackingPiece);
-        board.link(startField, attackingPiece);
-        board.link(targetField, dyingPiece);
+        ChessBoard.occupyField(startField, attackingPiece);
+        ChessBoard.occupyField(targetField, dyingPiece);
     }
 }

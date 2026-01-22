@@ -7,14 +7,14 @@ import kaiserol.pieces.Piece;
 import java.util.List;
 
 public enum GameState {
-    ACTIVE,
+    NORMAL,
     CHECK,
     CHECKMATE,
-    STALEMATE,
+    DRAW_STALEMATE,
     DRAW_INSUFFICIENT_MATERIAL,
     DRAW_THREEFOLD_REPETITION,
     DRAW_50_MOVE_RULE,
-    DRAW;
+    NO_MATERIAL;
 
     public boolean isDraw() {
         return this == DRAW_INSUFFICIENT_MATERIAL || this == DRAW_THREEFOLD_REPETITION || this == DRAW_50_MOVE_RULE;
@@ -25,15 +25,16 @@ public enum GameState {
 
         // 1. Check whether legal moves exist
         List<Piece> pieces = board.getPieces(currentState.getSideToMove());
-        boolean hasLegalMoves = pieces.stream().anyMatch(piece -> !piece.getLegalMoves().isEmpty());
+        if (pieces.isEmpty()) return NO_MATERIAL;
 
         // 2. Check whether the king is in check
         boolean inCheck = CheckDetector.isInCheck(board, currentState.getSideToMove());
 
-        // 3. Check whether the end states are reached (without further rules)
+        // 3. Check whether checkmate or stalemate is reached
+        boolean hasLegalMoves = pieces.stream().anyMatch(piece -> !piece.getLegalMoves().isEmpty());
         if (!hasLegalMoves) {
             if (inCheck) return GameState.CHECKMATE;
-            else return GameState.STALEMATE;
+            else return GameState.DRAW_STALEMATE;
         }
 
         // 4. Check whether the draw rules are fulfilled
@@ -43,6 +44,6 @@ public enum GameState {
 
         // 5. Return the current state
         if (inCheck) return GameState.CHECK;
-        else return GameState.ACTIVE;
+        else return GameState.NORMAL;
     }
 }

@@ -35,9 +35,9 @@ public final class Knight extends Piece {
             int targetX = fieldX + offset[0];
             int targetY = fieldY + offset[1];
 
-            if (board.inside(targetX, targetY)) {
+            if (ChessBoard.inside(targetX, targetY)) {
                 ChessField targetField = board.getField(targetX, targetY);
-                if (board.isOccupiedBySide(targetField, side)) continue;
+                if (ChessBoard.isOccupiedBySide(targetField, side)) continue;
                 moves.add(new NormalMove(board, field, targetField));
             }
         }

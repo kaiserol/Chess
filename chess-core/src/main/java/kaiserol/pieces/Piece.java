@@ -28,6 +28,10 @@ public abstract class Piece {
         return board;
     }
 
+    public boolean hasField() {
+        return field != null;
+    }
+
     public ChessField getField() {
         return field;
     }
@@ -44,7 +48,7 @@ public abstract class Piece {
         ChessField targetField = board.getField(targetX, targetY);
 
         // Stop if the target field is occupied by an own piece
-        if (board.isOccupiedBySide(targetField, side)) {
+        if (ChessBoard.isOccupiedBySide(targetField, side)) {
             return true;
         }
 

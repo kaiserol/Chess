@@ -22,18 +22,14 @@ public final class Castling extends Move {
     @Override
     public void execute() {
         // Castles the king with the rook
-        board.unlink(startField, king);
-        board.unlink(rookStartField, rook);
-        board.link(targetField, king);
-        board.link(rookTargetField, rook);
+        ChessBoard.occupyField(targetField, king);
+        ChessBoard.occupyField(rookTargetField, rook);
     }
 
     @Override
     public void undo() {
         // Puts the rook and king back
-        board.unlink(rookTargetField, rook);
-        board.unlink(targetField, king);
-        board.link(rookStartField, rook);
-        board.link(startField, king);
+        ChessBoard.occupyField(rookStartField, rook);
+        ChessBoard.occupyField(startField, king);
     }
 }

@@ -23,7 +23,7 @@ public class KnightTest {
     void testKnightMovesCenter() {
         ChessField field = board.getField("d4");
         Knight knight = new Knight(board, Side.WHITE);
-        board.link(field, knight);
+        board.occupyFieldAndSync(field, knight);
 
         List<Move> moves = knight.getSortedPseudoLegalMoves();
         System.out.printf("%d Pseudo legal moves from %s (%s): %s%n", moves.size(), field, knight, moves);
@@ -45,7 +45,7 @@ public class KnightTest {
     void testKnightMovesCorner() {
         ChessField field = board.getField("a1");
         Knight knight = new Knight(board, Side.WHITE);
-        board.link(field, knight);
+        board.occupyFieldAndSync(field, knight);
 
         List<Move> moves = knight.getSortedPseudoLegalMoves();
         System.out.printf("%d Pseudo legal moves from %s (%s): %s%n", moves.size(), field, knight, moves);
@@ -61,10 +61,10 @@ public class KnightTest {
     void testKnightMovesBlocked() {
         ChessField field = board.getField("d4");
         Knight knight = new Knight(board, Side.WHITE);
-        board.link(field, knight);
+        board.occupyFieldAndSync(field, knight);
 
         // Block c6
-        board.link(board.getField("c6"), new Pawn(board, Side.WHITE));
+        board.occupyFieldAndSync(board.getField("c6"), new Pawn(board, Side.WHITE));
         List<Move> moves = knight.getSortedPseudoLegalMoves();
 
         System.out.printf("%d Pseudo legal moves from %s (%s): %s%n", moves.size(), field, knight, moves);

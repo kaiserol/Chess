@@ -23,7 +23,7 @@ public class RookTest {
     void testRookMovesCenter() {
         ChessField field = board.getField("d4");
         Rook rook = new Rook(board, Side.WHITE);
-        board.link(field, rook);
+        board.occupyFieldAndSync(field, rook);
 
         List<Move> moves = rook.getSortedPseudoLegalMoves();
         System.out.printf("%d Pseudo legal moves from %s (%s): %s%n", moves.size(), field, rook, moves);
@@ -41,10 +41,10 @@ public class RookTest {
     void testRookMovesBlocked() {
         ChessField field = board.getField("d4");
         Rook rook = new Rook(board, Side.WHITE);
-        board.link(field, rook);
+        board.occupyFieldAndSync(field, rook);
 
         // Block d6
-        board.link(board.getField("d6"), new Pawn(board, Side.WHITE));
+        board.occupyFieldAndSync(board.getField("d6"), new Pawn(board, Side.WHITE));
 
         List<Move> moves = rook.getSortedPseudoLegalMoves();
         System.out.printf("%d Pseudo legal moves from %s (%s): %s%n", moves.size(), field, rook, moves);

@@ -7,7 +7,10 @@ import kaiserol.moves.Move;
 import kaiserol.moves.PawnJump;
 import kaiserol.pieces.King;
 import kaiserol.pieces.Pawn;
+import kaiserol.pieces.Piece;
 import kaiserol.pieces.Rook;
+
+import java.util.List;
 
 public class BoardState {
     // Turn information
@@ -64,37 +67,62 @@ public class BoardState {
      * Ideal for FEN imports or manual setups in unit tests.
      */
     public static BoardState fromBoard(ChessBoard board) {
-        // TODO: implement castling right detection
-        CastlingRights rights = new CastlingRights(
-                false,
-                false,
-                false,
-                false
-        );
+        CastlingRights castlingRights = new CastlingRights();
+
+        // Überprüfe, ob König noch Rochade-Rechte hat
+        for (Side side : Side.values()) {
+            List<Piece> pieces = board.getPieces(side);
+            King king = board.getKing(pieces);
+
+            if (king != null) {
+                int kingX = king.getField().getX();
+                int kingY = king.getField().getY();
+                int castlingRow = King.getCastlingRow(side);
+
+                // 1. When the king moved, he loses both rights
+                if (kingX != King.CASTLING_COLUMN_KING || kingY != castlingRow) {
+                    if (side.isWhite()) castlingRights.revokeWhiteCastle();
+                    else castlingRights.revokeBlackCastle();
+                    continue;
+                }
+
+                // 2. When a rook moved, it loses the corresponding right
+                Piece rookKingSide = board.getField(King.CASTLING_COLUMN_ROOK_KING_SIDE, castlingRow).getPiece();
+                if (!(rookKingSide instanceof Rook)) {
+                    if (side.isWhite()) castlingRights.revokeWhiteCastleKingSide();
+                    else castlingRights.revokeBlackCastleKingSide();
+                }
+
+                Piece rookQueenSide = board.getField(King.CASTLING_COLUMN_ROOK_QUEEN_SIDE, castlingRow).getPiece();
+                if (!(rookQueenSide instanceof Rook)) {
+                    if (side.isWhite()) castlingRights.revokeWhiteCastleQueenSide();
+                    else castlingRights.revokeBlackCastleQueenSide();
+                }
+            } else {
+                if (side.isWhite()) castlingRights.revokeWhiteCastle();
+                else castlingRights.revokeBlackCastle();
+            }
+        }
 
         return new BoardState(
                 Side.WHITE,
                 0,
                 1,
-                rights,
+                castlingRights,
                 null,
                 null
         );
     }
 
     public static BoardState nextState(BoardState currentState, Move move) {
-        Side nextSide = currentState.sideToMove.opposite();
+        Side nextSide = currentState.getSideToMove().opposite();
 
         // Calculate move counts
-        int halfMoveCount = calculateHalfMove(move, currentState.halfMoveCount);
-        int fullMoveCount = calculateFullMove(currentState.sideToMove, currentState.fullMoveCount);
+        int halfMoveCount = calculateHalfMove(move, currentState.getHalfMoveCount());
+        int fullMoveCount = calculateFullMove(currentState.getSideToMove(), currentState.getFullMoveCount());
 
         // Calculate castling rights
-        CastlingRights castlingRights = currentState.castlingRights;
-        boolean wKS = castlingRights.canWhiteCastleKingSide();
-        boolean wQS = castlingRights.canWhiteCastleQueenSide();
-        boolean bKS = castlingRights.canBlackCastleKingSide();
-        boolean bQS = castlingRights.canBlackCastleQueenSide();
+        CastlingRights castlingRights = currentState.getCastlingRights().copy();
 
         var piece = move.getStartField().getPiece();
         int startX = move.getStartField().getX();
@@ -104,28 +132,28 @@ public class BoardState {
 
         // 1. When the king moves, he loses both rights
         if (piece instanceof King) {
-            if (piece.getSide().isWhite()) wKS = wQS = false;
-            else bKS = bQS = false;
+            if (piece.getSide().isWhite()) castlingRights.revokeWhiteCastle();
+            else castlingRights.revokeBlackCastle();
         }
 
         // 2. When a rook moves, it loses the corresponding right
         if (piece instanceof Rook) {
-            if (piece.getSide().isWhite() && startY == 1) {
-                if (startX == 8) wKS = false;
-                if (startX == 1) wQS = false;
-            } else if (!piece.getSide().isWhite() && startY == 8) {
-                if (startX == 8) bKS = false;
-                if (startX == 1) bQS = false;
+            if (piece.getSide().isWhite() && startY == King.getCastlingRow(Side.WHITE)) {
+                if (startX == King.CASTLING_COLUMN_ROOK_KING_SIDE) castlingRights.revokeWhiteCastleKingSide();
+                if (startX == King.CASTLING_COLUMN_ROOK_QUEEN_SIDE) castlingRights.revokeWhiteCastleQueenSide();
+            } else if (!piece.getSide().isWhite() && startY == King.getCastlingRow(Side.BLACK)) {
+                if (startX == King.CASTLING_COLUMN_ROOK_KING_SIDE) castlingRights.revokeBlackCastleKingSide();
+                if (startX == King.CASTLING_COLUMN_ROOK_QUEEN_SIDE) castlingRights.revokeBlackCastleQueenSide();
             }
         }
 
         // 3. If a rook is captured on its starting square, that side loses the right
         if (targetY == 1) { // White side
-            if (targetX == 8) wKS = false;
-            if (targetX == 1) wQS = false;
+            if (targetX == King.CASTLING_COLUMN_ROOK_KING_SIDE) castlingRights.revokeWhiteCastleKingSide();
+            if (targetX == King.CASTLING_COLUMN_ROOK_QUEEN_SIDE) castlingRights.revokeWhiteCastleQueenSide();
         } else if (targetY == 8) {  // Black side
-            if (targetX == 8) bKS = false;
-            if (targetX == 1) bQS = false;
+            if (targetX == King.CASTLING_COLUMN_ROOK_KING_SIDE) castlingRights.revokeBlackCastleKingSide();
+            if (targetX == King.CASTLING_COLUMN_ROOK_QUEEN_SIDE) castlingRights.revokeBlackCastleQueenSide();
         }
 
         // En Passant Target
@@ -136,7 +164,7 @@ public class BoardState {
                 nextSide,
                 halfMoveCount,
                 fullMoveCount,
-                new CastlingRights(wKS, wQS, bKS, bQS),
+                castlingRights,
                 enPassantTarget,
                 move
         );

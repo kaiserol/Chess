@@ -18,17 +18,15 @@ public final class EnPassant extends Move {
 
     @Override
     public void execute() {
-        // Removes the dying pawn and moves the attacking pawn diagonally forward
-        board.unlink(capturePawnField, dyingPawn);
-        board.unlink(startField, attackingPawn);
-        board.link(targetField, attackingPawn);
+        // Moves the attacking pawn diagonally forward and removes the dying pawn
+        ChessBoard.occupyField(targetField, attackingPawn);
+        ChessBoard.clearField(capturePawnField);
     }
 
     @Override
     public void undo() {
         // Puts the attacking and dying pawn back
-        board.unlink(targetField, attackingPawn);
-        board.link(startField, attackingPawn);
-        board.link(capturePawnField, dyingPawn);
+        ChessBoard.occupyField(startField, attackingPawn);
+        ChessBoard.occupyField(capturePawnField, dyingPawn);
     }
 }

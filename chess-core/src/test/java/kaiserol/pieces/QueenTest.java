@@ -24,7 +24,7 @@ public class QueenTest {
     void testQueenMovesCenter() {
         ChessField field = board.getField("d4");
         Queen queen = new Queen(board, Side.WHITE);
-        board.link(field, queen);
+        board.occupyFieldAndSync(field, queen);
 
         List<Move> moves = queen.getSortedPseudoLegalMoves();
         System.out.printf("%d Pseudo legal moves from %s (%s): %s%n", moves.size(), field, queen, moves);

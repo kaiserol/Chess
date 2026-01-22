@@ -23,27 +23,21 @@ public final class PawnPromotion extends Move {
 
     @Override
     public void execute() {
-        // Removes the dying piece and moves the attacking pawn one field forward
-        board.unlink(targetField, dyingPiece);
-        board.unlink(startField, attackingPawn);
-        board.link(targetField, attackingPawn);
+        // Moves the attacking pawn one field forward and removes the dying piece
+        ChessBoard.occupyField(targetField, attackingPawn);
 
         // Set the promoting piece, if not already set
         setPromotingPiece();
 
-        // Removes the attacking pawn and promotes the pawn
-        board.unlink(targetField, attackingPawn);
-        board.link(targetField, promotingPiece);
+        // Promotes the pawn and removes the attacking pawn
+        ChessBoard.occupyField(targetField, promotingPiece);
     }
 
     @Override
     public void undo() {
-        // Removes the promoting piece
-        board.unlink(targetField, promotingPiece);
-
         // Puts the attacking pawn and dying piece back
-        board.link(startField, attackingPawn);
-        board.link(targetField, dyingPiece);
+        ChessBoard.occupyField(startField, attackingPawn);
+        ChessBoard.occupyField(targetField, dyingPiece);
     }
 
     @Override

@@ -34,7 +34,7 @@ public class BoardHistory {
         throw new IllegalStateException("The board history is not initialized.");
     }
 
-    public void initialize() {
+    public void initializeFirstState() {
         stack.clear();
         redoStack.clear();
 
@@ -43,15 +43,11 @@ public class BoardHistory {
         stack.push(initialState);
     }
 
-    /**
-     * Initializes the history with the current state on the board.
-     * Important for tests and FEN import!
-     */
-    public void initializeWithCurrentState(ChessBoard board) {
+    public void readFirstStateFromBoard(ChessBoard board) {
         stack.clear();
         redoStack.clear();
 
-        // Create a board state from the current board
+        // Create a board state by reading the current board position
         BoardState currentState = BoardState.fromBoard(board);
         stack.push(currentState);
     }

@@ -23,7 +23,7 @@ public class BishopTest {
     void testBishopMovesOnEmptyBoard() {
         ChessField field = board.getField("d4");
         Bishop bishop = new Bishop(board, Side.WHITE);
-        board.link(field, bishop);
+        board.occupyFieldAndSync(field, bishop);
 
         List<Move> moves = bishop.getSortedPseudoLegalMoves();
         System.out.printf("%d Pseudo legal moves from %s (%s): %s%n", moves.size(), field, bishop, moves);
@@ -43,12 +43,12 @@ public class BishopTest {
     void testBishopMovesBlocked() {
         ChessField field = board.getField("d4");
         Bishop bishop = new Bishop(board, Side.WHITE);
-        board.link(field, bishop);
+        board.occupyFieldAndSync(field, bishop);
 
         // Blocking pawns
-        board.link(board.getField("a1"), new Pawn(board, Side.WHITE));
-        board.link(board.getField("b6"), new Pawn(board, Side.WHITE));
-        board.link(board.getField("e5"), new Pawn(board, Side.WHITE));
+        board.occupyFieldAndSync(board.getField("a1"), new Pawn(board, Side.WHITE));
+        board.occupyFieldAndSync(board.getField("b6"), new Pawn(board, Side.WHITE));
+        board.occupyFieldAndSync(board.getField("e5"), new Pawn(board, Side.WHITE));
 
         List<Move> moves = bishop.getSortedPseudoLegalMoves();
         System.out.printf("%d Pseudo legal moves from %s (%s): %s%n", moves.size(), field, bishop, moves);
@@ -68,12 +68,12 @@ public class BishopTest {
     void testBishopMovesCapturingEnemies() {
         ChessField field = board.getField("d4");
         Bishop bishop = new Bishop(board, Side.WHITE);
-        board.link(field, bishop);
+        board.occupyFieldAndSync(field, bishop);
 
         // Blocking Enemies
-        board.link(board.getField("a1"), new Pawn(board, Side.BLACK));
-        board.link(board.getField("b6"), new Pawn(board, Side.BLACK));
-        board.link(board.getField("e5"), new Pawn(board, Side.BLACK));
+        board.occupyFieldAndSync(board.getField("a1"), new Pawn(board, Side.BLACK));
+        board.occupyFieldAndSync(board.getField("b6"), new Pawn(board, Side.BLACK));
+        board.occupyFieldAndSync(board.getField("e5"), new Pawn(board, Side.BLACK));
 
         List<Move> moves = bishop.getSortedPseudoLegalMoves();
         System.out.printf("%d Pseudo legal moves from %s (%s): %s%n", moves.size(), field, bishop, moves);

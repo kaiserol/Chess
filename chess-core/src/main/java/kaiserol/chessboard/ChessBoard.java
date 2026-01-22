@@ -25,6 +25,7 @@ public class ChessBoard {
 
         // Initialize history
         this.boardHistory = new BoardHistory();
+        synchronizeBoardState();
     }
 
     public BoardState getCurrentState() {
@@ -81,11 +82,6 @@ public class ChessBoard {
         return this.fields[x - 1][y - 1];
     }
 
-    private void checkCoordinates(int x, int y) {
-        if (x < 1 || x > 8) throw new CoordinateException("x must be between 1 and 8");
-        if (y < 1 || y > 8) throw new CoordinateException("y must be between 1 and 8");
-    }
-
     public ChessField getField(@NotNull String coord) {
         String c = coord.trim().toLowerCase();
         if (!c.matches("[a-h][1-8]")) {
@@ -100,35 +96,53 @@ public class ChessBoard {
         return getField(x, y);
     }
 
-    public void link(ChessField field, Piece piece) {
-        if (field != null) field.setPiece(piece);
-        if (piece != null) piece.setField(field);
+    public void occupyFieldAndSync(ChessField field, Piece piece) {
+        occupyField(field, piece);
+        synchronizeBoardState();
     }
 
-    public void unlink(ChessField field, Piece piece) {
-        if (field != null) field.removePiece();
-        if (piece != null) piece.removeField();
+    public static void occupyField(ChessField field, Piece piece) {
+        if (field != null) {
+            if (field.isOccupied()) {
+                Piece oldPiece = field.getPiece();
+                oldPiece.removeField();
+            }
+            field.setPiece(piece);
+        }
+
+        if (piece != null) {
+            if (piece.hasField()) {
+                ChessField oldField = piece.getField();
+                oldField.removePiece();
+            }
+            piece.setField(field);
+        }
     }
 
-    public boolean isOccupiedBySide(ChessField field, Side side) {
+    public static void clearField(ChessField field) {
+        if (field == null) return;
+
+        if (field.isOccupied()) {
+            Piece oldPiece = field.getPiece();
+            oldPiece.removeField();
+            field.removePiece();
+        }
+    }
+
+    public static boolean isOccupiedBySide(ChessField field, Side side) {
         return field.isOccupied() && field.getPiece().getSide() == side;
     }
 
-    public boolean inside(int x, int y) {
+    private static void checkCoordinates(int x, int y) {
+        if (x < 1 || x > 8) throw new CoordinateException("x must be between 1 and 8");
+        if (y < 1 || y > 8) throw new CoordinateException("y must be between 1 and 8");
+    }
+
+    public static boolean inside(int x, int y) {
         return x >= 1 && x <= 8 && y >= 1 && y <= 8;
     }
 
-    /**
-     * Synchronizes the history with the current manual setup.
-     * Must be called in tests after placing the figures.
-     */
-    public void syncBoardHistory() {
-        boardHistory.initializeWithCurrentState(this);
-        updateCurrentFEN();
-    }
-
     public void initializePieces() {
-        boardHistory.initialize();
         for (int y = 1; y <= 8; y++) {
             for (int x = 1; x <= 8; x++) {
                 ChessField field = getField(x, y);
@@ -136,21 +150,25 @@ public class ChessBoard {
 
                 if (y == 1 || y == 8) {
                     switch (x) {
-                        case 1, 8 -> link(field, new Rook(this, side));
-                        case 2, 7 -> link(field, new Knight(this, side));
-                        case 3, 6 -> link(field, new Bishop(this, side));
-                        case 4 -> link(field, new Queen(this, side));
-                        case 5 -> link(field, new King(this, side));
+                        case 1, 8 -> occupyField(field, new Rook(this, side));
+                        case 2, 7 -> occupyField(field, new Knight(this, side));
+                        case 3, 6 -> occupyField(field, new Bishop(this, side));
+                        case 4 -> occupyField(field, new Queen(this, side));
+                        case 5 -> occupyField(field, new King(this, side));
                     }
                 } else if (y == 2 || y == 7) {
-                    link(field, new Pawn(this, side));
+                    occupyField(field, new Pawn(this, side));
                 } else {
-                    if (field.isOccupied()) {
-                        unlink(field, field.getPiece());
-                    }
+                    clearField(field);
                 }
             }
         }
+        boardHistory.initializeFirstState();
+        updateCurrentFEN();
+    }
+
+    private void synchronizeBoardState() {
+        boardHistory.readFirstStateFromBoard(this);
         updateCurrentFEN();
     }
 
@@ -203,7 +221,7 @@ public class ChessBoard {
         for (int y = 1; y <= 8; y++) {
             for (int x = 1; x <= 8; x++) {
                 ChessField field = getField(x, y);
-                if (isOccupiedBySide(field, side)) {
+                if (ChessBoard.isOccupiedBySide(field, side)) {
                     pieces.add(field.getPiece());
                 }
             }

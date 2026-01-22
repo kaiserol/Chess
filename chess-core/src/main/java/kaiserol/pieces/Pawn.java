@@ -9,13 +9,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public final class Pawn extends Piece {
-    private final int START_ROW;
-    private final int PROMOTION_ROW;
+    private static final int START_ROW_WHITE = 2;
+    private static final int START_ROW_BLACK = 7;
+    private static final int PROMOTION_ROW_WHITE = 8;
+    private static final int PROMOTION_ROW_BLACK = 1;
 
     public Pawn(ChessBoard board, Side side) {
         super(board, side);
-        this.START_ROW = side.isWhite() ? 2 : 7;
-        this.PROMOTION_ROW = side.isWhite() ? 8 : 1;
     }
 
     @Override
@@ -37,7 +37,7 @@ public final class Pawn extends Piece {
 
             // Move two fields forward
             int jumpFieldY = fieldY + 2 * direction;
-            if (fieldY == START_ROW) {
+            if (fieldY == getStartRow(side)) {
                 ChessField jumpField = board.getField(fieldX, jumpFieldY);
 
                 if (!jumpField.isOccupied()) {
@@ -47,17 +47,17 @@ public final class Pawn extends Piece {
         }
 
         // Hit diagonally to the left
-        if (board.inside(fieldX - 1, targetY)) {
+        if (ChessBoard.inside(fieldX - 1, targetY)) {
             ChessField captureField = board.getField(fieldX - 1, targetY);
-            if (board.isOccupiedBySide(captureField, side.opposite())) {
+            if (ChessBoard.isOccupiedBySide(captureField, side.opposite())) {
                 addMove(moves, captureField);
             }
         }
 
         // Hit diagonally to the right
-        if (board.inside(fieldX + 1, targetY)) {
+        if (ChessBoard.inside(fieldX + 1, targetY)) {
             ChessField captureField = board.getField(fieldX + 1, targetY);
-            if (board.isOccupiedBySide(captureField, side.opposite())) {
+            if (ChessBoard.isOccupiedBySide(captureField, side.opposite())) {
                 addMove(moves, captureField);
             }
         }
@@ -77,7 +77,7 @@ public final class Pawn extends Piece {
     }
 
     private void addMove(List<Move> moves, ChessField targetField) {
-        if (targetField.getY() == PROMOTION_ROW) {
+        if (targetField.getY() == getPromotionRow(side)) {
             moves.add(new PawnPromotion(board, field, targetField));
         } else {
             moves.add(new NormalMove(board, field, targetField));
@@ -92,5 +92,13 @@ public final class Pawn extends Piece {
     @Override
     public char getLetter() {
         return side.isWhite() ? 'P' : 'p';
+    }
+
+    public static int getStartRow(Side side) {
+        return side.isWhite() ? START_ROW_WHITE : START_ROW_BLACK;
+    }
+
+    public static int getPromotionRow(Side side) {
+        return side.isWhite() ? PROMOTION_ROW_WHITE : PROMOTION_ROW_BLACK;
     }
 }

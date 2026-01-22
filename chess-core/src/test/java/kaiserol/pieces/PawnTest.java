@@ -23,7 +23,7 @@ public class PawnTest {
     void testWhitePawnMovesFromStart() {
         ChessField whiteField = board.getField("e2");
         Pawn whitePawn = new Pawn(board, Side.WHITE);
-        board.link(whiteField, whitePawn);
+        board.occupyFieldAndSync(whiteField, whitePawn);
 
         List<Move> moves = whitePawn.getSortedPseudoLegalMoves();
         System.out.printf("%d Pseudo legal moves from %s (%s): %s%n", moves.size(), whiteField, whitePawn, moves);
@@ -38,7 +38,7 @@ public class PawnTest {
     void testBlackPawnMovesFromStart() {
         ChessField blackField = board.getField("e7");
         Pawn blackPawn = new Pawn(board, Side.BLACK);
-        board.link(blackField, blackPawn);
+        board.occupyFieldAndSync(blackField, blackPawn);
 
         List<Move> moves = blackPawn.getSortedPseudoLegalMoves();
         System.out.printf("%d Pseudo legal moves from %s (%s): %s%n", moves.size(), blackField, blackPawn, moves);
@@ -53,15 +53,15 @@ public class PawnTest {
     void testPawnCapture() {
         ChessField whiteField = board.getField("e4");
         Pawn whitePawn = new Pawn(board, Side.WHITE);
-        board.link(whiteField, whitePawn);
+        board.occupyFieldAndSync(whiteField, whitePawn);
 
         ChessField blackField = board.getField("d5");
         Pawn blackPawn = new Pawn(board, Side.BLACK);
-        board.link(blackField, blackPawn);
+        board.occupyFieldAndSync(blackField, blackPawn);
 
         ChessField otherBlackField = board.getField("f5");
         Rook blackRook = new Rook(board, Side.BLACK);
-        board.link(otherBlackField, blackRook);
+        board.occupyFieldAndSync(otherBlackField, blackRook);
 
         List<Move> moves = whitePawn.getSortedPseudoLegalMoves();
         System.out.printf("%d Pseudo legal moves from %s (%s): %s%n", moves.size(), whiteField, whitePawn, moves);
@@ -78,11 +78,11 @@ public class PawnTest {
     void testPawnBlocked() {
         ChessField whiteField = board.getField("e4");
         Pawn whitePawn = new Pawn(board, Side.WHITE);
-        board.link(whiteField, whitePawn);
+        board.occupyFieldAndSync(whiteField, whitePawn);
 
         ChessField blockingField = board.getField("e5");
         Rook blockingPiece = new Rook(board, Side.BLACK);
-        board.link(blockingField, blockingPiece);
+        board.occupyFieldAndSync(blockingField, blockingPiece);
 
         List<Move> moves = whitePawn.getSortedPseudoLegalMoves();
         System.out.printf("%d Pseudo legal moves from %s (%s): %s%n", moves.size(), whiteField, whitePawn, moves);
@@ -95,7 +95,7 @@ public class PawnTest {
     void testPawnPromotionMove() {
         ChessField whiteField = board.getField("e7");
         Pawn whitePawn = new Pawn(board, Side.WHITE);
-        board.link(whiteField, whitePawn);
+        board.occupyFieldAndSync(whiteField, whitePawn);
 
         List<Move> moves = whitePawn.getSortedPseudoLegalMoves();
         System.out.printf("%d Pseudo legal moves from %s (%s): %s%n", moves.size(), whiteField, whitePawn, moves);
@@ -115,11 +115,11 @@ public class PawnTest {
 
         ChessField e5 = board.getField("e5");
         Pawn whitePawn = new Pawn(board, Side.WHITE);
-        board.link(e5, whitePawn);
+        board.occupyFieldAndSync(e5, whitePawn);
 
         ChessField d7 = board.getField("d7");
         Pawn blackPawn = new Pawn(board, Side.BLACK);
-        board.link(d7, blackPawn);
+        board.occupyFieldAndSync(d7, blackPawn);
 
         ChessField d5 = board.getField("d5");
         PawnJump jump = new PawnJump(board, d7, d5);

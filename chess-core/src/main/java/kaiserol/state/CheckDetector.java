@@ -15,9 +15,7 @@ public class CheckDetector {
     public static boolean isInCheck(ChessBoard board, Side side) {
         List<Piece> pieces = board.getPieces(side);
         King king = board.getKing(pieces);
-        if (king == null) {
-            throw new IllegalStateException("King not found!");
-        }
+        if (king == null) return false; // King was not found
 
         return isFieldAttacked(board, king.getField(), side.opposite());
     }

@@ -12,17 +12,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public final class King extends Piece {
-    private final int CASTLING_ROW;
-    private final int CASTLING_COLUMN_KING;
-    private final int CASTLING_COLUMN_ROOK_KING;
-    private final int CASTLING_COLUMN_ROOK_QUEEN;
+    public static final int CASTLING_ROW_WHITE = 1;
+    public static final int CASTLING_ROW_BLACK = 8;
+    public static final int CASTLING_COLUMN_KING = 5;
+    public static final int CASTLING_COLUMN_ROOK_KING_SIDE = 8;
+    public static final int CASTLING_COLUMN_ROOK_QUEEN_SIDE = 1;
 
     public King(ChessBoard board, Side side) {
         super(board, side);
-        this.CASTLING_ROW = side.isWhite() ? 1 : 8;
-        this.CASTLING_COLUMN_KING = 5;
-        this.CASTLING_COLUMN_ROOK_KING = 8;
-        this.CASTLING_COLUMN_ROOK_QUEEN = 1;
     }
 
     @Override
@@ -41,25 +38,25 @@ public final class King extends Piece {
                 int targetX = fieldX + x;
                 int targetY = fieldY + y;
 
-                if (board.inside(targetX, targetY)) {
+                if (ChessBoard.inside(targetX, targetY)) {
                     ChessField targetField = board.getField(targetX, targetY);
-                    if (!board.isOccupiedBySide(targetField, side)) {
+                    if (!ChessBoard.isOccupiedBySide(targetField, side)) {
                         moves.add(new NormalMove(board, field, targetField));
                     }
                 }
             }
         }
 
-        // Check whether the king is in the castle position
-        if (fieldX != CASTLING_COLUMN_KING || fieldY != CASTLING_ROW) {
+        // Check whether the king has already moved
+        if (fieldX != CASTLING_COLUMN_KING || fieldY != getCastlingRow(side)) {
             return moves;
         }
 
         boolean castleKingSide = side.isWhite() ? board.canWhiteCastleKingSide() : board.canBlackCastleKingSide();
         boolean castleQueenSide = side.isWhite() ? board.canWhiteCastleQueenSide() : board.canBlackCastleQueenSide();
 
-        if (castleKingSide) addCastling(moves, CASTLING_COLUMN_ROOK_KING); // Check Kingside Castling
-        if (castleQueenSide) addCastling(moves, CASTLING_COLUMN_ROOK_QUEEN); // Check Queenside Castling
+        if (castleKingSide) addCastling(moves, CASTLING_COLUMN_ROOK_KING_SIDE); // Check Kingside Castling
+        if (castleQueenSide) addCastling(moves, CASTLING_COLUMN_ROOK_QUEEN_SIDE); // Check Queenside Castling
 
         return moves;
     }
@@ -69,12 +66,12 @@ public final class King extends Piece {
         int fieldY = field.getY();
         ChessField rookStartField = board.getField(rookX, fieldY);
 
-        if (board.isOccupiedBySide(rookStartField, side) && rookStartField.getPiece() instanceof Rook) {
+        if (ChessBoard.isOccupiedBySide(rookStartField, side) && rookStartField.getPiece() instanceof Rook) {
             // Check whether the fields between the king and the rook are empty
             int startX = Math.min(field.getX(), rookX) + 1;
             int endX = Math.max(field.getX(), rookX) - 1;
-            for (int tx = startX; tx <= endX; tx++) {
-                if (board.getField(tx, fieldY).isOccupied()) return;
+            for (int x = startX; x <= endX; x++) {
+                if (board.getField(x, fieldY).isOccupied()) return;
             }
 
             // Check whether the king is in check or moves over attacked fields
@@ -99,5 +96,9 @@ public final class King extends Piece {
     @Override
     public char getLetter() {
         return side.isWhite() ? 'K' : 'k';
+    }
+
+    public static int getCastlingRow(Side side) {
+        return side.isWhite() ? CASTLING_ROW_WHITE : CASTLING_ROW_BLACK;
     }
 }

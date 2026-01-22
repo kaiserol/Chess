@@ -11,7 +11,7 @@ public final class PawnJump extends Move {
     public PawnJump(ChessBoard board, ChessField startField, ChessField targetField) {
         super(board, startField, targetField);
         this.pawn = (Pawn) startField.getPiece();
-        
+
         int enPassantY = (startField.getY() + targetField.getY()) / 2;
         this.enPassantTarget = board.getField(startField.getX(), enPassantY);
     }
@@ -23,14 +23,12 @@ public final class PawnJump extends Move {
     @Override
     public void execute() {
         // Moves the pawn two fields forward
-        board.unlink(startField, pawn);
-        board.link(targetField, pawn);
+        ChessBoard.occupyField(targetField, pawn);
     }
 
     @Override
     public void undo() {
         // Puts the pawn back
-        board.unlink(targetField, pawn);
-        board.link(startField, pawn);
+        ChessBoard.occupyField(startField, pawn);
     }
 }
