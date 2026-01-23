@@ -18,12 +18,17 @@ public final class Bishop extends Piece {
     }
 
     @Override
-    public char getSymbol() {
-        return !side.isWhite() ? '♗' : '♝';
+    public char getLetter() {
+        return side.isWhite() ? 'B' : 'b';
     }
 
     @Override
-    public char getLetter() {
-        return side.isWhite() ? 'B' : 'b';
+    public char getWhiteSymbol() {
+        return '♝';
+    }
+
+    @Override
+    public char getBlackSymbol() {
+        return '♗';
     }
 }

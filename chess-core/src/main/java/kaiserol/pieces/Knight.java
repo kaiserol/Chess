@@ -46,12 +46,17 @@ public final class Knight extends Piece {
     }
 
     @Override
-    public char getSymbol() {
-        return !side.isWhite() ? '♘' : '♞';
+    public char getLetter() {
+        return side.isWhite() ? 'N' : 'n';
     }
 
     @Override
-    public char getLetter() {
-        return side.isWhite() ? 'N' : 'n';
+    public char getWhiteSymbol() {
+        return '♞';
+    }
+
+    @Override
+    public char getBlackSymbol() {
+        return '♘';
     }
 }

@@ -28,6 +28,14 @@ public class ChessBoard {
         synchronizeBoardState();
     }
 
+    public PawnPromotionProvider getPromotionProvider() {
+        return pawnPromotionProvider;
+    }
+
+    public void setPromotionProvider(PawnPromotionProvider provider) {
+        this.pawnPromotionProvider = provider;
+    }
+
     public BoardState getCurrentState() {
         return boardHistory.current();
     }
@@ -56,12 +64,9 @@ public class ChessBoard {
         return getCurrentState().getEnPassantTarget();
     }
 
-    public PawnPromotionProvider getPromotionProvider() {
-        return pawnPromotionProvider;
-    }
-
-    public void setPromotionProvider(PawnPromotionProvider provider) {
-        this.pawnPromotionProvider = provider;
+    public String getMoveCount() {
+        int moveCount = boardHistory.getMoveCount();
+        return moveCount > 0 ? "%02d".formatted(moveCount) : "INIT";
     }
 
     private void initializeFields() {
@@ -248,11 +253,11 @@ public class ChessBoard {
     }
 
     public void toConsole() {
-        System.out.println(this);
+        System.out.println(BoardPrinter.format(this, true));
     }
 
     @Override
     public String toString() {
-        return BoardPrinter.format(this);
+        return BoardPrinter.format(this, false);
     }
 }

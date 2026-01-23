@@ -88,9 +88,8 @@ public final class King extends Piece {
         }
     }
 
-    @Override
-    public char getSymbol() {
-        return !side.isWhite() ? '♔' : '♚';
+    public static int getCastlingRow(Side side) {
+        return side.isWhite() ? CASTLING_ROW_WHITE : CASTLING_ROW_BLACK;
     }
 
     @Override
@@ -98,7 +97,13 @@ public final class King extends Piece {
         return side.isWhite() ? 'K' : 'k';
     }
 
-    public static int getCastlingRow(Side side) {
-        return side.isWhite() ? CASTLING_ROW_WHITE : CASTLING_ROW_BLACK;
+    @Override
+    public char getWhiteSymbol() {
+        return '♚';
+    }
+
+    @Override
+    public char getBlackSymbol() {
+        return '♔';
     }
 }

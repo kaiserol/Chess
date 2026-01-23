@@ -84,9 +84,12 @@ public final class Pawn extends Piece {
         }
     }
 
-    @Override
-    public char getSymbol() {
-        return !side.isWhite() ? '♙' : '♟';
+    public static int getStartRow(Side side) {
+        return side.isWhite() ? START_ROW_WHITE : START_ROW_BLACK;
+    }
+
+    public static int getPromotionRow(Side side) {
+        return side.isWhite() ? PROMOTION_ROW_WHITE : PROMOTION_ROW_BLACK;
     }
 
     @Override
@@ -94,11 +97,13 @@ public final class Pawn extends Piece {
         return side.isWhite() ? 'P' : 'p';
     }
 
-    public static int getStartRow(Side side) {
-        return side.isWhite() ? START_ROW_WHITE : START_ROW_BLACK;
+    @Override
+    public char getWhiteSymbol() {
+        return '♟';
     }
 
-    public static int getPromotionRow(Side side) {
-        return side.isWhite() ? PROMOTION_ROW_WHITE : PROMOTION_ROW_BLACK;
+    @Override
+    public char getBlackSymbol() {
+        return '♙';
     }
 }

@@ -111,9 +111,15 @@ public abstract class Piece {
         return legalMoves;
     }
 
-    public abstract char getSymbol();
-
     public abstract char getLetter();
+
+    public abstract char getWhiteSymbol();
+
+    public abstract char getBlackSymbol();
+
+    public final char getSymbol() {
+        return side.isWhite() ? getWhiteSymbol() : getBlackSymbol();
+    }
 
     @Override
     public String toString() {

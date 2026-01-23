@@ -22,12 +22,17 @@ public final class Queen extends Piece {
     }
 
     @Override
-    public char getSymbol() {
-        return !side.isWhite() ? '♕' : '♛';
+    public char getLetter() {
+        return side.isWhite() ? 'Q' : 'q';
     }
 
     @Override
-    public char getLetter() {
-        return side.isWhite() ? 'Q' : 'q';
+    public char getWhiteSymbol() {
+        return '♛';
+    }
+
+    @Override
+    public char getBlackSymbol() {
+        return '♕';
     }
 }

@@ -73,6 +73,10 @@ public class BoardHistory {
         return nextState.getMove();
     }
 
+    public int getMoveCount() {
+        return stack.size() - 1;
+    }
+
     /**
      * Returns how often the current position has occurred.
      */
