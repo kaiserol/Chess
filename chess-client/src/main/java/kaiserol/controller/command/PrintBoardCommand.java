@@ -1,25 +1,24 @@
 package kaiserol.controller.command;
 
-import kaiserol.chessboard.ChessBoard;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.function.Consumer;
 
 public class PrintBoardCommand extends Command {
-    private final ChessBoard board;
+    private final Runnable onPrint;
 
-    public PrintBoardCommand(@NotNull Consumer<String> out, @NotNull Consumer<String> err, ChessBoard board) {
+    public PrintBoardCommand(@NotNull Consumer<String> out, @NotNull Consumer<String> err, @NotNull Runnable onPrint) {
         super(out, err);
-        this.board = board;
+        this.onPrint = onPrint;
     }
 
     @Override
-    public void execute(String[] args) throws Exception {
-        board.toConsole();
+    public void execute(@NotNull String[] args) throws Exception {
+        onPrint.run();
     }
 
     @Override
-    public String keyword() {
+    public String keyWord() {
         return "board";
     }
 

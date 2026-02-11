@@ -56,7 +56,7 @@ public class TerminalChessSimulator extends ChessController {
         String SEP = "-".repeat(8);
         printlnMessage("%s %d. Simulation '%s' started %s".formatted(SEP, simulationNumber, simulationName, SEP));
         printlnMessage("Initial state of the game:");
-        game.getBoard().toConsole();
+        printBoard();
 
         int maxMoves = Math.max(whiteMoves.length, blackMoves.length);
         for (int i = 0; i < maxMoves; i++) {
@@ -64,7 +64,7 @@ public class TerminalChessSimulator extends ChessController {
                 printlnMessage("White moves: " + whiteMoves[i]);
                 try {
                     game.executeMove(whiteMoves[i]);
-                    game.getBoard().toConsole();
+                    printBoard();
                 } catch (Exception e) {
                     printlnError(e.getMessage());
                     break;
@@ -75,7 +75,7 @@ public class TerminalChessSimulator extends ChessController {
                 printlnMessage("Black moves: " + blackMoves[i]);
                 try {
                     game.executeMove(blackMoves[i]);
-                    game.getBoard().toConsole();
+                    printBoard();
                 } catch (Exception e) {
                     printlnError(e.getMessage());
                     break;

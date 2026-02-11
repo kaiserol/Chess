@@ -15,9 +15,9 @@ public abstract class Command implements Comparable<Command> {
         this.err = err;
     }
 
-    public abstract void execute(String[] args) throws Exception;
+    public abstract void execute(@NotNull String[] args) throws Exception;
 
-    public abstract String keyword();
+    public abstract String keyWord();
 
     public abstract String description();
 
@@ -27,12 +27,12 @@ public abstract class Command implements Comparable<Command> {
 
     @Override
     public int compareTo(@NotNull Command o) {
-        return compareTo(keyword(), o.keyword());
+        return compareTo(keyWord(), o.keyWord());
     }
 
     @Override
     public String toString() {
-        return keyword();
+        return keyWord();
     }
 
     public static boolean matchesOptions(@NotNull String[] args, @NotNull String[] options) {
@@ -45,19 +45,19 @@ public abstract class Command implements Comparable<Command> {
         return true;
     }
 
-    public static int compareTo(@NotNull String keyword1, @NotNull String keyword2) {
-        String k1 = normalize(keyword1);
-        String k2 = normalize(keyword2);
+    public static int compareTo(@NotNull String keyWord1, @NotNull String keyWord2) {
+        String k1 = normalize(keyWord1);
+        String k2 = normalize(keyWord2);
 
         int result = k1.compareToIgnoreCase(k2);
         if (result != 0) {
             return result;
         }
 
-        return keyword1.compareToIgnoreCase(keyword2);
+        return keyWord1.compareToIgnoreCase(keyWord2);
     }
 
-    private static String normalize(String keyword) {
-        return keyword.toLowerCase().replaceAll("\\s+", " ");
+    private static String normalize(@NotNull String keyWord) {
+        return keyWord.toLowerCase().replaceAll("\\s+", " ");
     }
 }

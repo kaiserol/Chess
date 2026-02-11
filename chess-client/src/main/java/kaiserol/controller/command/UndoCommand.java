@@ -15,12 +15,12 @@ public class UndoCommand extends Command {
     }
 
     @Override
-    public void execute(String[] args) throws MoveException {
+    public void execute(@NotNull String[] args) throws MoveException {
         game.undoMove();
     }
 
     @Override
-    public String keyword() {
+    public String keyWord() {
         return "undo";
     }
 

@@ -252,8 +252,8 @@ public class ChessBoard {
         return null;
     }
 
-    public void toConsole() {
-        System.out.println(BoardPrinter.format(this, true));
+    public String formatUsingAnsiCodes() {
+        return BoardPrinter.format(this, true);
     }
 
     @Override

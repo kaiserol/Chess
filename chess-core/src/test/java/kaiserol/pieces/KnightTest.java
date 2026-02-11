@@ -27,7 +27,7 @@ public class KnightTest {
 
         List<Move> moves = knight.getSortedPseudoLegalMoves();
         System.out.printf("%d Pseudo legal moves from %s (%s): %s%n", moves.size(), field, knight, moves);
-        board.toConsole();
+        System.out.println(board.formatUsingAnsiCodes());
 
         // d4 -> c6, e6, f5, f3, e2, c2, b3, b5
         assertEquals(8, moves.size());
@@ -49,7 +49,7 @@ public class KnightTest {
 
         List<Move> moves = knight.getSortedPseudoLegalMoves();
         System.out.printf("%d Pseudo legal moves from %s (%s): %s%n", moves.size(), field, knight, moves);
-        board.toConsole();
+        System.out.println(board.formatUsingAnsiCodes());
 
         // a1 -> b3, c2
         assertEquals(2, moves.size());
@@ -68,7 +68,7 @@ public class KnightTest {
         List<Move> moves = knight.getSortedPseudoLegalMoves();
 
         System.out.printf("%d Pseudo legal moves from %s (%s): %s%n", moves.size(), field, knight, moves);
-        board.toConsole();
+        System.out.println(board.formatUsingAnsiCodes());
 
         assertEquals(7, moves.size());
         assertFalse(moves.stream().anyMatch(m -> m.getTargetField().has("c6")));

@@ -28,7 +28,7 @@ public class QueenTest {
 
         List<Move> moves = queen.getSortedPseudoLegalMoves();
         System.out.printf("%d Pseudo legal moves from %s (%s): %s%n", moves.size(), field, queen, moves);
-        board.toConsole();
+        System.out.println(board.formatUsingAnsiCodes());
 
         // Queen = Rook (14) + Bishop (13) = 27
         assertTrue(moves.stream().anyMatch(m -> m.getTargetField().has("d1")));

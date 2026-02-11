@@ -27,7 +27,7 @@ public class PawnTest {
 
         List<Move> moves = whitePawn.getSortedPseudoLegalMoves();
         System.out.printf("%d Pseudo legal moves from %s (%s): %s%n", moves.size(), whiteField, whitePawn, moves);
-        board.toConsole();
+        System.out.println(board.formatUsingAnsiCodes());
 
         assertEquals(2, moves.size());
         assertTrue(moves.stream().anyMatch(m -> m instanceof NormalMove && m.getTargetField().has("e3")));
@@ -42,7 +42,7 @@ public class PawnTest {
 
         List<Move> moves = blackPawn.getSortedPseudoLegalMoves();
         System.out.printf("%d Pseudo legal moves from %s (%s): %s%n", moves.size(), blackField, blackPawn, moves);
-        board.toConsole();
+        System.out.println(board.formatUsingAnsiCodes());
 
         assertEquals(2, moves.size());
         assertTrue(moves.stream().anyMatch(m -> m instanceof NormalMove && m.getTargetField().has("e6")));
@@ -65,7 +65,7 @@ public class PawnTest {
 
         List<Move> moves = whitePawn.getSortedPseudoLegalMoves();
         System.out.printf("%d Pseudo legal moves from %s (%s): %s%n", moves.size(), whiteField, whitePawn, moves);
-        board.toConsole();
+        System.out.println(board.formatUsingAnsiCodes());
 
         // Forward (e5), Capture Left (d5), Capture Right (f5)
         assertEquals(3, moves.size());
@@ -86,7 +86,7 @@ public class PawnTest {
 
         List<Move> moves = whitePawn.getSortedPseudoLegalMoves();
         System.out.printf("%d Pseudo legal moves from %s (%s): %s%n", moves.size(), whiteField, whitePawn, moves);
-        board.toConsole();
+        System.out.println(board.formatUsingAnsiCodes());
 
         assertEquals(0, moves.size(), "Pawn should be blocked by piece in front");
     }
@@ -99,7 +99,7 @@ public class PawnTest {
 
         List<Move> moves = whitePawn.getSortedPseudoLegalMoves();
         System.out.printf("%d Pseudo legal moves from %s (%s): %s%n", moves.size(), whiteField, whitePawn, moves);
-        board.toConsole();
+        System.out.println(board.formatUsingAnsiCodes());
 
         assertEquals(1, moves.size());
         assertInstanceOf(PawnPromotion.class, moves.getFirst());
@@ -127,7 +127,7 @@ public class PawnTest {
 
         List<Move> moves = whitePawn.getSortedPseudoLegalMoves();
         System.out.printf("%d Pseudo legal moves from %s (%s): %s%n", moves.size(), e5, whitePawn, moves);
-        board.toConsole();
+        System.out.println(board.formatUsingAnsiCodes());
 
         assertTrue(moves.stream().anyMatch(m -> m instanceof EnPassant && m.getTargetField().has("d6")),
                 "En Passant move to d6 should be available");

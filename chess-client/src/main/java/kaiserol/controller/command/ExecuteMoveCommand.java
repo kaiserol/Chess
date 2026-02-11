@@ -17,12 +17,12 @@ public class ExecuteMoveCommand extends Command {
     }
 
     @Override
-    public void execute(String[] args) throws MoveException {
+    public void execute(@NotNull String[] args) throws MoveException {
         game.executeMove(move);
     }
 
     @Override
-    public String keyword() {
+    public String keyWord() {
         return move;
     }
 

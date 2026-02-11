@@ -13,12 +13,12 @@ public class ExitCommand extends Command {
     }
 
     @Override
-    public void execute(String[] args) {
+    public void execute(@NotNull String[] args) {
         onExit.run();
     }
 
     @Override
-    public String keyword() {
+    public String keyWord() {
         return "exit";
     }
 

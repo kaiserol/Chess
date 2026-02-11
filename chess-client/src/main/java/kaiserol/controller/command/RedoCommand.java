@@ -15,12 +15,12 @@ public class RedoCommand extends Command {
     }
 
     @Override
-    public void execute(String[] args) throws MoveException {
+    public void execute(@NotNull String[] args) throws MoveException {
         game.redoMove();
     }
 
     @Override
-    public String keyword() {
+    public String keyWord() {
         return "redo";
     }
 

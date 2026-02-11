@@ -14,12 +14,12 @@ public class RestartCommand extends Command {
     }
 
     @Override
-    public void execute(String[] args) {
+    public void execute(@NotNull String[] args) {
         game.reset();
     }
 
     @Override
-    public String keyword() {
+    public String keyWord() {
         return "restart";
     }
 

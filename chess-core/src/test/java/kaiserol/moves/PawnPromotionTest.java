@@ -31,9 +31,9 @@ public class PawnPromotionTest {
         PawnPromotion promotion = new PawnPromotion(board, startField, targetField, PawnPromotion.Choice.QUEEN);
         Piece promotingQueen = promotion.getPromotingPiece();
 
-        board.toConsole();
+        System.out.println(board.formatUsingAnsiCodes());
         board.executeMove(promotion);
-        board.toConsole();
+        System.out.println(board.formatUsingAnsiCodes());
 
         assertNull(startField.getPiece());
         assertNull(pawn.getField());
@@ -52,11 +52,11 @@ public class PawnPromotionTest {
         PawnPromotion promotion = new PawnPromotion(board, startField, targetField, PawnPromotion.Choice.QUEEN);
         Piece promotingQueen = promotion.getPromotingPiece();
 
-        board.toConsole();
+        System.out.println(board.formatUsingAnsiCodes());
         board.executeMove(promotion);
-        board.toConsole();
+        System.out.println(board.formatUsingAnsiCodes());
         board.undoMove();
-        board.toConsole();
+        System.out.println(board.formatUsingAnsiCodes());
 
         assertNull(targetField.getPiece());
         assertNull(promotingQueen.getField());
@@ -78,9 +78,9 @@ public class PawnPromotionTest {
         PawnPromotion promotion = new PawnPromotion(board, startField, targetField, PawnPromotion.Choice.QUEEN);
         Piece promotingQueen = promotion.getPromotingPiece();
 
-        board.toConsole();
+        System.out.println(board.formatUsingAnsiCodes());
         board.executeMove(promotion);
-        board.toConsole();
+        System.out.println(board.formatUsingAnsiCodes());
 
         assertNull(startField.getPiece());
         assertNull(blackRook.getField());
@@ -103,11 +103,11 @@ public class PawnPromotionTest {
         PawnPromotion promotion = new PawnPromotion(board, startField, targetField, PawnPromotion.Choice.QUEEN);
         Piece promotingQueen = promotion.getPromotingPiece();
 
-        board.toConsole();
+        System.out.println(board.formatUsingAnsiCodes());
         board.executeMove(promotion);
-        board.toConsole();
+        System.out.println(board.formatUsingAnsiCodes());
         board.undoMove();
-        board.toConsole();
+        System.out.println(board.formatUsingAnsiCodes());
 
         assertNull(promotingQueen.getField());
         assertEquals(pawn, startField.getPiece());

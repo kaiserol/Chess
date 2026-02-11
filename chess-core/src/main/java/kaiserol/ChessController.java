@@ -52,19 +52,23 @@ public abstract class ChessController implements PawnPromotionProvider {
         }
     }
 
-    protected void printMessage(String message) {
+    protected final void printMessage(String message) {
         System.out.print(message);
     }
 
-    protected void printlnMessage(String message) {
+    protected final void printlnMessage(String message) {
         System.out.println(message);
     }
 
-    protected void printlnError(String error) {
+    protected final void printlnError(String error) {
         System.out.println("Error: " + error);
     }
 
-    protected void printError(Object error) {
+    protected final void printError(Object error) {
         System.out.print("Error: " + error);
+    }
+
+    public final void printBoard() {
+        System.out.println(game.getBoard().formatUsingAnsiCodes());
     }
 }

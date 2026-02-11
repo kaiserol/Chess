@@ -23,7 +23,7 @@ public class TerminalChess extends ChessController {
 
     private void registerCommands() {
         commandRegistry.add(new LegalMovesCommand(this::printlnMessage, this::printlnError, game));
-        commandRegistry.add(new PrintBoardCommand(this::printlnMessage, this::printlnError, game.getBoard()));
+        commandRegistry.add(new PrintBoardCommand(this::printlnMessage, this::printlnError, this::printBoard));
         commandRegistry.add(new ExitCommand(this::printlnMessage, this::printlnError, this::exitGame));
         commandRegistry.add(new RestartCommand(this::printlnMessage, this::printlnError, game));
         commandRegistry.add(new UndoCommand(this::printlnMessage, this::printlnError, game));
@@ -37,24 +37,24 @@ public class TerminalChess extends ChessController {
         else running = true;
 
         startGame();
-        game.getBoard().toConsole();
+        printBoard();
 
         while (running) {
             String input = readInput();
             if (input.isBlank()) continue;
 
-            String[] allArguments = input.split("\\s+");
-            String keyword = allArguments[0];
-            String[] args = Arrays.copyOfRange(allArguments, 1, allArguments.length);
+            String[] values = input.split("\\s+");
+            String keyWord = values[0];
+            String[] args = Arrays.copyOfRange(values, 1, values.length);
 
             try {
-                Command command = getCommand(keyword);
+                Command command = getCommand(keyWord);
                 command.execute(args);
 
                 // Print board after each move
                 if (command instanceof ExecuteMoveCommand || command instanceof RestartCommand ||
                         command instanceof UndoCommand || command instanceof RedoCommand) {
-                    game.getBoard().toConsole();
+                    printBoard();
                     handleGameState();
                 }
             } catch (Exception e) {
@@ -75,11 +75,11 @@ public class TerminalChess extends ChessController {
         return scanner.nextLine().trim();
     }
 
-    private Command getCommand(String keyword) {
-        return commandRegistry.resolve(keyword)
-                .orElse(keyword.matches("\\w\\d\\w\\d") ?
-                        new ExecuteMoveCommand(this::printlnMessage, this::printlnError, game, keyword) :
-                        new InvalidCommand(this::printlnMessage, this::printlnError, keyword));
+    private Command getCommand(String keyWord) {
+        return commandRegistry.get(keyWord)
+                .orElse(keyWord.matches("\\w\\d\\w\\d") ?
+                        new ExecuteMoveCommand(this::printlnMessage, this::printlnError, game, keyWord) :
+                        new InvalidCommand(this::printlnMessage, this::printlnError, keyWord));
     }
 
     private void startGame() {

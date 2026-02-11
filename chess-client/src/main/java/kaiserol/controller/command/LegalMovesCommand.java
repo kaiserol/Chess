@@ -16,13 +16,13 @@ import java.util.function.Consumer;
 public class LegalMovesCommand extends Command {
     private final Game game;
 
-    public LegalMovesCommand(@NotNull Consumer<String> out, @NotNull Consumer<String> err, Game game) {
+    public LegalMovesCommand(@NotNull Consumer<String> out, @NotNull Consumer<String> err, @NotNull Game game) {
         super(out, err);
         this.game = game;
     }
 
     @Override
-    public void execute(String[] args) throws Exception {
+    public void execute(@NotNull String[] args) throws Exception {
         if (matchesOptions(args, new String[]{})) printAllLegalMoves();
         else if (matchesOptions(args, new String[]{"-count"})) printAllLegalMovesCount();
         else if (matchesOptions(args, new String[]{"\\w\\d"})) printAllLegalMovesFrom(args[0]);
@@ -34,7 +34,7 @@ public class LegalMovesCommand extends Command {
     }
 
     @Override
-    public String keyword() {
+    public String keyWord() {
         return "lm";
     }
 
@@ -79,7 +79,7 @@ public class LegalMovesCommand extends Command {
         return map;
     }
 
-    private void printAllLegalMovesFrom(String coord) {
+    private void printAllLegalMovesFrom(@NotNull String coord) {
         Piece piece = getPieceFrom(coord);
         if (piece == null) return;
 
@@ -87,7 +87,7 @@ public class LegalMovesCommand extends Command {
         out.accept("" + legalMoves);
     }
 
-    private void printBoardWithAllLegalMovesFrom(String coord) {
+    private void printBoardWithAllLegalMovesFrom(@NotNull String coord) {
         Piece piece = getPieceFrom(coord);
         if (piece == null) return;
 
@@ -95,7 +95,7 @@ public class LegalMovesCommand extends Command {
         out.accept(boardView);
     }
 
-    private Piece getPieceFrom(String coord) {
+    private Piece getPieceFrom(@NotNull String coord) {
         try {
             ChessField field = game.getBoard().getField(coord);
             if (!field.isOccupied()) {

@@ -1,7 +1,14 @@
 package kaiserol.chessboard;
 
 public enum Side {
-    WHITE, BLACK;
+    WHITE("White"),
+    BLACK("Black");
+
+    private final String text;
+
+    Side(String text) {
+        this.text = text;
+    }
 
     public boolean isWhite() {
         return this == WHITE;
@@ -13,8 +20,6 @@ public enum Side {
 
     @Override
     public String toString() {
-        String firstLetter = this.name().substring(0, 1).toUpperCase();
-        String remainingLetters = this.name().substring(1).toLowerCase();
-        return firstLetter + remainingLetters;
+        return text;
     }
 }

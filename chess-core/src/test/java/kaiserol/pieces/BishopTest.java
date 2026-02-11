@@ -27,7 +27,7 @@ public class BishopTest {
 
         List<Move> moves = bishop.getSortedPseudoLegalMoves();
         System.out.printf("%d Pseudo legal moves from %s (%s): %s%n", moves.size(), field, bishop, moves);
-        board.toConsole();
+        System.out.println(board.formatUsingAnsiCodes());
 
         // Diagonals from d4:
         // a1, b2, c3, e5, f6, g7, h8 (7 fields)
@@ -52,7 +52,7 @@ public class BishopTest {
 
         List<Move> moves = bishop.getSortedPseudoLegalMoves();
         System.out.printf("%d Pseudo legal moves from %s (%s): %s%n", moves.size(), field, bishop, moves);
-        board.toConsole();
+        System.out.println(board.formatUsingAnsiCodes());
 
         // Should not contain e5, f6, g7, h8, ...
         assertEquals(6, moves.size()); // 13 - 7 = 6
@@ -77,7 +77,7 @@ public class BishopTest {
 
         List<Move> moves = bishop.getSortedPseudoLegalMoves();
         System.out.printf("%d Pseudo legal moves from %s (%s): %s%n", moves.size(), field, bishop, moves);
-        board.toConsole();
+        System.out.println(board.formatUsingAnsiCodes());
 
         // Should contain e5, but not f6, g7, h8, ...
         assertEquals(9, moves.size()); // 13 - 4 = 9

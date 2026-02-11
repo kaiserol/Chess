@@ -30,7 +30,7 @@ public class BoardPrinter {
             return " %s ".formatted(pieceSymbol);
         };
 
-        return formatAnsi(board, handler);
+        return formatWithAnsiCodes(board, handler);
     }
 
     public static String format(ChessBoard board, boolean useAnsiCodes) {
@@ -45,11 +45,11 @@ public class BoardPrinter {
             return " %s ".formatted(pieceSymbol);
         };
 
-        if (useAnsiCodes) return formatAnsi(board, handler);
+        if (useAnsiCodes) return formatWithAnsiCodes(board, handler);
         return format(board, handler);
     }
 
-    private static String formatAnsi(ChessBoard board, ChessFieldHandler handler) {
+    private static String formatWithAnsiCodes(ChessBoard board, ChessFieldHandler handler) {
         StringBuilder builder = new StringBuilder();
 
         for (int y = 8; y >= 1; y--) {

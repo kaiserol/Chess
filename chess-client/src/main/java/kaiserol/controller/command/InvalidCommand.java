@@ -5,21 +5,21 @@ import org.jetbrains.annotations.NotNull;
 import java.util.function.Consumer;
 
 public class InvalidCommand extends Command {
-    private final String keyword;
+    private final String invalidKeyWord;
 
-    public InvalidCommand(@NotNull Consumer<String> out, @NotNull Consumer<String> err, @NotNull String keyword) {
+    public InvalidCommand(@NotNull Consumer<String> out, @NotNull Consumer<String> err, @NotNull String invalidKeyWord) {
         super(out, err);
-        this.keyword = keyword;
+        this.invalidKeyWord = invalidKeyWord;
     }
 
     @Override
-    public void execute(String[] args) {
-        err.accept("The command '%s' is invalid.".formatted(keyword));
+    public void execute(@NotNull String[] args) {
+        err.accept("The command '%s' is invalid.".formatted(invalidKeyWord));
     }
 
     @Override
-    public String keyword() {
-        return keyword;
+    public String keyWord() {
+        return invalidKeyWord;
     }
 
     @Override
